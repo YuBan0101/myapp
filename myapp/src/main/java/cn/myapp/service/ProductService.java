@@ -12,4 +12,6 @@ public interface ProductService {
 	
 	public List<Product> getThisTypeProduct(String type);
 
+	public List<Product> searchProduct(String key);
+
 }

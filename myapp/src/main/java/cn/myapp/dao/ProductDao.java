@@ -24,4 +24,11 @@ public interface ProductDao {
     List<Product> selectAllPrroductType();
     
     List<Product> selectThisTypeProduct(@Param(value="type")String type);
+    
+    List<Product> searchProduct(@Param(value="brand")String brand,@Param(value="model")String model);
+    
+    List<Product> searchProductByModel(@Param(value="model")String model);
+    
+    List<Product> searchProductByBrand(@Param(value="brand")String brand);
+    
 }

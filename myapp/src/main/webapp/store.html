@@ -88,19 +88,20 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fa fa-dashboard"></i>
-               <p>功能选择</p>
+               <p>数据统计<i class="right fa fa-angle-left"></i></p>
+               
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./index.html" class="nav-link ">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>最近销售</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="./store.html" class="nav-link active">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>商品库存</p>
                 </a>
@@ -108,7 +109,7 @@
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>库存不足</p>
+                  <p>售罄商品</p>
                 </a>
               </li>
             </ul>
@@ -118,7 +119,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-pie-chart"></i>
               <p>
-                报表
+               统计 报表
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
@@ -185,8 +186,16 @@
             <h1>商品库存</h1>
           </div>
           <div class="col-sm-6">
+          <script type="text/javascript">
+          $("document").ready(function(){
+        	  $("#home").on("click",function(){
+        		  window.location.reload();
+        	  });
+          });
+          </script>
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a id ="home" href="#">Home</a></li>
+              
               <li class="breadcrumb-item active">Inbox</li>
             </ol>
           </div>
@@ -258,7 +267,14 @@
          
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">商品分类</h3>
+              <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
+                 <script type="text/javascript">
+       				   $("document").ready(function(){
+        				  $("#typec").on("click",function(){
+        					  window.location.reload();
+        	 		 });
+        		  });
+          </script>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -317,15 +333,40 @@
                 <div class="input-group input-group-sm" id="ss">
                   <input type="text" class="form-control" placeholder="查找">
                   <div class="input-group-append">
-                  <form id ="hd" action="/product/search" hidden="hidden" enctype="application/x-www-form-urlencoded">
-                  	<input  type="text" hidden ="hidden" name="keyword" value="">
-                  </form>
+                  
                   <script type="text/javascript">
-                  	$("#hd input").value =$("#ss input").val().trim();
                   	$("document").ready(function(){
                   		$("#search").on("click",function(){
-                  			$("#hd").submit();
-                  		});
+                  			$.ajax({
+                  				type:'GET',
+                      			contentType:"allication/json",
+                        		dataType: "json",
+                        		data:{keyword:$("#ss input").val().trim()},
+                        		url:'/product/searchProduct',
+                        		success: function(data){
+                        			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
+                    	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
+                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
+                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+                    	    				);
+                        			for(var o in data){
+                        				$("#plist tbody").append("<tr>"+
+                        				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
+                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
+                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
+                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
+                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
+                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
+                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
+                        				'</tr>');
+                        			}
+                        		}
+                      		});
+                  			});
+                  		
                   	});
                   </script>
                     <div class="btn btn-primary" id="search">
