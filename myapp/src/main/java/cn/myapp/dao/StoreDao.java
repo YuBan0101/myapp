@@ -1,5 +1,10 @@
 package cn.myapp.dao;
 
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.myapp.model.Store;
 
 public interface StoreDao {
@@ -15,5 +20,7 @@ public interface StoreDao {
 
     int updateByPrimaryKey(Store record);
     
-    Store selectThisMonthStoreCount();
+    List<Store> selectThisMonthStoreCount();
+    
+    Store selectLastStoreDate(@Param(value="brand")String brand,@Param(value="model")String model);
 }

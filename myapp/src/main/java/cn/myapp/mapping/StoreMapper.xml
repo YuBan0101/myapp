@@ -18,6 +18,13 @@
     from store
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+   <select id="selectLastStoreDate"  resultMap="BaseResultMap">
+    select date
+    from store 
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR}
+  </select>
+  
 
     <select id="selectThisMonthStoreCount"  resultMap="BaseResultMap">
     select 

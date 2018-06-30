@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import cn.myapp.service.StoreService;
 
 @Controller
+@RequestMapping("store")
 public class StoreController {
 	
 	private static Logger log=LoggerFactory.getLogger(StoreController.class);
@@ -21,11 +22,10 @@ public class StoreController {
 	private StoreService storeService = null;
 	@RequestMapping(value ="/showThisMonthStoreCount",method=RequestMethod.GET)
 	@ResponseBody
+	//获取本月进货数量
 	public String showThisMonthStoreCount() {
-		
-		String s = String.valueOf(storeService.getThisMonthStoreCount());
-		System.err.println(s);
-		return JSON.toJSONString(s);
+
+		return JSON.toJSONString(String.valueOf(storeService.getThisMonthStoreCount()));
 	}
 	
 }

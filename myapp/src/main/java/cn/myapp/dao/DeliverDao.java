@@ -1,5 +1,10 @@
 package cn.myapp.dao;
 
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.myapp.model.Deliver;
 
 public interface DeliverDao {
@@ -14,4 +19,14 @@ public interface DeliverDao {
     int updateByPrimaryKeySelective(Deliver record);
 
     int updateByPrimaryKey(Deliver record);
+    
+    int selectThisMonthDeliverCount();
+    
+    int selectThisMonthDeliverPrice();
+    
+    int selectThisMonthProfit();
+    
+    Deliver selectLastDeliverDate(@Param(value="brand")String brand,@Param(value="model")String model);
+    
+    
 }

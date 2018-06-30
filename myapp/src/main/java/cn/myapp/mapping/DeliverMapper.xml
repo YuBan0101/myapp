@@ -7,10 +7,10 @@
     <result column="model" jdbcType="VARCHAR" property="model" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="count" jdbcType="INTEGER" property="count" />
+   
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, model, date, price, count
+    id, brand, model, date, price
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,16 +18,41 @@
     from deliver
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectLastDeliverDate" resultMap="BaseResultMap">
+    select date
+    from deliver 
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
+  </select>
+  
+  <select id="selectThisMonthDeliverCount"  resultType="java.lang.Integer">
+    select count(date)
+    from deliver
+    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+  </select>
+  
+  <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Integer">
+    select SUM(price)
+    from deliver
+    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+  </select>
+  
+  <select id="selectThisMonthProfit"  resultType="java.lang.Integer">
+     SELECT SUM(s) FROM (SELECT d.price-s.price as s FROM store as s RIGHT JOIN  deliver as d 
+     ON s.brand =d.brand AND s.model=d.model
+     where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from deliver
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.myapp.model.Deliver">
     insert into deliver (id, brand, model, 
-      date, price, count
+      date, price
       )
     values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
-      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{count,jdbcType=INTEGER}
+      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.myapp.model.Deliver">
@@ -48,9 +73,7 @@
       <if test="price != null">
         price,
       </if>
-      <if test="count != null">
-        count,
-      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -68,9 +91,7 @@
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
       </if>
-      <if test="count != null">
-        #{count,jdbcType=INTEGER},
-      </if>
+      
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.myapp.model.Deliver">
@@ -88,9 +109,7 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="count != null">
-        count = #{count,jdbcType=INTEGER},
-      </if>
+      
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +119,6 @@
       model = #{model,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
       price = #{price,jdbcType=DOUBLE},
-      count = #{count,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

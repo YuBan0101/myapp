@@ -13,8 +13,6 @@ public class Deliver {
 
     private Double price;
 
-    private Integer count;
-
     public Integer getId() {
         return id;
     }
@@ -53,13 +51,5 @@ public class Deliver {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }

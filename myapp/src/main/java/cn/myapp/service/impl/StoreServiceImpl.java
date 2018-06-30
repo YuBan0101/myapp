@@ -1,6 +1,7 @@
 package cn.myapp.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -18,9 +19,8 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public int getThisMonthStoreCount() {
 		int count = 0;
-		ArrayList<Store> list = new ArrayList<Store>();
-		list.add(storeDao.selectThisMonthStoreCount());
-		System.err.println(list.size());
+		List<Store> list = new ArrayList<Store>();
+		list = storeDao.selectThisMonthStoreCount();
 		for(int i = 0; i < list.size(); i++) {
 			count = count +list.get(i).getCount();
 		}

@@ -1,5 +1,7 @@
 package cn.myapp.model;
 
+import java.util.Date;
+
 public class Product {
     private Integer id;
 
@@ -8,6 +10,35 @@ public class Product {
     private String model;
 
     private Integer count;
+    
+    private String type;
+    
+    private String LastDeliverDate;
+    
+    private String LastStoreDate;
+    
+    public String getLastDeliverDate() {
+		return LastDeliverDate;
+	}
+
+	public void setLastDeliverDate(String lastDeliverDate) {
+		LastDeliverDate = lastDeliverDate;
+	}
+
+	public String getLastStoreDate() {
+		return LastStoreDate;
+	}
+
+	public void setLastStoreDate(String lastStoreDate) {
+		LastStoreDate = lastStoreDate;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type == null ? null : type.trim();
+	}
 
     public Integer getId() {
         return id;

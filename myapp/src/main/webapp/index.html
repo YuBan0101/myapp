@@ -99,7 +99,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="./store.html" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>商品库存</p>
                 </a>
@@ -107,7 +107,7 @@
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
-                  <p>库存不足</p>
+                  <p>售罄商品</p>
                 </a>
               </li>
             </ul>
@@ -191,7 +191,44 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+    
+    <!-- 初始化页面信息载入 -->
+    <script type="text/javascript">
+                $("document").ready(function(){
+                	$.ajax({
+                		type:'GET',
+                		dataType: "json",
+                		url:'/store/showThisMonthStoreCount',
+                		success: function(data){
+                			$("#storenumber").html(data);
+                		}
+                	});
+                	$.ajax({
+                		type:'GET',
+                		dataType: "json",
+                		url:'/deliver/showThisMonthDeliverCount',
+                		success: function(data){
+                			$("#delivernumber").html(data);
+                		}
+                	});
+                	$.ajax({
+                		type:'GET',
+                		dataType: "json",
+                		url:'/deliver/showThisMonthDeliverPrice',
+                		success: function(data){
+                			$("#deliverprice").html(data);
+                		}
+                	});
+                	$.ajax({
+                		type:'GET',
+                		dataType: "json",
+                		url:'/deliver/showThisMonthProfit',
+                		success: function(data){
+                			$("#profit").html(data);
+                		}
+                	});
+                });
+                </script>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -203,20 +240,8 @@
               <div class="inner">
                 <h3 id ="storenumber"></h3>
 
-                <p>近期进货数量</p>
-                <script type="text/javascript">
-                $("document").ready(function(){
-                	$.ajax({
-                		type:'GET',
-                		dataType: "json",
-                		url:'/showThisMonthStoreCount',
-                		success: function(data){
-                			alert(data.val);
-                			$("#storenumber").html(data);
-                		}
-                	});
-                });
-                </script>
+                <p>本月进货数量</p>
+               
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -229,9 +254,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner" >
-                <h3 id ="deliverumber"></h3>
+                <h3 id ="delivernumber"></h3>
 
-                <p>近期销售数量</p>
+                <p>本月销售数量</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -244,9 +269,9 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3 id="deliverprice"></h3>
 
-                <p>月累计现金收入</p>
+                <p>月累计金额收入</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -259,12 +284,12 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3 id="profit">65</h3>
 
-                <p>月累计非现金收入</p>
+                <p>月累计净收入</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-pinpoint"></i>
               </div>
               <a href="#" class="small-box-footer">详细信息 <i class="fa fa-arrow-circle-right"></i></a>
             </div>

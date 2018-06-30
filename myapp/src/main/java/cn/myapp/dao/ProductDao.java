@@ -1,5 +1,9 @@
 package cn.myapp.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.myapp.model.Product;
 
 public interface ProductDao {
@@ -14,4 +18,10 @@ public interface ProductDao {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+    
+    List<Product> selectAllPrroduct();
+    
+    List<Product> selectAllPrroductType();
+    
+    List<Product> selectThisTypeProduct(@Param(value="type")String type);
 }
