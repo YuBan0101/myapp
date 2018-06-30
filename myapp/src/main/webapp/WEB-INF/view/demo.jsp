@@ -8,5 +8,6 @@
 </head>
 <body>
 <h1>this is springMVC demo</h1>
+${count}
 </body>
 </html>

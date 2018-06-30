@@ -60,7 +60,7 @@
         <property name="ignoreAcceptHeader" value="true"></property>
     </bean>
     
-    <!-- 视图解析器 -->
+    <!-- 视图解析器  -->
     <bean
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"></property>

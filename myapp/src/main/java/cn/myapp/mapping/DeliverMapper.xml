@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myapp.dao.DeliverDao">
+  <resultMap id="BaseResultMap" type="cn.myapp.model.Deliver">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+   
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, brand, model, date, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from deliver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectLastDeliverDate" resultMap="BaseResultMap">
+    select date
+    from deliver 
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
+  </select>
+  
+  <select id="selectThisMonthDeliverCount"  resultType="java.lang.Integer">
+    select count(date)
+    from deliver
+    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+  </select>
+  
+  <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Integer">
+    select SUM(price)
+    from deliver
+    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+  </select>
+  
+  <select id="selectThisMonthProfit"  resultType="java.lang.Integer">
+     SELECT SUM(s) FROM (SELECT d.price-s.price as s FROM store as s RIGHT JOIN  deliver as d 
+     ON s.brand =d.brand AND s.model=d.model
+     where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from deliver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.myapp.model.Deliver">
+    insert into deliver (id, brand, model, 
+      date, price
+      )
+    values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.myapp.model.Deliver">
+    insert into deliver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.myapp.model.Deliver">
+    update deliver
+    <set>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.myapp.model.Deliver">
+    update deliver
+    set brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DOUBLE},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
