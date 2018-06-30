@@ -22,6 +22,24 @@
     select DISTINCT type from product
   </select>
   
+  <select id="searchProduct" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from product where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  
+  <select id="searchProductByModel" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from product where model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  
+  <select id="searchProductByBrand" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from product where brand like CONCAT(CONCAT('%',#{brand}),'%')
+  </select>
+  
   <select id="selectThisTypeProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
       <include refid="Base_Column_List" />

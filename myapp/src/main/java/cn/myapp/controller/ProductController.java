@@ -45,4 +45,12 @@ public class ProductController {
 		String type = req.getParameter("type");
 		return productService.getThisTypeProduct(type);
 	}
+	
+	@RequestMapping(value ="/searchProduct",method=RequestMethod.GET)
+	@ResponseBody
+	//显示当前type所以商品
+	public List<Product> searchProduct(HttpServletRequest req) {
+		String key = req.getParameter("keyword");
+		return productService.searchProduct(key);
+	}
 }
