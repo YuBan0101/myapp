@@ -43,7 +43,6 @@ public class ProductController {
 	//显示当前type所以商品
 	public List<Product> showThisTypeProduct(HttpServletRequest req) {
 		String type = req.getParameter("type");
-		System.err.println(type);
 		return productService.getThisTypeProduct(type);
 	}
 }

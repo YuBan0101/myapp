@@ -207,36 +207,46 @@
     			for(var o in data){
     				$("#typeUl").append('<li class="nav-item">'+
                     '<a href="javascript:void(0)" class="nav-link">'+
-                     ' <i class="fa fa-inbox"></i> '+data[o]+'</a></li>');
+                    '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
     			}
     		}
 		});
 		
-	});
-	
-	$("#typeUl li a").click(function(){
-		$("li[class='active']").removeAttr("class");
-		$(this).parent.addClass("active nav-item");
-		$.ajax({
-			type:'GET',
-  			contentType:"allication/json",
-  			data:{type:$(this).text()},
-    		dataType: "json",
-    		url:'/product/showThisTypeProduct',
-    		success: function(data){
-    			for(var o in data){
-    				$("#plist tbody").append("<tr>"+
-            				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-            				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-            				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-            				'</tr>');
-    			}
-    		}
-		});
+		$("#typeUl").on("click","li a",function(){
+			$("#typeUl li a").removeClass("active");
+			$(this).addClass("active");
+			$.ajax({
+				type:'GET',
+	  			contentType:"allication/json",
+	  			data:{type:$(this).text().trim()},
+	    		dataType: "json",
+	    		url:'/product/showThisTypeProduct',
+	    		success: function(data){
+	    			
+	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
+	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+	    				);
+	    				for(var i= 0;i<data.length;i++){
+	    				   $("#plist tbody").append("<tr>"+
+	    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
+	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
+	    				   '</tr>');
+	    		       
+	    			}
+	    		}
+	    	  });
+	       });
+		
 	});
 </script>
 
@@ -304,12 +314,24 @@
               <h3 class="card-title">库存查看</h3>
 
               <div class="card-tools">
-                <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" placeholder="Search Mail">
+                <div class="input-group input-group-sm" id="ss">
+                  <input type="text" class="form-control" placeholder="查找">
                   <div class="input-group-append">
-                    <div class="btn btn-primary">
+                  <form id ="hd" action="/product/search" hidden="hidden" enctype="application/x-www-form-urlencoded">
+                  	<input  type="text" hidden ="hidden" name="keyword" value="">
+                  </form>
+                  <script type="text/javascript">
+                  	$("#hd input").value =$("#ss input").val().trim();
+                  	$("document").ready(function(){
+                  		$("#search").on("click",function(){
+                  			$("#hd").submit();
+                  		});
+                  	});
+                  </script>
+                    <div class="btn btn-primary" id="search">
                       <i class="fa fa-search"></i>
                     </div>
+                    
                   </div>
                 </div>
               </div>
@@ -321,7 +343,7 @@
                 <!-- Check all button -->
      
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+              <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -378,7 +400,7 @@
             <div class="card-footer p-0">
               <div class="mailbox-controls">
                 
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+              <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="float-right">
                   1-50/200
                   <div class="btn-group">
@@ -416,8 +438,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -447,7 +468,7 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 </body>
