@@ -50,7 +50,6 @@ public class ProductServiceImpl implements ProductService {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		list = productDao.selectThisTypeProduct(type);
-		System.err.println(list.size());
 		for(int i=0;i<list.size();i++) {
 			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
 			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));

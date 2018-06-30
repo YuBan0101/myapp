@@ -23,7 +23,9 @@
   </select>
   
   <select id="selectThisTypeProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select  type from product where type = #{type,jdbcType=VARCHAR}
+    select 
+      <include refid="Base_Column_List" />
+     from product where type = #{type,jdbcType=VARCHAR}
   </select>
   
   <select id="selectAllPrroduct"  resultMap="BaseResultMap">
