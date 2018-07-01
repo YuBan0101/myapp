@@ -12,8 +12,18 @@ public class Deliver {
     private Date date;
 
     private Double price;
+    
+    private String dateString;
 
-    public Integer getId() {
+    public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
+
+	public Integer getId() {
         return id;
     }
 
