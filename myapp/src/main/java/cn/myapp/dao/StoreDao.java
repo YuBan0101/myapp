@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Product;
 import cn.myapp.model.Store;
 
 public interface StoreDao {
@@ -20,6 +21,16 @@ public interface StoreDao {
     int updateByPrimaryKey(Store record);
     
     List<Store> selectThisMonthStoreCount();
+    
+    List<Store> selectAllStoreRecord();
+    
+    List<Store> selectThisTypeStoreRecord(@Param(value="type")String type);
+    
+    List<Store> searchStoreRecord(@Param(value="brand")String brand,@Param(value="model")String model);
+    
+    List<Store> searchStoreRecordByModel(@Param(value="model")String model);
+    
+    List<Store> searchStoreRecordByBrand(@Param(value="brand")String brand);
     
     Store selectLastStoreDate(@Param(value="brand")String brand,@Param(value="model")String model);
 }

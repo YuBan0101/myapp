@@ -9,9 +9,10 @@
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="type" jdbcType="VARCHAR" property="type" />
+    
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, model, date, price, count
+    id, brand, model, date, price, count, type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,6 +34,33 @@
     from store
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
+  
+  <select id="selectAllStoreRecord"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from store order by date DESC
+  </select>
+  <select id="selectThisTypeStoreRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select 
+      <include refid="Base_Column_List" />
+     from store where type = #{type,jdbcType=VARCHAR} order by date DESC
+  </select>
+  <select id="searchStoreRecord"  resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="searchStoreRecordByModel"  resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from store where model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="searchStoreRecordByBrand"  resultMap="BaseResultMap">
+   select   
+    <include refid="Base_Column_List" />
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%')
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from store
     where id = #{id,jdbcType=INTEGER}

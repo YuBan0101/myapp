@@ -16,6 +16,16 @@ public class Store {
     private Integer count;
     
     private String type;
+    
+    private String dateString;
+    
+    public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString == null ? null : dateString.trim();
+	}
 
     public String getType() {
 		return type;
