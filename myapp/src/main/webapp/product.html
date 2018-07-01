@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>库存管理</title>
+  <title>补仓&售罄</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -100,13 +100,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./store.html" class="nav-link active">
+                <a href="./store.html" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>商品库存</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./product.html" class="nav-link">
+                <a href="./product.html" class="nav-link active">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>售罄商品</p>
                 </a>
@@ -182,7 +182,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>商品库存</h1>
+            <h1>补仓&售罄</h1>
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
@@ -193,9 +193,9 @@
           });
           </script>
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a id ="home" href="#">Home</a></li>
+              <li class="breadcrumb-item"><a id ="home" href="#">刷新页面</a></li>
               
-              <li class="breadcrumb-item active">Inbox</li>
+              <li class="breadcrumb-item active">-</li>
             </ol>
           </div>
         </div>
@@ -228,28 +228,39 @@
 	  			contentType:"allication/json",
 	  			data:{type:$(this).text().trim()},
 	    		dataType: "json",
-	    		url:'/product/showThisTypeProduct',
+	    		url:'/product/showThisTypeShortSupplyProduct',
 	    		success: function(data){
 	    			
 	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>库存余量</td>'+
 	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
 	    				);
 	    				for(var i= 0;i<data.length;i++){
+	    					if(data[i].count == 0){
+	    						$("#plist tbody").append("<tr>"+
+	    			    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
+	    			    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+	    			    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+	    			    				   '<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">库存已空！</a></td>'+
+	    			    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+	    			    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
+	    			    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
+	    			    				   '</tr>');
+	    					}else {
 	    				   $("#plist tbody").append("<tr>"+
 	    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[i].count+' 个</a></td>'+
 	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
 	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
 	    				   '</tr>');
-	    		       
+	    				}
 	    			}
 	    		}
 	    	  });
@@ -326,7 +337,7 @@
         <div class="col-md-9">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">库存查看</h3>
+              <h3 class="card-title">短缺产品</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" id="ss">
@@ -401,18 +412,30 @@
               			type:'GET',
               			contentType:"allication/json",
                 		dataType: "json",
-                		url:'/product/showAllProduct',
+                		url:'/product/showAllShortSupplyProduct',
                 		success: function(data){
                 			for(var o in data){
+                				if(data[o].count == 0){
+                					$("#plist tbody").append("<tr>"+
+                            				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
+                            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
+                            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
+                            				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">库存已空！</a></td>'+
+                            				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
+                            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
+                            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
+                            				'</tr>');
+                				}else {
                 				$("#plist tbody").append("<tr>"+
                 				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
                 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
                 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
+                				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[o].count+' 个</a></td>'+
                 				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
                 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
                 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
                 				'</tr>');
+                				}
                 			}
                 		}
               		});

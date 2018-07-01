@@ -29,9 +29,13 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getAllProduct() {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
-		list = productDao.selectAllPrroduct();
+		list = productDao.selectAllProduct();
 		for(int i=0;i<list.size();i++) {
+			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
+				list.get(i).setLastDeliverDate("暂无出库时间信息");
+			}else {
 			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			}
 			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
 		}
 		return list;
@@ -39,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<String> getAllProductType() {
 		
-		List<Product> list = productDao.selectAllPrroductType();
+		List<Product> list = productDao.selectAllProductType();
 		ArrayList<String> alist = new ArrayList<String>();
 		for(int i = 0 ;i < list.size(); i++) {
 			alist.add(list.get(i).getType());
@@ -53,7 +57,15 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> list = new ArrayList<Product>();
 		list = productDao.selectThisTypeProduct(type);
 		for(int i=0;i<list.size();i++) {
+			//此处如果deliver 和Store 表中没有Date 报错 ，修改成？表达式试试
+			//list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			//list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+		//} 出库时间空值修正  入库时间必有无需校验
+			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
+				list.get(i).setLastDeliverDate("暂无出库时间信息");
+			}else {
 			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			}
 			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
 		}
 		return list;
@@ -78,7 +90,41 @@ public class ProductServiceImpl implements ProductService {
         	list = productDao.searchProduct(arr.get(0), arr.get(1));
         }
         for(int i=0;i<list.size();i++) {
+        	if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
+				list.get(i).setLastDeliverDate("暂无出库时间信息");
+			}else {
 			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			}
+			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+		}
+		return list;
+	}
+	@Override
+	public List<Product> getAllShortSupplyProduct() {
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		List<Product> list = new ArrayList<Product>();
+		list = productDao.selectAllShortSupplyProduct();
+		for(int i=0;i<list.size();i++) {
+			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
+				list.get(i).setLastDeliverDate("暂无出库时间信息");
+			}else {
+			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			}
+			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+		}
+		return list;
+	}
+	@Override
+	public List<Product> getThisTypeShotSupplyProduct(String type) {
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		List<Product> list = new ArrayList<Product>();
+		list = productDao.selectThisTypeShortSupplyProduct(type);
+		for(int i=0;i<list.size();i++) {
+			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
+				list.get(i).setLastDeliverDate("暂无出库时间信息");
+			}else {
+			list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
+			}
 			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
 		}
 		return list;

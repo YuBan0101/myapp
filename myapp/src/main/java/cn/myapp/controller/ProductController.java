@@ -53,4 +53,21 @@ public class ProductController {
 		String key = req.getParameter("keyword");
 		return productService.searchProduct(key);
 	}
+	
+	
+	@RequestMapping(value ="/showAllShortSupplyProduct",method=RequestMethod.GET)
+	@ResponseBody
+	//获取所有商品类别
+	public List<Product> showAllShortSupplyProduct() {
+		
+		return productService.getAllShortSupplyProduct();
+	}
+	
+	@RequestMapping(value ="/showThisTypeShortSupplyProduct",method=RequestMethod.GET)
+	@ResponseBody
+	//显示当前type所以商品
+	public List<Product> showThisTypeShortSupplyProduct(HttpServletRequest req) {
+		String type = req.getParameter("type");
+		return productService.getThisTypeShotSupplyProduct(type);
+	}
 }
