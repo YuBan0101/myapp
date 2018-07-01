@@ -19,9 +19,13 @@ public interface ProductDao {
 
     int updateByPrimaryKey(Product record);
     
-    List<Product> selectAllPrroduct();
+    List<Product> selectAllProduct();
     
-    List<Product> selectAllPrroductType();
+    List<Product> selectAllProductType();
+    
+    List<Product> selectAllShortSupplyProduct();
+    
+    List<Product> selectThisTypeShortSupplyProduct(@Param(value="type")String type);
     
     List<Product> selectThisTypeProduct(@Param(value="type")String type);
     

@@ -14,8 +14,18 @@ public class Store {
     private Double price;
 
     private Integer count;
+    
+    private String type;
 
-    public Integer getId() {
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type == null ? null : type.trim();
+	}
+
+	public Integer getId() {
         return id;
     }
 

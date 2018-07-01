@@ -13,5 +13,11 @@ public interface ProductService {
 	public List<Product> getThisTypeProduct(String type);
 
 	public List<Product> searchProduct(String key);
+	
+	public List<Product> getAllShortSupplyProduct();
+	
+	public List<Product> getThisTypeShotSupplyProduct(String type);
+	
+	
 
 }

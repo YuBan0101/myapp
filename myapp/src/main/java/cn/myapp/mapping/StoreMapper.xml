@@ -8,6 +8,7 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
     id, brand, model, date, price, count

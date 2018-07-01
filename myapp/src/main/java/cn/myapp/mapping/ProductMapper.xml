@@ -18,8 +18,20 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectAllPrroductType" resultMap="BaseResultMap">
+  <select id="selectAllProductType" resultMap="BaseResultMap">
     select DISTINCT type from product
+  </select>
+  
+  <select id="selectAllShortSupplyProduct" resultMap="BaseResultMap">
+    select  
+    <include refid="Base_Column_List" />
+     from product where count &lt; 5 
+  </select>
+  
+  <select id="selectThisTypeShortSupplyProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+      <include refid="Base_Column_List" />
+     from product where type = #{type,jdbcType=VARCHAR} and count &lt; 5
   </select>
   
   <select id="searchProduct" resultMap="BaseResultMap">
@@ -46,7 +58,7 @@
      from product where type = #{type,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectAllPrroduct"  resultMap="BaseResultMap">
+  <select id="selectAllProduct"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from product
