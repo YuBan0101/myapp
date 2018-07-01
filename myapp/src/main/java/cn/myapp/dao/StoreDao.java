@@ -28,6 +28,8 @@ public interface StoreDao {
     
     List<Store> searchStoreRecord(@Param(value="brand")String brand,@Param(value="model")String model);
     
+    Store searchStoreRecordDes(@Param(value="brand")String brand,@Param(value="model")String model);
+    
     List<Store> searchStoreRecordByModel(@Param(value="model")String model);
     
     List<Store> searchStoreRecordByBrand(@Param(value="brand")String brand);

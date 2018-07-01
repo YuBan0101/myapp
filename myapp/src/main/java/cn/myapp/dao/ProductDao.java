@@ -31,6 +31,8 @@ public interface ProductDao {
     
     List<Product> searchProduct(@Param(value="brand")String brand,@Param(value="model")String model);
     
+    Product searchProductDes(@Param(value="brand")String brand,@Param(value="model")String model);
+    
     List<Product> searchProductByModel(@Param(value="model")String model);
     
     List<Product> searchProductByBrand(@Param(value="brand")String brand);

@@ -1,6 +1,5 @@
 package cn.myapp.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -62,5 +61,29 @@ public class DeliverController {
 	public List<Deliver> showDeliverRecord() {
 
 		return deliverService.getDeliverRecord();
+	}
+	
+	@RequestMapping(value="/showAllDeliverRecord")
+	@ResponseBody
+	//所有出库记录
+	public List<Deliver> showAllDeliverRecord() {
+
+		return deliverService.getAllDeliverRecord();
+	}
+	
+	@RequestMapping(value="/showThisTypeDeliverRecord")
+	@ResponseBody
+	//type 信息
+	public List<Deliver> showThisTypeDeliverRecord(HttpServletRequest req) {
+
+		return deliverService.getThisTypeDeliverRecord(req.getParameter("type"));
+	}
+	
+	@RequestMapping(value="/searchDeliverRecord")
+	@ResponseBody
+	//查找
+	public List<Deliver> searchDeliverRecord(HttpServletRequest req) {
+
+		return deliverService.searchDeliverRecord(req.getParameter("keyword"));
 	}
 }
