@@ -7,9 +7,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css"> 
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- iCheck -->
@@ -27,8 +25,32 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <script type="text/javascript" src ="./plugins/jquery/jquery.min.js"></script>
+  <style>
+  .box{
+  	position:absolute;
+    width:20%; top:50%; left:30%; padding:20px;
+    height:50%; border:2px solid orange;
+    z-index:1002; overflow:auto;
+    background-color :white;
+    display:none;            /* 默认对话框隐藏 */
+   }
+   .boxback{
+   	 display: block; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.2; 
+            opacity:.20; 
+            filter: alpha(opacity=20); 
+   }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
+<div  id="boxback" class="">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -342,24 +364,17 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <ul class="todo-list">
+                <ul class="todo-list" id="dl">
                   <li>
                     <!-- drag handle -->
                     <span class="handle">
                       <i class="fa fa-ellipsis-v"></i>
                       <i class="fa fa-ellipsis-v"></i>
                     </span>
-                    <!-- checkbox -->
-                    <input type="checkbox" value="" name="">
                     <!-- todo text -->
                     <span class="text">Design a nice theme</span>
                     <!-- Emphasis label -->
                     <small class="badge badge-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                    <!-- General tools such as edit or delete-->
-                    <div class="tools">
-                      <i class="fa fa-edit"></i>
-                      <i class="fa fa-trash-o"></i>
-                    </div>
                   </li>
                   <li>
                     <span class="handle">
@@ -430,7 +445,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button type="button" class="btn btn-info float-right"><em class="fa fa-plus"></em> 登记商品</button>
+                <button type="button" class="btn btn-info float-right" onClick="msgbox(1)"><em class="fa fa-plus"></em> 登记商品</button>
               </div>
             </div>
             <!-- /.card -->
@@ -553,7 +568,109 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+</div>
 <!-- ./wrapper -->
+<!-- 登记出库 -->
+<script>  
+        function msgbox(n){
+            document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+            if(n==1){
+              $("#boxback").addClass("boxback");
+            }
+            else{
+            	$("#boxback").removeClass("boxback");
+            }
+        } 
+        </script>
+        <script type="text/javascript">
+        $("document").ready(function(){
+        	 $("#sub").on("click",function(){
+        			$.ajax({
+                		type:'POST',
+                		dataType: 'json',
+                		url:'/deliver/showDeliverRecordOne',
+                		data:{"brand":$("#fd input[name='type']").val().trim(),
+                			  "model":$("#fd input[name='model']").val().trim(),
+                			  "price":$("#fd input[name='price']").val().trim()
+                			 },
+                		success: function(data){
+                			alert("登记成功");
+                			msgbox(0);
+                			$("#dl").prepend('<li>'+
+                            '<span class="handle ui-sortable-handle">'+
+                            '<i class="fa fa-ellipsis-v"></i></span>'+
+                            '<span class="text">出售了'+data.brand+'  '+data.model+'。  售价为'+data.price+'元。</span>        '+
+                            '<small class="badge badge-info"><i class="fa fa-clock-o"></i> '+data.dateString+'</small>'+
+                          '</li>');
+                		 }
+                	});
+        			
+        		});
+        	 //初始化销售面板
+        	 
+        	 var info = new Array("badge-warning",
+        			 "badge-primary",
+        			 "badge-success",
+        			 "badge-warning",
+        			 "badge-info",
+        			 "badge-danger",
+        			 "badge-secondary"); 		 
+        	 $.ajax({
+         		type:'POST',
+         		dataType: 'json',
+         		url:'/deliver/showDeliverRecord',
+         		success: function(data){
+         			$("#dl").html("");
+         			for(var i=0;i<data.length; i++){
+         		
+         			$("#dl").append('<li>'+
+                     '<span class="handle ui-sortable-handle">'+
+                     '<i class="fa fa-ellipsis-v"></i></span>'+
+                     '<span class="text">出售了'+data[i].brand+'  '+data[i].model+'。  售价为'+data[i].price+'元。</span>        '+
+                     '<small class="badge '+info[i]+'"><i class="fa fa-clock-o"></i> '+data[i].dateString+'</small>'+
+                   '</li>');
+         			} 
+         			
+         				
+         		 }
+         	});
+        	});
+     </script> 
+
+<div class="card-body register-card-body box" id="inputbox">
+	<div style="padiing-top:10%">
+      <p class="login-box-msg">登记出售</p>
+	
+      <form action="#" method="post" id="fd">
+        <div class="form-group has-feedback">
+       	  产品品牌：	
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="type">
+        </div>
+         <div class="form-group has-feedback">
+      	    产品型号：                 
+          <input type="text" class="form-control" placeholder="型号" name="model">
+        </div>
+         <div class="form-group has-feedback">
+    	     售价：                 
+           <input type="text" class="form-control" placeholder="售价" name="price">
+        </div>
+        <br/><br/>
+        <div class="row">
+          <div class="col-4">
+                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox(0)"> 取消 </button>
+          </div>
+          <!-- /.col -->
+          <div class="col-4" style="text-align: right;">
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+      </form>
+</div>
+    </div>
+    <!-- /.form-box -->
+
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -592,5 +709,6 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
 </body>
 </html>

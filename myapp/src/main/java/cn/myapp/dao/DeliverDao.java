@@ -1,6 +1,5 @@
 package cn.myapp.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -22,11 +21,13 @@ public interface DeliverDao {
     
     int selectThisMonthDeliverCount();
     
-    int selectThisMonthDeliverPrice();
+    double selectThisMonthDeliverPrice();
     
-    int selectThisMonthProfit();
+    double selectThisMonthProfit();
     
     Deliver selectLastDeliverDate(@Param(value="brand")String brand,@Param(value="model")String model);
+    
+    List<Deliver> selectDeliverRecord();
     
     
 }

@@ -20,9 +20,17 @@
   </select>
   
   <select id="selectLastDeliverDate" resultMap="BaseResultMap">
-    select date
+    select 
+    <include refid="Base_Column_List" />
     from deliver 
     where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
+  </select>
+  
+  <select id="selectDeliverRecord" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from deliver 
+     order by date DESC limit 7
   </select>
   
   <select id="selectThisMonthDeliverCount"  resultType="java.lang.Integer">
@@ -31,14 +39,14 @@
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
   
-  <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Integer">
-    select SUM(price)
+  <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Double">
+    select ifnull(SUM(price),0)
     from deliver
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
   
-  <select id="selectThisMonthProfit"  resultType="java.lang.Integer">
-     SELECT SUM(s) FROM (SELECT d.price-s.price as s FROM store as s RIGHT JOIN  deliver as d 
+  <select id="selectThisMonthProfit"  resultType="java.lang.Double">
+     SELECT ifnull(SUM(s),0) FROM (SELECT d.price-s.price as s FROM store as s RIGHT JOIN  deliver as d 
      ON s.brand =d.brand AND s.model=d.model
      where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
   </select>

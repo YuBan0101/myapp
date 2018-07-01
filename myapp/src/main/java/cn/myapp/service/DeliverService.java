@@ -1,14 +1,19 @@
 package cn.myapp.service;
 
-import java.util.Date;
+import java.util.List;
+
+import cn.myapp.model.Deliver;
 
 public interface DeliverService {
 	
 	public int getThisMonthDeliverCount();
 
-	public int getThisMonthDeliverPrice();
+	public double getThisMonthDeliverPrice();
 	
-	public int getThisMonthProfit();
+	public double getThisMonthProfit();
 	
+	public Deliver getDeliverRecordOne(Deliver record);
+	
+	public List<Deliver> getDeliverRecord();
 	
 }
