@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.myapp.dao.DeliverDao;
+import cn.myapp.dao.ProductDao;
 import cn.myapp.model.Deliver;
 import cn.myapp.service.DeliverService;
 
@@ -19,6 +20,8 @@ public class DeliverServiceImpl implements DeliverService{
 
 	@Resource
 	private DeliverDao deliverDao;
+	@Resource
+	private ProductDao productDao;
 	
 	@Override
 	public int getThisMonthDeliverCount() {
@@ -37,10 +40,14 @@ public class DeliverServiceImpl implements DeliverService{
 	}
 	@Override
 	@Transactional
+	//插入一条数据deliver 并在product里对count -1;
 	public Deliver getDeliverRecordOne(Deliver record) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		record.setDate(new Date());
+		//插入
 		deliverDao.insertSelective(record);
+		//count--
+		productDao.updateProductCount(record.getBrand(), record.getModel());
 		record = deliverDao.selectLastDeliverDate(record.getBrand(), record.getModel());
 		record.setDateString(ft.format(record.getDate()));
 		return record;
