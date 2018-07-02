@@ -47,7 +47,7 @@ public class DeliverController {
 		return JSON.toJSONString(String.valueOf(deliverService.getThisMonthProfit()));
 	}
 	
-	@RequestMapping(value="/showDeliverRecordOne")
+	@RequestMapping(value="/showDeliverRecordAfterAdd")
 	@ResponseBody
 	//获取新插入一条信息
 	public Deliver showDeliverRecordAfterAdd(Deliver record, HttpServletRequest req) {

@@ -29,7 +29,7 @@
   .box{
   	position:absolute;
     width:20%; top:50%; left:30%; padding:20px;
-    height:50%; border:2px solid orange;
+    height:auto; border:2px solid orange;
     z-index:1002; overflow:auto;
     background-color :white;
     display:none;            /* 默认对话框隐藏 */
@@ -588,10 +588,11 @@
         			$.ajax({
                 		type:'POST',
                 		dataType: 'json',
-                		url:'/deliver/showDeliverRecordOne',
+                		url:'/deliver/showDeliverRecordAfterAdd',
                 		data:{"brand":$("#fd input[name='type']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
-                			  "price":$("#fd input[name='price']").val().trim()
+                			  "price":$("#fd input[name='price']").val().trim(),
+                			  "count":$("#fd input[name='count']").val().trim()
                 			 },
                 		success: function(data){
                 			alert("登记成功");
@@ -599,7 +600,7 @@
                 			$("#dl").prepend('<li>'+
                             '<span class="handle ui-sortable-handle">'+
                             '<i class="fa fa-ellipsis-v"></i></span>'+
-                            '<span style="font-family:Microsoft Yahei">出售了'+data.brand+'  '+data.model+'.     售价为 ￥'+data.price+'元.</span>        '+
+                            '<span style="font-family:Microsoft Yahei">出售了'+data.brand+'  '+data.model+' '+data.count +'个（米）.     售价为 ￥'+(data.price*data.count)+'元.</span>        '+
                             '<small class="badge badge-info"><i class="fa fa-clock-o"></i> '+data.dateString+'</small>'+
                           '</li>');
                 		 }
@@ -626,7 +627,7 @@
          			$("#dl").append('<li>'+
                      '<span class="handle ui-sortable-handle">'+
                      '<i class="fa fa-ellipsis-v"></i></span>'+
-                     '<span style="font-family:Microsoft Yahei">出售了'+data[i].brand+'  '+data[i].model+'.     售价为 ￥'+data[i].price+'元.</span>        '+
+                     '<span style="font-family:Microsoft Yahei">出售了'+data[i].brand+'  '+data[i].model+' '+data[i].count +'个（米）.     售价为 ￥'+(data[i].price*data[i].count)+'元.</span>        '+
                      '<small class="badge '+info[i]+'"><i class="fa fa-clock-o"></i> '+data[i].dateString+'</small>'+
                    '</li>');
          			} 
@@ -654,6 +655,12 @@
     	     售价：                 
            <input type="text" class="form-control" placeholder="售价" name="price">
         </div>
+        <div class="form-group has-feedback">
+    	    数量：                 
+           <input type="text" class="form-control" placeholder="数量" name="count" value="1">
+        </div>
+        
+        
         <br/><br/>
         <div class="row">
           <div class="col-4">
