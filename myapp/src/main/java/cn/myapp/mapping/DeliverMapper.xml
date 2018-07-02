@@ -7,10 +7,12 @@
     <result column="model" jdbcType="VARCHAR" property="model" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    
    
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, model, date, price
+    id, brand, model, date, price ,count
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,22 +35,55 @@
      order by date DESC limit 7
   </select>
   
+   <select id="selectAllDeliverRecord" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from deliver 
+     order by date DESC 
+  </select>
+  
+  <select id="selectThisTypeDeliverRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from (SELECT d.* ,p.type FROM deliver as d LEFT JOIN product as p ON d.brand = p.brand and d.model= p.model)t
+  	where type = #{type,jdbcType=VARCHAR}
+  	order by date DESC
+  </select>
+  
   <select id="selectThisMonthDeliverCount"  resultType="java.lang.Integer">
-    select count(date)
+    select sum(count)
     from deliver
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
   
   <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Double">
-    select ifnull(SUM(price),0)
-    from deliver
-    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    select ifnull(SUM(p),0) from (select price*count as p from deliver
+  
+    where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
   </select>
   
   <select id="selectThisMonthProfit"  resultType="java.lang.Double">
-     SELECT ifnull(SUM(s),0) FROM (SELECT d.price-s.price as s FROM store as s RIGHT JOIN  deliver as d 
+     SELECT ifnull(SUM(s),0) FROM (SELECT (d.price-s.price)*d.count as s FROM store as s RIGHT JOIN  deliver as d 
      ON s.brand =d.brand AND s.model=d.model
      where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
+  </select>
+  
+  <select id="searchDeliverRecord" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  
+  <select id="searchDeliverRecordByModel" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from deliver where model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  
+  <select id="searchDeliverRecordByBrand" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%')
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -57,10 +92,10 @@
   </delete>
   <insert id="insert" parameterType="cn.myapp.model.Deliver">
     insert into deliver (id, brand, model, 
-      date, price
+      date, price, count
       )
     values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
-      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}
+      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE},#{count,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.myapp.model.Deliver">
@@ -81,6 +116,9 @@
       <if test="price != null">
         price,
       </if>
+      <if test="count != null">
+        count,
+      </if>
       
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -98,6 +136,9 @@
       </if>
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=DOUBLE},
       </if>
       
     </trim>
@@ -117,6 +158,9 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
+       <if test="count != null">
+        count = #{count,jdbcType=DOUBLE},
+      </if>
       
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -127,6 +171,7 @@
       model = #{model,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
       price = #{price,jdbcType=DOUBLE},
+      count = #{count,jdbcType=INTEGER},
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

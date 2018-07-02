@@ -14,13 +14,45 @@ public class Deliver {
     private Double price;
     
     private String dateString;
+    
+    private Integer count;
+    
+    private String type;
+    
+    private Double sprice;
+    
+    public Double getSprice() {
+		return sprice;
+	}
+
+	public void setSprice(Double sprice) {
+		this.sprice = sprice;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type == null ? null : type.trim();
+	}
+
+	
 
     public String getDateString() {
 		return dateString;
 	}
 
 	public void setDateString(String dateString) {
-		this.dateString = dateString;
+		this.dateString = dateString == null ? null : dateString.trim();
 	}
 
 	public Integer getId() {

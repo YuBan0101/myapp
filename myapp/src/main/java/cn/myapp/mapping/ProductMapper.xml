@@ -40,6 +40,12 @@
     from product where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
   </select>
   
+   <select id="searchProductDes" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from product where brand = #{brand} and model = #{model}
+  </select>
+  
   <select id="searchProductByModel" resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />

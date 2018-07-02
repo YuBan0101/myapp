@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>入库登记</title>
+  <title>出库登记</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -148,7 +148,7 @@
           
           <li class="nav-header">出入库管理</li>
           <li class="nav-item">
-            <a href="./inbound.html" class="nav-link active">
+            <a href="./inbound.html" class="nav-link ">
               <i class="nav-icon fa fa-tree"></i>
               <p>
                 入库登记
@@ -156,7 +156,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="./outbound.html" class="nav-link ">
+            <a href="./outbound.html" class="nav-link active">
               <i class="nav-icon fa fa-envelope-o"></i>
               <p>
                 出库登记
@@ -182,7 +182,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>入库登记</h1>
+            <h1>出库登记</h1>
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
@@ -228,26 +228,28 @@
 	  			contentType:"allication/json",
 	  			data:{type:$(this).text().trim()},
 	    		dataType: "json",
-	    		url:'/store/showThisTypeStoreRecord',
+	    		url:'/deliver/showThisTypeDeliverRecord',
 	    		success: function(data){
 	    			
 	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
-						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库单价</td>'+
-						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库小计</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售价格</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售个数（米）</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>金额小计</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>净赚（利润）</td>'+
 	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td></tr>'
 	    				);
 	    				for(var i= 0;i<data.length;i++){
 	    				   $("#plist tbody").append("<tr>"+
 	    				   '<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
-						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
 						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+'</a></td>'+
 	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 	    				   '</tr>');
@@ -328,7 +330,7 @@
         <div class="col-md-9">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">入库记录</h3>
+              <h3 class="card-title">销售（入库）记录</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" id="ss">
@@ -343,26 +345,28 @@
                       			contentType:"allication/json",
                         		dataType: "json",
                         		data:{keyword:$("#ss input").val().trim()},
-                        		url:'/store/searchStoreRecord',
+                        		url:'/deliver/searchDeliverRecord',
                         		success: function(data){
                         			
 	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
-						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库单价</td>'+
-						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库小计</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售价格</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售个数（米）</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>金额小计</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>净赚（利润）</td>'+
 	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td></tr>'
 	    				);
 	    				for(var i= 0;i<data.length;i++){
 	    				   $("#plist tbody").append("<tr>"+
 	    				   '<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
-						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
 						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+'</a></td>'+
 	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 	    				   '</tr>');
@@ -406,20 +410,21 @@
               			type:'GET',
               			contentType:"allication/json",
                 		dataType: "json",
-                		url:'/store/showAllStoreRecord',
+                		url:'/deliver/showAllDeliverRecord',
                 		success: function(data){
                 			for(var i= 0;i<data.length;i++){
-                				$("#plist tbody").append("<tr>"+
-                				'<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].count+'</a></td>'+
-								'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].price+'</a></td>'+
-								'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].count*data[i].price+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
-                				'</tr>');
-                			}
+	    				   $("#plist tbody").append("<tr>"+
+	    				   '<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
+	    				   '</tr>');
+                        			}
                 		}
               		});
               	});
@@ -431,11 +436,12 @@
                     <td class="mailbox-subject" style="text-align:center">ID</td>
                     <td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>
                     <td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>
-                    <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库数量</td>
-					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库单价</td>
-					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库小计</td>
+                    <td class="mailbox-subject" style="text-align:center"><a href="#"></a>出售价格</td>
+					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>出售个数（米）</td>
+					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>金额小计</td>
+					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>净赚（利润）</td>
 					  <td class="mailbox-attachment" style="text-align:center">产品类型</td>
-                    <td class="mailbox-subject" style="text-align:center">最后一次入库时间</td>
+                    <td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>
 					  </tr>
                   </tbody>
                 </table>
