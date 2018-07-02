@@ -80,14 +80,17 @@ public class DeliverServiceImpl implements DeliverService{
 		}
 		return list;
 	}
+	
+	//sql 大法好
 	@Override
 	public List<Deliver> getThisTypeDeliverRecord(String type) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
-		List<Product> list1 = new ArrayList<Product>();
-		list1 = productDao.selectThisTypeProduct(type);
-		for(int i=0;i<list1.size();i++) {
-			
+		list = deliverDao.selectThisTypeDeliverRecord(type);
+		for(int i=0;i<list.size();i++) {
+			list.get(i).setDateString(ft.format(list.get(i).getDate()));
+			list.get(i).setType(type);
+			list.get(i).setSprice(storeDao.searchStoreRecordDes(list.get(i).getBrand(), list.get(i).getModel()).getPrice());
 			
 		}
 		return list;

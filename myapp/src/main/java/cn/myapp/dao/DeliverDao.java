@@ -32,7 +32,7 @@ public interface DeliverDao {
     
     List<Deliver> selectAllDeliverRecord();
     
-    List<Deliver> selectThisTypeDeliverRecord(Deliver deliver);
+    List<Deliver> selectThisTypeDeliverRecord(@Param(value="type")String type);
     
     List<Deliver> searchDeliverRecord(@Param(value="brand")String brand,@Param(value="model")String model);
     
