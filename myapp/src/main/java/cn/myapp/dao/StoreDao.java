@@ -20,7 +20,7 @@ public interface StoreDao {
 
     int updateByPrimaryKey(Store record);
     
-    List<Store> selectThisMonthStoreCount();
+    int selectThisMonthStoreCount();
     
     List<Store> selectAllStoreRecord();
     

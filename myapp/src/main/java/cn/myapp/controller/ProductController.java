@@ -21,7 +21,7 @@ public class ProductController {
 
 	@Resource
 	private ProductService productService;
-	
+	//显示收缩商品
 	@RequestMapping(value ="/showAllProduct",method=RequestMethod.GET)
 	@ResponseBody
 	//显示所有商品

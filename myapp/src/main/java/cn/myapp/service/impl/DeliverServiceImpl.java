@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,20 +41,24 @@ public class DeliverServiceImpl implements DeliverService{
 		return deliverDao.selectThisMonthDeliverPrice();
 	}
 	@Override
+	//获得净利润  
+	//肥来了 ，store问题
 	public double getThisMonthProfit() {
 		
 		return deliverDao.selectThisMonthProfit();
 	}
 	@Override
 	@Transactional
-	//插入一条数据deliver 并在product里对count -1;
-	public Deliver getDeliverRecordOne(Deliver record) {
+	//插入一条数据deliver 并在product里对count -delivercount;
+	public Deliver getDeliverRecordAfterAdd(Deliver record) {
+		
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		record.setDate(new Date());
 		//插入
 		deliverDao.insertSelective(record);
 		//count--
-		productDao.updateProductCount(record.getBrand(), record.getModel());
+		
+		productDao.updateReduceProductCount(record.getBrand(), record.getModel(),record.getCount());
 		record = deliverDao.selectLastDeliverDate(record.getBrand(), record.getModel());
 		record.setDateString(ft.format(record.getDate()));
 		return record;

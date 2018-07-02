@@ -13,7 +13,7 @@ public interface DeliverService {
 	
 	public double getThisMonthProfit();
 	
-	public Deliver getDeliverRecordOne(Deliver record);
+	public Deliver getDeliverRecordAfterAdd(Deliver record);
 	
 	public List<Deliver> getDeliverRecord();
 	
