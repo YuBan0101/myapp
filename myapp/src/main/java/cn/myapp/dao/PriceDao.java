@@ -1,5 +1,7 @@
 package cn.myapp.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.myapp.model.Price;
@@ -23,4 +25,7 @@ public interface PriceDao {
     
     //更新价格
     void updatePrice(Store record);
+    
+    //取得所有进价
+    List<Price> selectAllPriceRecord();
 }

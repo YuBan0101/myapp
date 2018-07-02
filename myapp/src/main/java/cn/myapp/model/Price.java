@@ -8,6 +8,39 @@ public class Price {
     private String model;
 
     private Double price;
+    
+    private Double oldPrice;
+    
+	private String dateNow;
+    
+    private String datePass;
+    
+    public Double getOldPrice() {
+		return oldPrice;
+	}
+
+	public void setOldPrice(Double oldPrice) {
+		this.oldPrice = oldPrice;
+	}
+
+    
+    public String getDateNow() {
+		return dateNow;
+	}
+
+	public void setDateNow(String dateNow) {
+		this.dateNow = dateNow;
+	}
+
+	public String getDatePass() {
+		return datePass;
+	}
+
+	public void setDatePass(String datePass) {
+		this.datePass = datePass;
+	}
+
+	
 
     public Integer getId() {
         return id;

@@ -35,4 +35,7 @@ public interface StoreDao {
     List<Store> searchStoreRecordByBrand(@Param(value="brand")String brand);
     
     Store selectLastStoreDate(@Param(value="brand")String brand,@Param(value="model")String model);
+    //查找最近插入的2条记录
+    List<Store> selectTwoLastStoreRecord(@Param(value="brand")String brand,@Param(value="model")String model);
+    
 }
