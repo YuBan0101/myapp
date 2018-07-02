@@ -24,6 +24,13 @@
     where brand = #{brand} and model =#{model}
   </select>
   
+  <select id="selectAllPriceRecord"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from price
+    order by brand
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from price
     where id = #{id,jdbcType=INTEGER}

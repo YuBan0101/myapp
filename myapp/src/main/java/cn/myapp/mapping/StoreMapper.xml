@@ -27,6 +27,13 @@
     where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
   </select>
   
+  <select id="selectTwoLastStoreRecord"  resultMap="BaseResultMap">
+    select 
+	<include refid="Base_Column_List" />
+    from store 
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 2
+  </select>
+  
 
     <select id="selectThisMonthStoreCount"  resultType="java.lang.Integer">
     select sum(count)
