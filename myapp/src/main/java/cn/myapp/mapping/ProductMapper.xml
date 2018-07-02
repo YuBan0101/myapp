@@ -143,10 +143,17 @@
       type = #{type,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateProductCount" parameterType="java.lang.String">
+  <update id="updateReduceProductCount" >
     update product
     set 
-      count = count-1
+      count = count-#{count,jdbcType=INTEGER}
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateAddProductCount" >
+    update product
+    set 
+      count = count+#{count,jdbcType=INTEGER}
     where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR}
   </update>
 </mapper>

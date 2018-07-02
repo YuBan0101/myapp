@@ -53,4 +53,12 @@ public class StoreController {
 		return storeService.searchStoreRecord(req.getParameter("keyword"));
 	}
 	
+	@RequestMapping(value ="/showStoreRecordAfterAdd")
+	@ResponseBody
+	//新录入入库记录
+	public Store showStoreRecordAfterAdd(HttpServletRequest req,Store record) {
+
+		return storeService.getStoreRecordAfterAdd(record);
+	}
+	
 }

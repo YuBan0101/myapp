@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.myapp.dao.DeliverDao;
+import cn.myapp.dao.PriceDao;
 import cn.myapp.dao.ProductDao;
 import cn.myapp.dao.StoreDao;
 import cn.myapp.model.Deliver;
-import cn.myapp.model.Product;
 import cn.myapp.service.DeliverService;
 
 @Service("DeliverService")
@@ -28,6 +28,8 @@ public class DeliverServiceImpl implements DeliverService{
 	private ProductDao productDao;
 	@Resource
 	private StoreDao storeDao;
+	@Resource
+	private PriceDao priceDao;
 	
 	@Override
 	public int getThisMonthDeliverCount() {
@@ -40,20 +42,24 @@ public class DeliverServiceImpl implements DeliverService{
 		return deliverDao.selectThisMonthDeliverPrice();
 	}
 	@Override
+	//获得净利润  
+	//肥来了 ，store问题
 	public double getThisMonthProfit() {
 		
 		return deliverDao.selectThisMonthProfit();
 	}
 	@Override
 	@Transactional
-	//插入一条数据deliver 并在product里对count -1;
-	public Deliver getDeliverRecordOne(Deliver record) {
+	//插入一条数据deliver 并在product里对count -delivercount;
+	public Deliver getDeliverRecordAfterAdd(Deliver record) {
+		
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		record.setDate(new Date());
 		//插入
 		deliverDao.insertSelective(record);
 		//count--
-		productDao.updateProductCount(record.getBrand(), record.getModel());
+		
+		productDao.updateReduceProductCount(record.getBrand(), record.getModel(),record.getCount());
 		record = deliverDao.selectLastDeliverDate(record.getBrand(), record.getModel());
 		record.setDateString(ft.format(record.getDate()));
 		return record;
@@ -76,7 +82,7 @@ public class DeliverServiceImpl implements DeliverService{
 		for(int i=0;i<list.size();i++) {
 			list.get(i).setDateString(ft.format(list.get(i).getDate()));
 			list.get(i).setType(productDao.searchProductDes(list.get(i).getBrand(), list.get(i).getModel()).getType());
-			list.get(i).setSprice(storeDao.searchStoreRecordDes(list.get(i).getBrand(), list.get(i).getModel()).getPrice());
+			list.get(i).setSprice(priceDao.selectPriceByModelAndBrand(list.get(i).getBrand(), list.get(i).getModel()).getPrice());
 		}
 		return list;
 	}
@@ -90,7 +96,7 @@ public class DeliverServiceImpl implements DeliverService{
 		for(int i=0;i<list.size();i++) {
 			list.get(i).setDateString(ft.format(list.get(i).getDate()));
 			list.get(i).setType(type);
-			list.get(i).setSprice(storeDao.searchStoreRecordDes(list.get(i).getBrand(), list.get(i).getModel()).getPrice());
+			list.get(i).setSprice(priceDao.selectPriceByModelAndBrand(list.get(i).getBrand(), list.get(i).getModel()).getPrice());
 			
 		}
 		return list;

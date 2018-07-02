@@ -50,9 +50,9 @@ public class DeliverController {
 	@RequestMapping(value="/showDeliverRecordOne")
 	@ResponseBody
 	//获取新插入一条信息
-	public Deliver showDeliverRecordOne(Deliver record, HttpServletRequest req) {
+	public Deliver showDeliverRecordAfterAdd(Deliver record, HttpServletRequest req) {
 
-		return deliverService.getDeliverRecordOne(record);
+		return deliverService.getDeliverRecordAfterAdd(record);
 	}
 	
 	@RequestMapping(value="/showDeliverRecord")

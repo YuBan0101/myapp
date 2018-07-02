@@ -24,13 +24,13 @@
    <select id="selectLastStoreDate"  resultMap="BaseResultMap">
     select date
     from store 
-    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR}
+    where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
   </select>
   
 
-    <select id="selectThisMonthStoreCount"  resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    <select id="selectThisMonthStoreCount"  resultType="java.lang.Integer">
+    select sum(count)
+    
     from store
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>

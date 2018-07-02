@@ -25,10 +25,33 @@
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  
+  <style>
+  .box{
+  	position:absolute;
+    width:55%; top:20%; left:25%; padding:20px;
+    height:auto; border:2px solid orange;
+    z-index:1002; overflow:auto;
+    background-color :white;
+    display:none;            /* 默认对话框隐藏 */
+   }
+   .boxback{
+   	 display: block; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.2; 
+            opacity:.20; 
+            filter: alpha(opacity=20); 
+   }
+  </style>
   <script type="text/javascript" src ="./plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
+<div  id="boxback" class="">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -304,9 +327,9 @@
             <div class="card-body p-0">
               <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="javascript:void(0);" onclick="msgbox(1)" class="nav-link">
                     <i class="fa fa-circle-o text-danger"></i>
-                    Important
+                                                                 登记出售
                   </a>
                 </li>
                 <li class="nav-item">
@@ -490,7 +513,80 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<!-- 登记出库 -->
+<script>  
+        function msgbox(n){
+            document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+            if(n==1){
+              $("#boxback").addClass("boxback");
+            }
+            else{
+            	$("#boxback").removeClass("boxback");
+            }
+        } 
+        </script>
+        <script type="text/javascript">
+        $("document").ready(function(){
+        	 $("#sub").on("click",function(){
+        			$.ajax({
+                		type:'POST',
+                		dataType: 'json',
+                		url:'/deliver/showDeliverRecordAfterAdd',
+                		data:{"brand":$("#fd input[name='type']").val().trim(),
+                			  "model":$("#fd input[name='model']").val().trim(),
+                			  "price":$("#fd input[name='price']").val().trim(),
+                			  "count":$("#fd input[name='count']").val().trim()
+                			 },
+                		success: function(data){
+                			alert("登记成功");
+                			msgbox(0);
+                			window.location.reload();
+                		 }
+                	});
+        		});
+        	});
+     </script> 
 
+
+
+</div>
+<div class="card-body register-card-body box" id="inputbox">
+	<div style="padiing-top:10%">
+      <p class="login-box-msg">登记出售</p>
+	
+      <form action="#" method="post" id="fd">
+        <div class="form-group has-feedback">
+       	  产品品牌：	
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="type">
+        </div>
+         <div class="form-group has-feedback">
+      	    产品型号：                 
+          <input type="text" class="form-control" placeholder="型号" name="model">
+        </div>
+         <div class="form-group has-feedback">
+    	     售价：                 
+           <input type="text" class="form-control" placeholder="售价" name="price">
+        </div>
+        <div class="form-group has-feedback">
+    	     个(米)数：                 
+           <input type="text" class="form-control" placeholder="默认为1个，可不填" name="count" value ="1">
+        </div>
+        <br/><br/>
+        <div class="row">
+          <div class="col-4">
+                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox(0)"> 取消 </button>
+          </div>
+          <!-- /.col -->
+          <div class="col-4" style="margin-left:310px;">
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+      </form>
+</div>
+    </div>
+    <!-- /.form-box -->
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
