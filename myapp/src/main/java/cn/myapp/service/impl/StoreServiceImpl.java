@@ -12,9 +12,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.myapp.dao.PriceDao;
 import cn.myapp.dao.ProductDao;
 import cn.myapp.dao.StoreDao;
-import cn.myapp.model.Product;
 import cn.myapp.model.Store;
 import cn.myapp.service.StoreService;
 
@@ -25,6 +25,8 @@ public class StoreServiceImpl implements StoreService {
 	private StoreDao storeDao;
 	@Resource
 	private ProductDao productDao;
+	@Resource
+	private PriceDao priceDao;
 	@Override
 	//获取当月入库记录
 	public int getThisMonthStoreCount() {
@@ -85,7 +87,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
-	//@Transactional
+	@Transactional
 	//插入一条记录   product.count + store.count
 	public Store getStoreRecordAfterAdd(Store record) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
@@ -93,8 +95,10 @@ public class StoreServiceImpl implements StoreService {
 		record.setType(productDao.searchProductDes(record.getBrand(), record.getModel()).getType());
 		//插入
 		storeDao.insertSelective(record);
-		//count+store.count
-		
+		//price表更新价格
+		priceDao.updatePrice(record);
+		//count+store.count product表更新数量
+	
 		productDao.updateAddProductCount(record.getBrand(), record.getModel(),record.getCount());
 		//设置入库时间
 		

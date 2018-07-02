@@ -63,7 +63,7 @@
   </select>
   
   <select id="selectThisMonthProfit"  resultType="java.lang.Double">
-     SELECT ifnull(SUM(s),0) FROM (SELECT (d.price-s.price)*d.count as s FROM store as s RIGHT JOIN  deliver as d 
+     SELECT ifnull(SUM(s),0) FROM (SELECT (d.price-s.price)*d.count as s FROM price as s RIGHT JOIN  deliver as d 
      ON s.brand =d.brand AND s.model=d.model
      where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
   </select>
