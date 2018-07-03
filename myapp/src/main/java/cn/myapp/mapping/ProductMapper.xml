@@ -59,10 +59,19 @@
     from product where brand like CONCAT(CONCAT('%',#{brand}),'%')
   </select>
   
-  <select id="selectThisTypeProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
+  
+  <!-- 获取所有type产品 limit by page -->
+  <select id="selectThisTypeProduct" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select 
       <include refid="Base_Column_List" />
-     from product where type = #{type,jdbcType=VARCHAR}
+     from product where type = #{type,jdbcType=VARCHAR} limit #{pageOffset}, #{pageSize}
+  </select>
+  
+  <!-- 获取type产品个数 保存在page对象 -->
+  <select id="selectThisTypeProductCount" parameterType="cn.myapp.model.Page"  resultType="java.lang.Integer">
+    select count(*)
+   
+    from product where type = #{type,jdbcType=VARCHAR}
   </select>
   
    <!-- 获取所有产品 limit by page -->

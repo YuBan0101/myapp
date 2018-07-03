@@ -3,13 +3,17 @@ package cn.myapp.model;
 public class Page {
 	
 	private Integer currentPage;
-	private Integer prePage;
-	private Integer nextPage;
 	private Integer pageCount;
 	private Integer pageSize;
-	
 	private Integer pageOffset;
+	private String type;
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public Integer getPageOffset() {
 		return pageOffset;
 	}
@@ -23,18 +27,7 @@ public class Page {
 	public void setCurrentPage(Integer currentPage) {
 		this.currentPage = currentPage;
 	}
-	public Integer getPrePage() {
-		return prePage;
-	}
-	public void setPrePage(Integer prePage) {
-		this.prePage = prePage;
-	}
-	public Integer getNextPage() {
-		return nextPage;
-	}
-	public void setNextPage(Integer nextPage) {
-		this.nextPage = nextPage;
-	}
+
 	public Integer getPageCount() {
 		return pageCount;
 	}

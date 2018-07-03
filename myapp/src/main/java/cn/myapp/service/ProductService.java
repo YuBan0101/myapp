@@ -6,20 +6,26 @@ import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 
 public interface ProductService {
+	
 	//获取所有产品
 	public List<Product> getAllProduct(Page page);
 	
 	public List<String> getAllProductType();
 	
-	public List<Product> getThisTypeProduct(String type);
+	//获取所有type产品
+	public List<Product> getThisTypeProduct(Page page);
 
 	public List<Product> searchProduct(String key);
 	
 	public List<Product> getAllShortSupplyProduct();
 	
 	public List<Product> getThisTypeShotSupplyProduct(String type);
+	
 	//获取所有产品的个数
 	public Page getAllProductCount(Page page);
+	
+	//获取type产品的个数
+	public Page getThisTypeProductCount(Page page);
 	
 	
 

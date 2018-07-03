@@ -27,16 +27,19 @@ public interface ProductDao {
     List<Product> selectAllProduct(Page page);
     
     //获取全部产品个数
-    
     int selectAllProductCount();
-    
+  
     List<Product> selectAllProductType();
     
     List<Product> selectAllShortSupplyProduct();
     
     List<Product> selectThisTypeShortSupplyProduct(@Param(value="type")String type);
     
-    List<Product> selectThisTypeProduct(@Param(value="type")String type);
+    ////获取所有type产品
+    List<Product> selectThisTypeProduct(Page page);
+    
+   //获取type产品个数
+    int selectThisTypeProductCount(Page page);
     
     List<Product> searchProduct(@Param(value="brand")String brand,@Param(value="model")String model);
     
