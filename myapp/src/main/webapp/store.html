@@ -386,102 +386,8 @@
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
               
               <!-- 分页 -->
-              <script type="text/javascript">
-              	$("document").ready(function(){
-              		var currentPage = $("input[name='currentPage']").val();
-              		$.ajax({
-              			type:'GET',
-              			contentType:"allication/json",
-                		dataType: "json",
-                		url:'/product/showAllProductCount',
-                		success: function(data){
-                			$(".float-right input[name='pageCount']").val(data.pageCount);
-                			if(data.pageCount < 15){
-                				$(".float-right span").text("1-"+data.pageCount+"/"+data.pageCount);
-                			}else if(currentPage > data.pageCount/15){
-                				$(".float-right span").text(((currentPage-1)*15+1)+"-"+data.pageCount+"/"+data.pageCount);
-                			}else{
-                			$(".float-right span").text(((currentPage-1)*15+1)+"-"+currentPage*15+"/"+data.pageCount);
-                			}
-                		}
-              		});
+              <script type="text/javascript" src="./page.js">
               	
-              	//向前翻页-------
-					$(".float-right div button i[class='fa fa-chevron-left']").on("click",function(){
-						if($("input[name='currentPage']").val() == 1){
-							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled","disabled");
-						}else{
-							$("input[name='currentPage']").val($("input[name='currentPage']").val()-1);
-						}
-						$.ajax({
-	              			type:'GET',
-	              			contentType:"allication/json",
-	                		dataType: "json",
-	                		url:'/product/showAllProduct',
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15},
-	                		success: function(data){
-	                			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
-                	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
-                	    				);
-	                			for(var o in data){
-	                				$("#plist tbody").append("<tr>"+
-	                				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-	                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-	                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-	                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-	                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-	                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-	                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-	                				'</tr>');
-	                			}
-	                		}
-	              		});
-						
-					}) ;  
-					
-              	//像后翻页
-					$(".float-right div button i[class='fa fa-chevron-right']").on("click",function(){
-						if($("input[name='currentPage']").val() > $("input[name='pageSize']").val()/15){
-							$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled","disabled");
-						}else{
-						$("input[name='currentPage']").val($("input[name='currentPage']").val()+1);
-						}
-						$.ajax({
-	              			type:'GET',
-	              			contentType:"allication/json",
-	                		dataType: "json",
-	                		url:'/product/showAllProduct',
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15},
-	                		success: function(data){
-	                			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
-                	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-                	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
-                	    				);
-	                			for(var o in data){
-	                				$("#plist tbody").append("<tr>"+
-	                				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-	                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-	                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-	                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-	                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-	                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-	                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-	                				'</tr>');
-	                			}
-	                		}
-	              		});
-						
-					}) ; 
-              	});
 					
               </script>
               
@@ -489,8 +395,8 @@
               
                 <div class="float-right">
                  <span> 1-50/200</span>
-                  <input hidden="hidden" type="text" name="currentPage" value="1"  />
-                  <input hidden="hidden" type="text" name="pageCount" value="0"  />
+                  <input  type="text" hidden="hidden" name="currentPage" value="1"  />
+                  <input  type="text" hidden="hidden" name="pageCount" value="1"  />
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>

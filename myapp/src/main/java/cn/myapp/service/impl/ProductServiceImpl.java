@@ -59,10 +59,11 @@ public class ProductServiceImpl implements ProductService {
 		return alist;
 	}
 	@Override
-	public List<Product> getThisTypeProduct(String type) {
+	public List<Product> getThisTypeProduct(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
-		list = productDao.selectThisTypeProduct(type);
+		page.setPageOffset();
+		list = productDao.selectThisTypeProduct(page);
 		for(int i=0;i<list.size();i++) {
 			//此处如果deliver 和Store 表中没有Date 报错 ，修改成？表达式试试
 			//list.get(i).setLastDeliverDate(ft.format((deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
@@ -141,6 +142,14 @@ public class ProductServiceImpl implements ProductService {
 	//获取全部product 个数 放入page 对象
 	public Page getAllProductCount(Page page) {
 		page.setPageCount(productDao.selectAllProductCount());
+		return page;
+	}
+
+
+	@Override
+	//获取type product 个数 放入page 对象
+	public Page getThisTypeProductCount(Page page) {
+		page.setPageCount(productDao.selectThisTypeProductCount(page));
 		return page;
 	}
 
