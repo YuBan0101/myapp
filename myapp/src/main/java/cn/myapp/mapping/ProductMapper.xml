@@ -71,6 +71,12 @@
     <include refid="Base_Column_List" />
     from product limit #{pageOffset}, #{pageSize}
   </select>
+  <!-- 获取全部产品个数 保存在page对象 -->
+  <select id="selectAllProductCount"   resultType="java.lang.Integer">
+    select count(*)
+   
+    from product 
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product
@@ -119,6 +125,46 @@
       </if>
     </trim>
   </insert>
+  
+  <!-- insert by store -->
+  <insert id="insertByStore" parameterType="cn.myapp.model.Store">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="cn.myapp.model.Product">
     update product
     <set>

@@ -12,8 +12,9 @@ public interface PriceDao {
 
     int insert(Price record);
 
-    int insertSelective(Price record);
-
+    //根据Store插入
+    int insertSelective(Store record);
+    
     Price selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Price record);
@@ -28,4 +29,6 @@ public interface PriceDao {
     
     //取得所有进价
     List<Price> selectAllPriceRecord();
+    
+
 }

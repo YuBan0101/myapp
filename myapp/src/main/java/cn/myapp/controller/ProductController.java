@@ -31,6 +31,14 @@ public class ProductController {
 		return productService.getAllProduct(page);
 	}
 	
+	@RequestMapping(value ="/showAllProductCount",method=RequestMethod.GET)
+	@ResponseBody
+	//显示所有商品个数
+	public Page showAllProductCount(Page page) {
+		
+		return productService.getAllProductCount(page);
+	}
+	
 	@RequestMapping(value ="/showAllProductType",method=RequestMethod.GET)
 	@ResponseBody
 	//获取所有商品类别

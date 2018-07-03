@@ -44,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return list;
 	}
+	
+	
+	
 	@Override
 	public List<String> getAllProductType() {
 		
@@ -132,6 +135,13 @@ public class ProductServiceImpl implements ProductService {
 			list.get(i).setLastStoreDate((ft.format(storeDao.selectLastStoreDate(list.get(i).getBrand(), list.get(i).getModel()).getDate())));
 		}
 		return list;
+	}
+
+	@Override
+	//获取全部product 个数 放入page 对象
+	public Page getAllProductCount(Page page) {
+		page.setPageCount(productDao.selectAllProductCount());
+		return page;
 	}
 
 	

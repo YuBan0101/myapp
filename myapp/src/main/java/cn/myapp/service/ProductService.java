@@ -18,6 +18,8 @@ public interface ProductService {
 	public List<Product> getAllShortSupplyProduct();
 	
 	public List<Product> getThisTypeShotSupplyProduct(String type);
+	//获取所有产品的个数
+	public Page getAllProductCount(Page page);
 	
 	
 

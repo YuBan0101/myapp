@@ -568,10 +568,11 @@
                 		type:'POST',
                 		dataType: 'json',
                 		url:'/store/showStoreRecordAfterAdd',
-                		data:{"brand":$("#fd input[name='type']").val().trim(),
+                		data:{"brand":$("#fd input[name='brand']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
                 			  "price":$("#fd input[name='price']").val().trim(),
-                			  "count":$("#fd input[name='count']").val().trim()
+                			  "count":$("#fd input[name='count']").val().trim(),
+                			  "type":$("#fd input[name='type']").val().trim()
                 			 },
                 		success: function(data){
                 			alert("登记成功");
@@ -579,10 +580,23 @@
                 			window.location.reload();
                 		 }
                 	});
-        			
         		});
-        	
-        	});
+        	 
+             	$.ajax({
+         			type:'GET',
+           			contentType:"allication/json",
+             		dataType: "json",
+             		url:'/product/showAllProductType',
+             		success: function(data){
+             			$("#typelist").html("");
+             			for(var o in data){
+             				$("#typelist").append(' <option>'+data[o]+'</option>');
+             			}
+             		}
+             });
+        	 
+        });
+        
      </script> 
 </div>
 <div class="card-body register-card-body box" id="inputbox">
@@ -592,7 +606,7 @@
       <form action="#" method="post" id="fd">
         <div class="form-group has-feedback">
        	  产品品牌：	
-          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="type">
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
         </div>
          <div class="form-group has-feedback">
       	    产品型号：                 
@@ -605,6 +619,16 @@
         <div class="form-group has-feedback">
     	     数量：<label>
            <input type="text" class="form-control" placeholder="请输入数量" name="count" >
+           </label>
+        </div>
+        <div class="form-group has-feedback">
+    	     分类：      
+    	    <label>
+           <input type="text" list="typelist" class="form-control" placeholder="产品分类" name="type">
+           <datalist id="typelist">
+  			  <option>item1</option>
+   		      <option>item2</option>
+           </datalist> 
            </label>
         </div>
         <br/><br/>
