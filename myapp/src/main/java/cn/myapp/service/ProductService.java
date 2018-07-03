@@ -2,11 +2,12 @@ package cn.myapp.service;
 
 import java.util.List;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 
 public interface ProductService {
-	
-	public List<Product> getAllProduct();
+	//获取所有产品
+	public List<Product> getAllProduct(Page page);
 	
 	public List<String> getAllProductType();
 	
@@ -17,6 +18,8 @@ public interface ProductService {
 	public List<Product> getAllShortSupplyProduct();
 	
 	public List<Product> getThisTypeShotSupplyProduct(String type);
+	//获取所有产品的个数
+	public Page getAllProductCount(Page page);
 	
 	
 

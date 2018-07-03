@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
+import cn.myapp.model.Store;
 
 public interface ProductDao {
     int deleteByPrimaryKey(Integer id);
@@ -17,9 +19,16 @@ public interface ProductDao {
 
     int updateByPrimaryKeySelective(Product record);
 
+    int insertByStore(Store record);
+    
     int updateByPrimaryKey(Product record);
     
-    List<Product> selectAllProduct();
+    //获取所有产品
+    List<Product> selectAllProduct(Page page);
+    
+    //获取全部产品个数
+    
+    int selectAllProductCount();
     
     List<Product> selectAllProductType();
     

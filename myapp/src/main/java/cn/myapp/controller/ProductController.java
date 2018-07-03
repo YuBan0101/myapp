@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 import cn.myapp.service.ProductService;
 
@@ -21,13 +22,21 @@ public class ProductController {
 
 	@Resource
 	private ProductService productService;
-	//显示收缩商品
+	
 	@RequestMapping(value ="/showAllProduct",method=RequestMethod.GET)
 	@ResponseBody
 	//显示所有商品
-	public List<Product> showAllProduct() {
+	public List<Product> showAllProduct(Page page) {
 		
-		return productService.getAllProduct();
+		return productService.getAllProduct(page);
+	}
+	
+	@RequestMapping(value ="/showAllProductCount",method=RequestMethod.GET)
+	@ResponseBody
+	//显示所有商品个数
+	public Page showAllProductCount(Page page) {
+		
+		return productService.getAllProductCount(page);
 	}
 	
 	@RequestMapping(value ="/showAllProductType",method=RequestMethod.GET)

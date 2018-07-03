@@ -41,7 +41,7 @@
     values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
       #{price,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="cn.myapp.model.Price">
+  <insert id="insertSelective" parameterType="cn.myapp.model.Store">
     insert into price
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -95,7 +95,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <update id="updatePrice" parameterType="cn.myapp.model.Price">
+  <update id="updatePrice" parameterType="cn.myapp.model.Store">
     update price
     set 
       price = #{price,jdbcType=DOUBLE}
