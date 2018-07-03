@@ -97,16 +97,21 @@ public class StoreServiceImpl implements StoreService {
 		storeDao.insertSelective(record);
 		// if price 表里有当前品牌型号产品 
 		//price表更新价格
-		priceDao.updatePrice(record);
+		if(priceDao.selectPriceByModelAndBrand(record.getBrand(), record.getModel())!=null) {
+			priceDao.updatePrice(record);
+		}else {
 		//else insert brand model price
-		priceDao.insertSelective(record);
+			priceDao.insertSelective(record);
+		}
 		//如果product 存在当前品牌型号
 		//count+store.count product表更新数量
-		productDao.updateAddProductCount(record.getBrand(), record.getModel(),record.getCount());
-		
-		//否则 插入当前品牌型号 in product
-		
-		//设置入库时间
+		if(productDao.searchProductDes(record.getBrand(), record.getModel())!=null) {
+			productDao.updateAddProductCount(record.getBrand(), record.getModel(),record.getCount());
+		}else {
+			//否则 插入当前品牌型号 in product
+			productDao.insertByStore(record);
+		}
+		//格式化入库时间并返回
 		
 		record = storeDao.selectLastStoreDate(record.getBrand(), record.getModel());
 		record.setDateString(ft.format(record.getDate()));
