@@ -16,6 +16,8 @@ public class Product {
     private String LastDeliverDate;
     
     private String LastStoreDate;
+
+
     
     public String getLastDeliverDate() {
 		return LastDeliverDate;
