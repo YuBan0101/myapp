@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import cn.myapp.dao.DeliverDao;
 import cn.myapp.dao.ProductDao;
 import cn.myapp.dao.StoreDao;
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 import cn.myapp.service.ProductService;
 
@@ -26,11 +27,14 @@ public class ProductServiceImpl implements ProductService {
 	@Resource
     private StoreDao storeDao;
 	@Override
-	public List<Product> getAllProduct() {
+	//获取所有产品
+	public List<Product> getAllProduct(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
-		list = productDao.selectAllProduct();
+		page.setPageOffset();
+		list = productDao.selectAllProduct(page);
 		for(int i=0;i<list.size();i++) {
+			//if 产品没有出库  
 			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
 				list.get(i).setLastDeliverDate("暂无出库时间信息");
 			}else {

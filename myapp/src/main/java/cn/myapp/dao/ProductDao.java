@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 
 public interface ProductDao {
@@ -19,7 +20,8 @@ public interface ProductDao {
 
     int updateByPrimaryKey(Product record);
     
-    List<Product> selectAllProduct();
+    //获取所有产品
+    List<Product> selectAllProduct(Page page);
     
     List<Product> selectAllProductType();
     

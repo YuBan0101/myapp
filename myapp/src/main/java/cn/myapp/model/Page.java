@@ -6,7 +6,16 @@ public class Page {
 	private Integer prePage;
 	private Integer nextPage;
 	private Integer pageCount;
-	private Integer showCount;
+	private Integer pageSize;
+	
+	private Integer pageOffset;
+	
+	public Integer getPageOffset() {
+		return pageOffset;
+	}
+	public void setPageOffset() {
+		this.pageOffset = (currentPage-1)*pageSize;
+	}
 	
 	public Integer getCurrentPage() {
 		return currentPage;
@@ -32,11 +41,11 @@ public class Page {
 	public void setPageCount(Integer pageCount) {
 		this.pageCount = pageCount;
 	}
-	public Integer getShowCount() {
-		return showCount;
+	public Integer getPageSize() {
+		return pageSize;
 	}
-	public void setShowCount(Integer showCount) {
-		this.showCount = showCount;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	
 
