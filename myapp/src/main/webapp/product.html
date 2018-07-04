@@ -503,12 +503,12 @@
 </div>
 <!-- ./wrapper -->
    <!-- 分页 -->
-              		<script type="text/javascript" src="./sspage.js"></script>
+              		<script type="text/javascript" src="./page.js"></script>
               		<script type="text/javascript">
-              			$("document").ready(showShortSupplyContent("/product/showAllShortSupplyProductCount","/product/showAllShortSupplyProduct"));
+              			$("document").ready(showContent("shortSupplyProduct","/product/showAllShortSupplyProductCount","/product/showAllShortSupplyProduct"));
               			$("document").ready(function(){
                       		$("#search").on("click",function(){
-                      			showShortSupplyContent("/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
+                      			showContent("shortSupplyProduct","/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
                       		});
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
@@ -530,7 +530,7 @@
                     		$("#typeUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
                     			$(this).addClass("active");
-                    			showShortSupplyContent("/product/showThisTypeShortSupplyProductCount","/product/showThisTypeShortSupplyProduct",$(this).text().trim());
+                    			showContent("shortSupplyProduct","/product/showThisTypeShortSupplyProductCount","/product/showThisTypeShortSupplyProduct",$(this).text().trim());
                     	       });
                     		 $("#home").on("click",function(){
                        		  window.location.reload();
