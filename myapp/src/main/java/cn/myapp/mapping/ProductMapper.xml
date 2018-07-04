@@ -23,17 +23,36 @@
     select DISTINCT type from product 
   </select>
   
-  <select id="selectAllShortSupplyProduct" resultMap="BaseResultMap">
+  <!-- 库存不足产品 -->
+  <select id="selectAllShortSupplyProduct" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select  
     <include refid="Base_Column_List" />
+     from product where count &lt; 5 limit #{pageOffset}, #{pageSize}
+  </select>
+  
+   <!-- 当前品种库存不足产品 -->
+  <select id="selectThisTypeShortSupplyProduct" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select 
+      <include refid="Base_Column_List" />
+     from product where type = #{type,jdbcType=VARCHAR} and count &lt; 5 limit #{pageOffset}, #{pageSize}
+  </select>
+  
+   <!-- 库存不足产品数量 -->
+  <select id="selectAllShortSupplyProductCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select  
+    count(type)
      from product where count &lt; 5 
   </select>
   
-  <select id="selectThisTypeShortSupplyProduct" parameterType="java.lang.String" resultMap="BaseResultMap">
+   <!-- 当前品种库存不足产品 数量-->
+  <select id="selectThisTypeShortSupplyProductCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
     select 
-      <include refid="Base_Column_List" />
-     from product where type = #{type,jdbcType=VARCHAR} and count &lt; 5
+      count(type)
+     from product where type = #{type,jdbcType=VARCHAR} and count &lt; 5 
   </select>
+  
+  
+  
   
   <!-- 获取分页产品  limit-->
   <select id="searchProduct" parameterType="cn.myapp.model.Page"  resultMap="BaseResultMap">

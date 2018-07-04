@@ -31,9 +31,18 @@ public interface ProductDao {
   
     List<Product> selectAllProductType();
     
-    List<Product> selectAllShortSupplyProduct();
     
-    List<Product> selectThisTypeShortSupplyProduct(@Param(value="type")String type);
+    
+    //短缺产品
+    List<Product> selectAllShortSupplyProduct(Page page);
+    //短缺产品数量
+    int selectAllShortSupplyProductCount(Page page);
+    
+    
+    //当前type下短缺产品
+    List<Product> selectThisTypeShortSupplyProduct(Page page);
+    //当前type下短缺产品数量
+    int selectThisTypeShortSupplyProductCount(Page page);
     
     ////获取所有type产品
     List<Product> selectThisTypeProduct(Page page);

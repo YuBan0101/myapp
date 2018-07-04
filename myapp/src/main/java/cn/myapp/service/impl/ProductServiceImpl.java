@@ -113,10 +113,11 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 	@Override
-	public List<Product> getAllShortSupplyProduct() {
+	public List<Product> getAllShortSupplyProduct(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
-		list = productDao.selectAllShortSupplyProduct();
+		page.setPageOffset();
+		list = productDao.selectAllShortSupplyProduct(page);
 		for(int i=0;i<list.size();i++) {
 			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
 				list.get(i).setLastDeliverDate("暂无出库时间信息");
@@ -128,10 +129,11 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 	@Override
-	public List<Product> getThisTypeShotSupplyProduct(String type) {
+	public List<Product> getThisTypeShotSupplyProduct(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
-		list = productDao.selectThisTypeShortSupplyProduct(type);
+		page.setPageOffset();
+		list = productDao.selectThisTypeShortSupplyProduct(page);
 		for(int i=0;i<list.size();i++) {
 			if(deliverDao.selectLastDeliverDate(list.get(i).getBrand(), list.get(i).getModel())== null ) {
 				list.get(i).setLastDeliverDate("暂无出库时间信息");
@@ -180,6 +182,22 @@ public class ProductServiceImpl implements ProductService {
         	page.setModel(arr.get(1));
         	page.setPageCount(productDao.searchProductCount(page));
         }
+		return page;
+	}
+
+
+	//所有短缺产品 数量
+	@Override
+	public Page getAllShortSupplyProductCount(Page page) {
+		page.setPageCount(productDao.selectAllShortSupplyProductCount(page));
+		return page;
+	}
+
+
+	//指定短缺产品 数量
+	@Override
+	public Page getThisTypeShotSupplyProductCount(Page page) {
+		page.setPageCount(productDao.selectThisTypeShortSupplyProductCount(page));
 		return page;
 	}
 

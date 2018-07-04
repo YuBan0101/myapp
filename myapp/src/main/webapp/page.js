@@ -13,8 +13,9 @@ function showContent(counturl,url,type,key){
                 		success: function(data){
                 			
                 			$(".float-right input[name='pageCount']").val(data.pageCount);
-                			
-                			if(data.pageCount < 15){
+                			if(data.pageCount == 0){
+                  				$(".float-right span").text("0-"+data.pageCount+"/"+data.pageCount);
+                  			}else if(data.pageCount < 15){
                 				$(".float-right span").text("1-"+data.pageCount+"/"+data.pageCount);
                 			}else{
                 				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+data.pageCount);
@@ -99,6 +100,7 @@ function showContent(counturl,url,type,key){
 					});
 					}); 
 				}
+
 function showProductTable(data,currentPage){
 			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
                     '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
