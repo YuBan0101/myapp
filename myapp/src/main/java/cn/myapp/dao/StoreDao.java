@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 import cn.myapp.model.Store;
 
@@ -21,18 +22,29 @@ public interface StoreDao {
     int updateByPrimaryKey(Store record);
     
     int selectThisMonthStoreCount();
+    //获取全部入库记录
+    List<Store> selectAllStoreRecord(Page page);
+    //获取全部入库记录数
+    int selectAllStoreRecordCount(Page page);
     
-    List<Store> selectAllStoreRecord();
+    //获取指定入库记录
+    List<Store> selectThisTypeStoreRecord(Page page);
+    //获取指定入库记录数
+    int selectThisTypeStoreRecordCount(Page page);
     
-    List<Store> selectThisTypeStoreRecord(@Param(value="type")String type);
+    //获取查找入库记录数
+    int selectSearchedStoreRecordCount(Page page);
+    int selectSearchedStoreRecordCountByModel(Page page);
+    int selectSearchedStoreRecordCountByBrand(Page page);
     
-    List<Store> searchStoreRecord(@Param(value="brand")String brand,@Param(value="model")String model);
+    //查找 by brand model
+    List<Store> searchStoreRecord(Page page);
     
-    Store searchStoreRecordDes(@Param(value="brand")String brand,@Param(value="model")String model);
+    Store searchStoreRecordDes(Page page);
     
-    List<Store> searchStoreRecordByModel(@Param(value="model")String model);
+    List<Store> searchStoreRecordByModel(Page page);
     
-    List<Store> searchStoreRecordByBrand(@Param(value="brand")String brand);
+    List<Store> searchStoreRecordByBrand(Page page);
     
     Store selectLastStoreDate(@Param(value="brand")String brand,@Param(value="model")String model);
     //查找最近插入的2条记录
