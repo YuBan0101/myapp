@@ -368,10 +368,10 @@
    <!-- 分页 -->
               		<script type="text/javascript" src="./page.js"></script>
               		<script type="text/javascript">
-              			$("document").ready(showContent("/product/showAllProductCount","/product/showAllProduct"));
+              			$("document").ready(showContent("product","/product/showAllProductCount","/product/showAllProduct"));
               			$("document").ready(function(){
                       		$("#search").on("click",function(){
-                      			showContent("/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
+                      			showContent("product","/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
                       		});
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
@@ -393,7 +393,7 @@
                     		$("#typeUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
                     			$(this).addClass("active");
-                    			showContent("/product/showThisTypeProductCount","/product/showThisTypeProduct",$(this).text().trim());
+                    			showContent("product","/product/showThisTypeProductCount","/product/showThisTypeProduct",$(this).text().trim());
                     	       });
                     		 $("#home").on("click",function(){
                        		  window.location.reload();

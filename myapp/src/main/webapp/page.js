@@ -1,4 +1,4 @@
-function showContent(counturl,url,type,key){
+function showContent(pageindex,counturl,url,type,key){
           $(document).ready(function(){ 
         	  var currentPage = 1;
         	  $("input[name='currentPage']").val(parseInt(1));
@@ -31,7 +31,7 @@ function showContent(counturl,url,type,key){
         	  			async:false,
         	  			data:{'currentPage':currentPage,'pageSize':15,"type":type,"key":key},
         	  			success: function(data){
-        	  				showProductTable(data,currentPage);
+        	  				showTableChoose(pageindex,data,currentPage);
         	  			}
         	  		});
               		var pageCount = $(".float-right input[name='pageCount']").val();
@@ -65,7 +65,7 @@ function showContent(counturl,url,type,key){
 	                			}else{
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
-	                			showProductTable(data,currentPage);
+	                			showTableChoose(pageindex,data,currentPage);
 	                		}
 	              		});
 						
@@ -94,7 +94,7 @@ function showContent(counturl,url,type,key){
 	                			}else{
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
-	                			showProductTable(data,currentPage);
+	                			showTableChoose(pageindex,data,currentPage);
 	                		}
 	              		});
 					});
@@ -102,6 +102,7 @@ function showContent(counturl,url,type,key){
 				}
 
 function showProductTable(data,currentPage){
+
 			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
                     '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
                     '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
@@ -125,3 +126,45 @@ function showProductTable(data,currentPage){
 			}
 		}
 
+function showShortSupplyProductTable(data,currentPage){
+
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>库存余量</td>'+
+    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
+    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
+    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+	);
+	for(var i= 0;i<data.length;i++){
+		if(data[i].count == 0){
+			$("#plist tbody").append("<tr>"+
+    				   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
+    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+    				   '<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">库存已空！</a></td>'+
+    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
+    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
+    				   '</tr>');
+		}else {
+				$("#plist tbody").append("<tr>"+
+				'<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
+				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[i].count+' 个</a></td>'+
+				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
+				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
+				'</tr>');
+		}
+	}
+}
+
+function showTableChoose(pageindex,data,currentPage){
+	switch(pageindex){
+		case "product" : showProductTable(data,currentPage); break;
+		case "shortSupplyProduct" :showShortSupplyProductTable (data,currentPage); break;
+		default :break;
+		}
+}
