@@ -35,10 +35,11 @@
      from product where type = #{type,jdbcType=VARCHAR} and count &lt; 5
   </select>
   
-  <select id="searchProduct" resultMap="BaseResultMap">
+  <!-- 获取分页产品  limit-->
+  <select id="searchProduct" parameterType="cn.myapp.model.Page"  resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
-    from product where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
+    from product where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%') limit #{pageOffset}, #{pageSize}
   </select>
   
    <select id="searchProductDes" resultMap="BaseResultMap">
@@ -47,15 +48,38 @@
     from product where brand = #{brand} and model = #{model}
   </select>
   
-  <select id="searchProductByModel" resultMap="BaseResultMap">
+  <!-- 获取分页产品 limit By model -->
+  <select id="searchProductByModel" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
-    from product where model like CONCAT(CONCAT('%',#{model}),'%')
+    from product where model like CONCAT(CONCAT('%',#{model}),'%') limit #{pageOffset}, #{pageSize}
   </select>
   
-  <select id="searchProductByBrand" resultMap="BaseResultMap">
+  <!-- 获取分页产品  limit By brand-->
+  <select id="searchProductByBrand" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
+    from product where brand like CONCAT(CONCAT('%',#{brand}),'%') limit #{pageOffset}, #{pageSize}
+  </select>
+  
+   <!-- 获取分页产品  数量  limit-->
+  <select id="searchProductCount" parameterType="cn.myapp.model.Page"  resultType="java.lang.Integer">
+    select   
+    count(*)
+    from product where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%') 
+  </select>
+  
+  <!-- 获取分页产品 数量  limit By model -->
+  <select id="searchProductCountByModel" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   
+    count(*)
+    from product where model like CONCAT(CONCAT('%',#{model}),'%') 
+  </select>
+  
+  <!-- 获取分页产品 数量  limit By brand-->
+  <select id="searchProductCountByBrand" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   
+    count(*)
     from product where brand like CONCAT(CONCAT('%',#{brand}),'%')
   </select>
   

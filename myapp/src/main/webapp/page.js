@@ -27,33 +27,26 @@ function showContent(counturl,url,type,key){
         	  			contentType:"allication/json",
         	  			dataType: "json",
         	  			url:url,
+        	  			async:false,
         	  			data:{'currentPage':currentPage,'pageSize':15,"type":type,"key":key},
         	  			success: function(data){
         	  				showProductTable(data,currentPage);
-        	  				/*for(var o in data){
-        	  					$("#plist tbody").append("<tr>"+
-        	  							'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-        	  							'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-        	  							'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-        	  							'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-        	  							'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-        	  							'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-        	  							'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-        	  					'</tr>');
-        	  				}*/
         	  			}
         	  		});
               		var pageCount = $(".float-right input[name='pageCount']").val();
-              		if($("input[name='currentPage']").val() == 1){
-						$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled","disabled");}
-              		if($("input[name='currentPage']").val() > pageCount/15){
-						$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled","disabled");}
+						$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
+              		if(pageCount < 15){
+						$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",true);
+              		}else{
+              			$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
+              		}
               		
               	//向前翻页-------
 					$(".float-right div button i[class='fa fa-chevron-left']").parent().off().on("click",function(){
 							$("input[name='currentPage']").val($("input[name='currentPage']").val()-1);
 							if($("input[name='currentPage']").val() == 1){
 							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
+							$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
 							}
 							$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
 						$.ajax({
@@ -82,6 +75,7 @@ function showContent(counturl,url,type,key){
 							$("input[name='currentPage']").val(parseInt($("input[name='currentPage']").val())+1);
 							if($("input[name='currentPage']").val() > pageCount/15){
 								$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",true);
+								$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
 							}
 							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
 						$.ajax({

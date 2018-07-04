@@ -40,14 +40,18 @@ public interface ProductDao {
     
    //获取type产品个数
     int selectThisTypeProductCount(Page page);
-    
-    List<Product> searchProduct(@Param(value="brand")String brand,@Param(value="model")String model);
-    
+
+    //获取产品 by model brand
+    List<Product> searchProduct(Page page);
     Product searchProductDes(@Param(value="brand")String brand,@Param(value="model")String model);
+    List<Product> searchProductByModel(Page page);
+    List<Product> searchProductByBrand(Page page);
     
-    List<Product> searchProductByModel(@Param(value="model")String model);
     
-    List<Product> searchProductByBrand(@Param(value="brand")String brand);
+    //获取产品数量 by model  brand
+    int searchProductCount(Page page);
+    int searchProductCountByModel(Page page);
+    int searchProductCountByBrand(Page page);
 
     
     void updateReduceProductCount(@Param(value="brand")String brand,@Param(value="model")String model, @Param(value="count")Integer count);
