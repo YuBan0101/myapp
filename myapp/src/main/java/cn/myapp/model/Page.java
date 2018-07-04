@@ -7,7 +7,22 @@ public class Page {
 	private Integer pageSize;
 	private Integer pageOffset;
 	private String type;
+	private String brand;
+	private String model;
 	private String key;
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
 	
 	public String getKey() {
 		return key;

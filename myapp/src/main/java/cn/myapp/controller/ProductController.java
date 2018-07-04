@@ -81,16 +81,30 @@ public class ProductController {
 	@RequestMapping(value ="/showAllShortSupplyProduct",method=RequestMethod.GET)
 	@ResponseBody
 	//获取所有商品类别
-	public List<Product> showAllShortSupplyProduct() {
+	public List<Product> showAllShortSupplyProduct(Page page) {
 		
-		return productService.getAllShortSupplyProduct();
+		return productService.getAllShortSupplyProduct(page);
 	}
 	
 	@RequestMapping(value ="/showThisTypeShortSupplyProduct",method=RequestMethod.GET)
 	@ResponseBody
 	//显示当前type所以商品
-	public List<Product> showThisTypeShortSupplyProduct(HttpServletRequest req) {
-		String type = req.getParameter("type");
-		return productService.getThisTypeShotSupplyProduct(type);
+	public List<Product> showThisTypeShortSupplyProduct(HttpServletRequest req,Page page) {
+		return productService.getThisTypeShotSupplyProduct(page);
+	}
+	
+	@RequestMapping(value ="/showAllShortSupplyProductCount",method=RequestMethod.GET)
+	@ResponseBody
+	//获取所有短缺产品   数量
+	public Page showAllShortSupplyProductCount(Page page) {
+		
+		return productService.getAllShortSupplyProductCount(page);
+	}
+	
+	@RequestMapping(value ="/showThisTypeShortSupplyProductCount",method=RequestMethod.GET)
+	@ResponseBody
+	//获取指定Type 短缺产品 数量
+	public Page showThisTypeShortSupplyProductCount(HttpServletRequest req,Page page) {
+		return productService.getThisTypeShotSupplyProductCount(page);
 	}
 }

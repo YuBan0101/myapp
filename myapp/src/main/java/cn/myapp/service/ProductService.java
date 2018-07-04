@@ -19,9 +19,15 @@ public interface ProductService {
 	//查找产品
 	public List<Product> searchProduct(Page page);
 	
-	public List<Product> getAllShortSupplyProduct();
+	// 短缺产品
+	public List<Product> getAllShortSupplyProduct(Page page);
+	// 短缺产品数量
+	public Page getAllShortSupplyProductCount(Page page);
 	
-	public List<Product> getThisTypeShotSupplyProduct(String type);
+	//短缺产品 指定type
+	public List<Product> getThisTypeShotSupplyProduct(Page page);
+	//短缺产品数量    指定type
+	public Page getThisTypeShotSupplyProductCount(Page page);
 	
 	//获取所有产品的个数
 	public Page getAllProductCount(Page page);

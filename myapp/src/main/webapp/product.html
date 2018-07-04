@@ -205,7 +205,7 @@
 
   <!-- 商品分类type初始化 -->
 <script type="text/javascript">
-	$("document").ready(function(){
+/*$("document").ready(function(){
 		$.ajax({
 			type:'GET',
   			contentType:"allication/json",
@@ -223,7 +223,7 @@
 		$("#typeUl").on("click","li a",function(){
 			$("#typeUl li a").removeClass("active");
 			$(this).addClass("active");
-			$.ajax({
+			 $.ajax({
 				type:'GET',
 	  			contentType:"allication/json",
 	  			data:{type:$(this).text().trim()},
@@ -263,10 +263,10 @@
 	    				}
 	    			}
 	    		}
-	    	  });
+	    	  }); 
 	       });
 		
-	});
+	});*/
 </script>
 
 
@@ -279,11 +279,11 @@
             <div class="card-header">
               <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
                  <script type="text/javascript">
-       				   $("document").ready(function(){
+       				/*    $("document").ready(function(){
         				  $("#typec").on("click",function(){
         					  window.location.reload();
         	 		 });
-        		  });
+        		  }); */
           </script>
 
               <div class="card-tools">
@@ -345,7 +345,7 @@
                   <div class="input-group-append">
                   
                   <script type="text/javascript">
-                  	$("document").ready(function(){
+                  	/* $("document").ready(function(){
                   		$("#search").on("click",function(){
                   			$.ajax({
                   				type:'GET',
@@ -377,7 +377,7 @@
                       		});
                   			});
                   		
-                  	});
+                  	}); */
                   </script>
                     <div class="btn btn-primary" id="search">
                       <i class="fa fa-search"></i>
@@ -396,7 +396,9 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
                 <div class="float-right">
-                  1-50/200
+                 <span> 1-50/200</span>
+                    <input  type="text" hidden="hidden" name="currentPage" value="1"  />
+                     <input  type="text" hidden="hidden" name="pageCount" value="1"  />
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -407,7 +409,7 @@
               </div>
               
               <script type="text/javascript">
-              	$("document").ready(function(){
+              	/* $("document").ready(function(){
               		$.ajax({
               			type:'GET',
               			contentType:"allication/json",
@@ -439,7 +441,7 @@
                 			}
                 		}
               		});
-              	});
+              	}); */
               </script>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped" id="plist" >
@@ -465,7 +467,7 @@
                 
               <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="float-right">
-                  1-50/200
+                  <span> 1-50/200</span>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -500,7 +502,43 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+   <!-- 分页 -->
+              		<script type="text/javascript" src="./sspage.js"></script>
+              		<script type="text/javascript">
+              			$("document").ready(showShortSupplyContent("/product/showAllShortSupplyProductCount","/product/showAllShortSupplyProduct"));
+              			$("document").ready(function(){
+                      		$("#search").on("click",function(){
+                      			showShortSupplyContent("/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
+                      		});
+                      		 $("#typec").on("click",function(){
+           						  window.location.reload();
+           	 				});
+                      		$.ajax({
+                    			type:'GET',
+                      			contentType:"allication/json",
+                        		dataType: "json",
+                        		url:'/product/showAllProductType',
+                        		success: function(data){
+                        			for(var o in data){
+                        				$("#typeUl").append('<li class="nav-item">'+
+                                        '<a href="javascript:void(0)" class="nav-link">'+
+                                        '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                        			}
+                        		}
+                    		});
+                    		
+                    		$("#typeUl").on("click","li a",function(){
+                    			$("#typeUl li a").removeClass("active");
+                    			$(this).addClass("active");
+                    			showShortSupplyContent("/product/showThisTypeShortSupplyProductCount","/product/showThisTypeShortSupplyProduct",$(this).text().trim());
+                    	       });
+                    		 $("#home").on("click",function(){
+                       		  window.location.reload();
+                       	  });
+                      	});
+              		</script>
+              
+              <!-- 分页 -->
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
