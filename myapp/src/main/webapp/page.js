@@ -1,13 +1,14 @@
-function showContent(counturl,url,type){
+function showContent(counturl,url,type,key){
           $(document).ready(function(){ 
         	  var currentPage = 1;
+        	  $("input[name='currentPage']").val(parseInt(1));
         	  //获取count
               		$.ajax({
               			type:'GET',
               			contentType:"allication/json",
                 		dataType: "json",
                 		async:false,
-                		data:{"type":type},
+                		data:{"type":type,"key":key},
                 		url:counturl,
                 		success: function(data){
                 			
@@ -26,9 +27,9 @@ function showContent(counturl,url,type){
         	  			contentType:"allication/json",
         	  			dataType: "json",
         	  			url:url,
-        	  			data:{'currentPage':currentPage,'pageSize':15,"type":type},
+        	  			data:{'currentPage':currentPage,'pageSize':15,"type":type,"key":key},
         	  			success: function(data){
-        	  				showTable(data);
+        	  				showProductTable(data,currentPage);
         	  				/*for(var o in data){
         	  					$("#plist tbody").append("<tr>"+
         	  							'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
@@ -49,7 +50,7 @@ function showContent(counturl,url,type){
 						$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled","disabled");}
               		
               	//向前翻页-------
-					$(".float-right div button i[class='fa fa-chevron-left']").parent().on("click",function(){
+					$(".float-right div button i[class='fa fa-chevron-left']").parent().off().on("click",function(){
 							$("input[name='currentPage']").val($("input[name='currentPage']").val()-1);
 							if($("input[name='currentPage']").val() == 1){
 							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
@@ -59,9 +60,8 @@ function showContent(counturl,url,type){
 	              			type:'GET',
 	              			contentType:"allication/json",
 	                		dataType: "json",
-	                		async:false,
 	                		url:url,
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type},
+	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
 	                		success: function(data){
 	                			currentPage = $("input[name='currentPage']").val();
 	                			if(data.pageCount < 15){
@@ -71,14 +71,14 @@ function showContent(counturl,url,type){
 	                			}else{
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
-	                			showTable(data);
+	                			showProductTable(data,currentPage);
 	                		}
 	              		});
 						
 					}) ;  
 					
               	//像后翻页
-					$(".float-right div button i[class='fa fa-chevron-right']").parent().on("click",function(){
+					$(".float-right div button i[class='fa fa-chevron-right']").parent().off().on("click",function(){
 							$("input[name='currentPage']").val(parseInt($("input[name='currentPage']").val())+1);
 							if($("input[name='currentPage']").val() > pageCount/15){
 								$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",true);
@@ -89,7 +89,7 @@ function showContent(counturl,url,type){
 	              			contentType:"allication/json",
 	                		dataType: "json",
 	                		url:url,
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type},
+	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
 	                		success: function(data){
 	                			currentPage = $("input[name='currentPage']").val();
 	                			if(data.pageCount < 15){
@@ -99,13 +99,13 @@ function showContent(counturl,url,type){
 	                			}else{
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
-	                			showTable(data);
+	                			showProductTable(data,currentPage);
 	                		}
 	              		});
 					});
 					}); 
 				}
-function showTable(data){
+function showProductTable(data,currentPage){
 			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
                     '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
                     '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
@@ -116,15 +116,15 @@ function showTable(data){
     				);
 			//害我不浅
 			//$("input[name='currentPage']").val(data[0].currentPage);
-			for(var o in data){
+			for(var i=0;i<data.length;i++){
 				$("#plist tbody").append("<tr>"+
-				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
+				'<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
+				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+'</a></td>'+
+				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
+				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
 				'</tr>');
 			}
 		}

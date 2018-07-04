@@ -79,12 +79,12 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 	@Override
-	public List<Product> searchProduct(String key) {
+	public List<Product> searchProduct(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		ArrayList<String> arr = new ArrayList<String>();
 		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
-		Matcher m = p.matcher(key.trim());
+		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
         }
@@ -150,6 +150,28 @@ public class ProductServiceImpl implements ProductService {
 	//获取type product 个数 放入page 对象
 	public Page getThisTypeProductCount(Page page) {
 		page.setPageCount(productDao.selectThisTypeProductCount(page));
+		return page;
+	}
+
+
+	//获取搜索的product 个数 放入page 对象
+	@Override
+	public Page getSearchedProductCount(Page page) {
+		ArrayList<String> arr = new ArrayList<String>();
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
+		Matcher m = p.matcher(page.getKey().trim());
+        while ( m.find() ) {
+            arr.add(m.group());
+        }
+      //此处有逻辑错误 
+        if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == false) {
+        	page.setPageCount(productDao.searchProductByModel(arr.get(0)).size());
+        }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == true) {
+        	page.setPageCount(productDao.searchProductByBrand(arr.get(0)).size());
+        }
+        else {
+        	page.setPageCount(productDao.searchProduct(arr.get(0), arr.get(1)).size());
+        }
 		return page;
 	}
 
