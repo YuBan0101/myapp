@@ -223,10 +223,14 @@
 		$("#typeUl").on("click","li a",function(){
 			$("#typeUl li a").removeClass("active");
 			$(this).addClass("active");
-			$.ajax({
+			//$(".float-right input[name='counturl']").val("/product/showThisTypeProductCount");
+			//$(".float-right input[name='url']").val("/product/showThisTypeProduct");
+			showContent("/product/showThisTypeProductCount","/product/showThisTypeProduct",$(this).text().trim());
+			/* $.ajax({
 				type:'GET',
 	  			contentType:"allication/json",
-	  			data:{type:$(this).text().trim()},
+	  			data:{type:$(this).text().trim(),
+	  				},
 	    		dataType: "json",
 	    		url:'/product/showThisTypeProduct',
 	    		success: function(data){
@@ -252,7 +256,7 @@
 	    		       
 	    			}
 	    		}
-	    	  });
+	    	  }); */
 	       });
 		
 	});
@@ -385,11 +389,11 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
               
-              <!-- 分页 -->
-              <script type="text/javascript" src="./page.js">
-              	
-					
-              </script>
+                  <!-- 分页 -->
+              		<script type="text/javascript" src="./page.js"></script>
+              		<script type="text/javascript">
+              			$(document).ready(showContent("/product/showAllProductCount","/product/showAllProduct"));
+              		</script>
               
               <!-- 分页 -->
               
@@ -397,39 +401,19 @@
                  <span> 1-50/200</span>
                   <input  type="text" hidden="hidden" name="currentPage" value="1"  />
                   <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+               
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
                   </div>
+                  
+              
                   <!-- /.btn-group -->
                 </div>
                 <!-- /.float-right -->
               </div>
               <!-- 初始化库存查看页面 请求  showAllProduct -->
-              <script type="text/javascript">
-              	$("document").ready(function(){
-              		$.ajax({
-              			type:'GET',
-              			contentType:"allication/json",
-                		dataType: "json",
-                		url:'/product/showAllProduct',
-                		data:{'currentPage':1,'pageSize':15},
-                		success: function(data){
-                			for(var o in data){
-                				$("#plist tbody").append("<tr>"+
-                				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-                				'</tr>');
-                			}
-                		}
-              		});
-              	});
-              </script>
+              
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped" id="plist" >
                   <tbody>

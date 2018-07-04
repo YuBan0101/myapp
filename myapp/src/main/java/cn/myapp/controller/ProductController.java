@@ -58,9 +58,9 @@ public class ProductController {
 	@RequestMapping(value ="/showThisTypeProductCount",method=RequestMethod.GET)
 	@ResponseBody
 	//显示当前type商品个数
-	public List<Product> showThisTypeProductCount(Page page) {
+	public Page showThisTypeProductCount(Page page) {
 		
-		return productService.getThisTypeProduct(page);
+		return productService.getThisTypeProductCount(page);
 	}
 	
 	@RequestMapping(value ="/searchProduct",method=RequestMethod.GET)
