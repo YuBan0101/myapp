@@ -185,13 +185,7 @@
             <h1>商品库存</h1>
           </div>
           <div class="col-sm-6">
-          <script type="text/javascript">
-          $("document").ready(function(){
-        	  $("#home").on("click",function(){
-        		  window.location.reload();
-        	  });
-          });
-          </script>
+         
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a id ="home" href="#">Home</a></li>
               
@@ -204,60 +198,6 @@
 
 
   <!-- 商品分类type初始化 -->
-<script type="text/javascript">
-	$("document").ready(function(){
-		$.ajax({
-			type:'GET',
-  			contentType:"allication/json",
-    		dataType: "json",
-    		url:'/product/showAllProductType',
-    		success: function(data){
-    			for(var o in data){
-    				$("#typeUl").append('<li class="nav-item">'+
-                    '<a href="javascript:void(0)" class="nav-link">'+
-                    '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
-    			}
-    		}
-		});
-		
-		$("#typeUl").on("click","li a",function(){
-			$("#typeUl li a").removeClass("active");
-			$(this).addClass("active");
-			$.ajax({
-				type:'GET',
-	  			contentType:"allication/json",
-	  			data:{type:$(this).text().trim()},
-	    		dataType: "json",
-	    		url:'/product/showThisTypeProduct',
-	    		success: function(data){
-	    			
-	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
-	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
-	    				);
-	    				for(var i= 0;i<data.length;i++){
-	    				   $("#plist tbody").append("<tr>"+
-	    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
-	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
-	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
-	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
-	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
-	    				   '</tr>');
-	    		       
-	    			}
-	    		}
-	    	  });
-	       });
-		
-	});
-</script>
-
 
     <!-- Main content -->
     <section class="content">
@@ -267,13 +207,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
-                 <script type="text/javascript">
-       				   $("document").ready(function(){
-        				  $("#typec").on("click",function(){
-        					  window.location.reload();
-        	 		 });
-        		  });
-          </script>
+                 
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -333,41 +267,7 @@
                   <input type="text" class="form-control" placeholder="查找">
                   <div class="input-group-append">
                   
-                  <script type="text/javascript">
-                  	$("document").ready(function(){
-                  		$("#search").on("click",function(){
-                  			$.ajax({
-                  				type:'GET',
-                      			contentType:"allication/json",
-                        		dataType: "json",
-                        		data:{keyword:$("#ss input").val().trim()},
-                        		url:'/product/searchProduct',
-                        		success: function(data){
-                        			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
-                    	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
-                    	    				);
-                        			for(var o in data){
-                        				$("#plist tbody").append("<tr>"+
-                        				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-                        				'</tr>');
-                        			}
-                        		}
-                      		});
-                  			});
-                  		
-                  	});
-                  </script>
+                 
                     <div class="btn btn-primary" id="search">
                       <i class="fa fa-search"></i>
                     </div>
@@ -385,51 +285,28 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
               
-              <!-- 分页 -->
-              <script type="text/javascript" src="./page.js">
-              	
-					
-              </script>
-              
-              <!-- 分页 -->
+               
               
                 <div class="float-right">
                  <span> 1-50/200</span>
+                 
+                 <!--  撒旦 -->
                   <input  type="text" hidden="hidden" name="currentPage" value="1"  />
                   <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+               	  <input  type="text" hidden="hidden" name="url" value=""  />
+               
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
                   </div>
+                  
+              
                   <!-- /.btn-group -->
                 </div>
                 <!-- /.float-right -->
               </div>
               <!-- 初始化库存查看页面 请求  showAllProduct -->
-              <script type="text/javascript">
-              	$("document").ready(function(){
-              		$.ajax({
-              			type:'GET',
-              			contentType:"allication/json",
-                		dataType: "json",
-                		url:'/product/showAllProduct',
-                		data:{'currentPage':1,'pageSize':15},
-                		success: function(data){
-                			for(var o in data){
-                				$("#plist tbody").append("<tr>"+
-                				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-                				'</tr>');
-                			}
-                		}
-              		});
-              	});
-              </script>
+              
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped" id="plist" >
                   <tbody>
@@ -489,7 +366,43 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+   <!-- 分页 -->
+              		<script type="text/javascript" src="./page.js"></script>
+              		<script type="text/javascript">
+              			$("document").ready(showContent("/product/showAllProductCount","/product/showAllProduct"));
+              			$("document").ready(function(){
+                      		$("#search").on("click",function(){
+                      			showContent("/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
+                      		});
+                      		 $("#typec").on("click",function(){
+           						  window.location.reload();
+           	 				});
+                      		$.ajax({
+                    			type:'GET',
+                      			contentType:"allication/json",
+                        		dataType: "json",
+                        		url:'/product/showAllProductType',
+                        		success: function(data){
+                        			for(var o in data){
+                        				$("#typeUl").append('<li class="nav-item">'+
+                                        '<a href="javascript:void(0)" class="nav-link">'+
+                                        '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                        			}
+                        		}
+                    		});
+                    		
+                    		$("#typeUl").on("click","li a",function(){
+                    			$("#typeUl li a").removeClass("active");
+                    			$(this).addClass("active");
+                    			showContent("/product/showThisTypeProductCount","/product/showThisTypeProduct",$(this).text().trim());
+                    	       });
+                    		 $("#home").on("click",function(){
+                       		  window.location.reload();
+                       	  });
+                      	});
+              		</script>
+              
+              <!-- 分页 -->
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

@@ -58,17 +58,23 @@ public class ProductController {
 	@RequestMapping(value ="/showThisTypeProductCount",method=RequestMethod.GET)
 	@ResponseBody
 	//显示当前type商品个数
-	public List<Product> showThisTypeProductCount(Page page) {
+	public Page showThisTypeProductCount(Page page) {
 		
-		return productService.getThisTypeProduct(page);
+		return productService.getThisTypeProductCount(page);
 	}
 	
 	@RequestMapping(value ="/searchProduct",method=RequestMethod.GET)
 	@ResponseBody
 	//显示当前keyword所有商品
-	public List<Product> searchProduct(HttpServletRequest req) {
-		String key = req.getParameter("keyword");
-		return productService.searchProduct(key);
+	public List<Product> searchProduct(Page page) {
+		return productService.searchProduct(page);
+	}
+	
+	@RequestMapping(value ="/searchProductCount",method=RequestMethod.GET)
+	@ResponseBody
+	//显示当前keyword所有商品   个数
+	public Page searchProductCount(Page page) {
+		return productService.getSearchedProductCount(page);
 	}
 	
 	

@@ -7,6 +7,14 @@ public class Page {
 	private Integer pageSize;
 	private Integer pageOffset;
 	private String type;
+	private String key;
+	
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
 	
 	public String getType() {
 		return type;

@@ -48,6 +48,7 @@ public interface ProductDao {
     List<Product> searchProductByModel(@Param(value="model")String model);
     
     List<Product> searchProductByBrand(@Param(value="brand")String brand);
+
     
     void updateReduceProductCount(@Param(value="brand")String brand,@Param(value="model")String model, @Param(value="count")Integer count);
     
