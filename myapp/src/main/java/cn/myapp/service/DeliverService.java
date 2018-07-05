@@ -3,6 +3,7 @@ package cn.myapp.service;
 import java.util.List;
 
 import cn.myapp.model.Deliver;
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 
 public interface DeliverService {
@@ -17,10 +18,21 @@ public interface DeliverService {
 	
 	public List<Deliver> getDeliverRecord();
 	
-	public List<Deliver> getAllDeliverRecord();
+	//获取所有出库记录
+	public List<Deliver> getAllDeliverRecord(Page page);
 	
-	public List<Deliver> getThisTypeDeliverRecord(String type);
+	//获取指定type出库记录
+	public List<Deliver> getThisTypeDeliverRecord(Page page);
 	
-	public List<Deliver> searchDeliverRecord(String key);
+	
+	//查找关键字 出库记录
+	public List<Deliver> searchDeliverRecord(Page page);
+	public Page searchDeliverRecordCount(Page page);
+
+	//获取所有入库记录 数量
+	public Page getAllDeliverRecordCount(Page page);
+	
+	// 获取指定type 入库记录 数量
+	public Page getThisTypeDeliverRecordCount(Page page);
 	
 }

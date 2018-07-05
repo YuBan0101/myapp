@@ -209,11 +209,11 @@
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
-          $("document").ready(function(){
+         /*  $("document").ready(function(){
         	  $("#home").on("click",function(){
         		  window.location.reload();
         	  });
-          });
+          }); */
           </script>
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a id ="home" href="#">刷新页面</a></li>
@@ -228,7 +228,7 @@
 
   <!-- 商品分类type初始化 -->
 <script type="text/javascript">
-	$("document").ready(function(){
+	/* $("document").ready(function(){
 		$.ajax({
 			type:'GET',
   			contentType:"allication/json",
@@ -282,7 +282,7 @@
 	    	  });
 	       });
 		
-	});
+	}); */
 </script>
 
 
@@ -295,11 +295,11 @@
             <div class="card-header">
               <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
                  <script type="text/javascript">
-       				   $("document").ready(function(){
+       				/*    $("document").ready(function(){
         				  $("#typec").on("click",function(){
         					  window.location.reload();
         	 		 });
-        		  });
+        		  }); */
           </script>
 
               <div class="card-tools">
@@ -361,7 +361,7 @@
                   <div class="input-group-append">
                   
                   <script type="text/javascript">
-                  	$("document").ready(function(){
+                  	/* $("document").ready(function(){
                   		$("#search").on("click",function(){
                   			$.ajax({
                   				type:'GET',
@@ -398,7 +398,7 @@
                       		});
                   			});
                   		
-                  	});
+                  	}); */
                   </script>
                     <div class="btn btn-primary" id="search">
                       <i class="fa fa-search"></i>
@@ -417,7 +417,15 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
                 <div class="float-right">
-                  1-50/200
+                  <span>1-50/200</span>
+                  
+                  
+                       <!--  撒旦 -->
+                  <input  type="text" hidden="hidden" name="currentPage" value="1"  />
+                  <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+                  
+                  
+                  
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -428,7 +436,7 @@
               </div>
               
               <script type="text/javascript">
-              	$("document").ready(function(){
+              	/* $("document").ready(function(){
               		$.ajax({
               			type:'GET',
               			contentType:"allication/json",
@@ -450,7 +458,7 @@
                         			}
                 		}
               		});
-              	});
+              	}); */
               </script>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped" id="plist" >
@@ -478,7 +486,7 @@
                 
               <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="float-right">
-                  1-50/200
+                  <span>1-50/200</span>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -532,7 +540,7 @@
                 		type:'POST',
                 		dataType: 'json',
                 		url:'/deliver/showDeliverRecordAfterAdd',
-                		data:{"brand":$("#fd input[name='type']").val().trim(),
+                		data:{"brand":$("#fd input[name='brand']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
                 			  "price":$("#fd input[name='price']").val().trim(),
                 			  "count":$("#fd input[name='count']").val().trim()
@@ -557,7 +565,7 @@
       <form action="#" method="post" id="fd">
         <div class="form-group has-feedback">
        	  产品品牌：	
-          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="type">
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
         </div>
          <div class="form-group has-feedback">
       	    产品型号：                 
@@ -587,6 +595,47 @@
 </div>
     </div>
     <!-- /.form-box -->
+    
+    <!-- 分页 -->
+              		<script type="text/javascript" src="./page.js"></script>
+              		<script type="text/javascript">
+              			$("document").ready(showContent("deliver","/deliver/showAllDeliverRecordCount","/deliver/showAllDeliverRecord"));
+              			$("document").ready(function(){
+                      		$("#search").on("click",function(){
+                      			showContent("deliver","/deliver/searchDeliverRecordCount","/deliver/searchDeliverRecord","",$("#ss input").val().trim());
+                      		});
+                      		 $("#typec").on("click",function(){
+           						  window.location.reload();
+           	 				});
+                      		//初始化类别显示页面
+                       		$.ajax({
+                     			type:'GET',
+                       			contentType:"allication/json",
+                         		dataType: "json",
+                         		url:'/product/showAllProductType',
+                         		success: function(data){
+                         			for(var o in data){
+                         				$("#typeUl").append('<li class="nav-item">'+
+                                         '<a href="javascript:void(0)" class="nav-link">'+
+                                         '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                         			}
+                         		}
+                     		});
+                      		//当前类别
+                    		$("#typeUl").on("click","li a",function(){
+                    			$("#typeUl li a").removeClass("active");
+                    			$(this).addClass("active");
+                    			showContent("deliver","/deliver/showThisTypeDeliverRecordCount","/deliver/showThisTypeDeliverRecord",$(this).text().trim());
+                    	       });
+                    		 $("#home").on("click",function(){
+                       		  window.location.reload();
+                       	  });
+                    		
+                      	});
+              		</script>
+              
+              <!-- 分页 -->
+    
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

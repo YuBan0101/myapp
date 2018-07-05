@@ -212,12 +212,40 @@ function showPriceTable(data,currentPage){
 		}
 }
 
+function showDeliverTable(data,currentPage){
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售价格</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售个数（米）</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>金额小计</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>净赚（利润）</td>'+
+            '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
+            '<td class="mailbox-subject" style="text-align:center">出库时间</td></tr>'
+			);
+			for(var i= 0;i<data.length;i++){
+			   $("#plist tbody").append("<tr>"+
+			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
+			   '</tr>');
+	       
+		}
+}
+
 function showTableChoose(pageindex,data,currentPage){
 	switch(pageindex){
 		case "product" : showProductTable(data,currentPage); break;
 		case "shortSupplyProduct" :showShortSupplyProductTable (data,currentPage); break;
 		case "store" : showStoreTable(data,currentPage); break;
 		case "price" : showPriceTable(data,currentPage); break;
+		case "deliver" : showDeliverTable(data,currentPage); break;
 		default :break;
 		}
 }
