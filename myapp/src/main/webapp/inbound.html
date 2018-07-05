@@ -209,11 +209,11 @@
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
-          $("document").ready(function(){
+         /*  $("document").ready(function(){
         	  $("#home").on("click",function(){
         		  window.location.reload();
         	  });
-          });
+          }); */
           </script>
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a id ="home" href="#">刷新页面</a></li>
@@ -228,7 +228,7 @@
 
   <!-- 商品分类type初始化 -->
 <script type="text/javascript">
-	$("document").ready(function(){
+	/* $("document").ready(function(){
 		$.ajax({
 			type:'GET',
   			contentType:"allication/json",
@@ -281,7 +281,7 @@
 	    	  });
 	       });
 		
-	});
+	}); */
 </script>
 
 
@@ -294,11 +294,11 @@
             <div class="card-header">
               <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
                  <script type="text/javascript">
-       				   $("document").ready(function(){
+       				 /*   $("document").ready(function(){
         				  $("#typec").on("click",function(){
         					  window.location.reload();
         	 		 });
-        		  });
+        		  }); */
           </script>
 
               <div class="card-tools">
@@ -345,7 +345,7 @@
               </ul>
               
               <script type="text/javascript">
-              
+          /*     
           	$("#optionUl").on("click","li a",function(){
     			$("#typeUl li a").removeClass("active");
     			$("#optionUl li a").removeClass("active");
@@ -381,7 +381,7 @@
     	    			}
     	    		}
     	    	  });
-    	       });
+    	       }); */
               </script>
             </div>
             <!-- /.card-body -->
@@ -400,7 +400,7 @@
                   <div class="input-group-append">
                   
                   <script type="text/javascript">
-                  	$("document").ready(function(){
+                  /* 	$("document").ready(function(){
                   		$("#search").on("click",function(){
                   			$.ajax({
                   				type:'GET',
@@ -435,7 +435,7 @@
                       		});
                   			});
                   		
-                  	});
+                  	}); */
                   </script>
                     <div class="btn btn-primary" id="search">
                       <i class="fa fa-search"></i>
@@ -454,7 +454,14 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
                 <div class="float-right">
-                  1-50/200
+                    <span> 1-50/200</span>
+                 
+                 <!--  撒旦 -->
+                  <input  type="text" hidden="hidden" name="currentPage" value="1"  />
+                  <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+                  
+                  
+                  
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -465,7 +472,7 @@
               </div>
               
               <script type="text/javascript">
-              	$("document").ready(function(){
+              	/* $("document").ready(function(){
               		$.ajax({
               			type:'GET',
               			contentType:"allication/json",
@@ -486,7 +493,7 @@
                 			}
                 		}
               		});
-              	});
+              	}); */
               </script>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped" id="plist" >
@@ -513,7 +520,7 @@
                 
               <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="float-right">
-                  1-50/200
+                 <span> 1-50/200</span>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -647,6 +654,54 @@
 </div>
     </div>
     <!-- /.form-box -->
+
+   <!-- 分页 -->
+              		<script type="text/javascript" src="./page.js"></script>
+              		<script type="text/javascript">
+              			$("document").ready(showContent("store","/store/showAllStoreRecordCount","/store/showAllStoreRecord"));
+              			$("document").ready(function(){
+                      		$("#search").on("click",function(){
+                      			showContent("store","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss input").val().trim());
+                      		});
+                      		 $("#typec").on("click",function(){
+           						  window.location.reload();
+           	 				});
+                      		//初始化类别显示页面
+                       		$.ajax({
+                     			type:'GET',
+                       			contentType:"allication/json",
+                         		dataType: "json",
+                         		url:'/product/showAllProductType',
+                         		success: function(data){
+                         			for(var o in data){
+                         				$("#typeUl").append('<li class="nav-item">'+
+                                         '<a href="javascript:void(0)" class="nav-link">'+
+                                         '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                         			}
+                         		}
+                     		});
+                      		//当前类别
+                    		$("#typeUl").on("click","li a",function(){
+                    			$("#typeUl li a").removeClass("active");
+                    			$(this).addClass("active");
+                    			showContent("store","/store/showThisTypeStoreRecordCount","/store/showThisTypeStoreRecord",$(this).text().trim());
+                    	       });
+                    		 $("#home").on("click",function(){
+                       		  window.location.reload();
+                       	  });
+                    		 //2次进货差价
+                    		 $("#optionUl").on("click","li a",function(){
+                     			$("#typeUl li a").removeClass("active");
+                     			$("#optionUl li a").removeClass("active");
+                     			$(this).addClass("active");
+                    			showContent("price","/price/showAllPriceRecordCount","/price/showAllPriceRecord");
+                    		 });
+                      	});
+              		</script>
+              
+              <!-- 分页 -->
+
+
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

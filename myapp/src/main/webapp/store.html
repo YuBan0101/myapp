@@ -376,20 +376,20 @@
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
            	 				});
-                      		$.ajax({
-                    			type:'GET',
-                      			contentType:"allication/json",
-                        		dataType: "json",
-                        		url:'/product/showAllProductType',
-                        		success: function(data){
-                        			for(var o in data){
-                        				$("#typeUl").append('<li class="nav-item">'+
-                                        '<a href="javascript:void(0)" class="nav-link">'+
-                                        '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
-                        			}
-                        		}
-                    		});
-                    		
+                      		//初始化类别显示页面
+                       		$.ajax({
+                     			type:'GET',
+                       			contentType:"allication/json",
+                         		dataType: "json",
+                         		url:'/product/showAllProductType',
+                         		success: function(data){
+                         			for(var o in data){
+                         				$("#typeUl").append('<li class="nav-item">'+
+                                         '<a href="javascript:void(0)" class="nav-link">'+
+                                         '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                         			}
+                         		}
+                     		});
                     		$("#typeUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
                     			$(this).addClass("active");

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Price;
 import cn.myapp.model.Store;
 
@@ -28,7 +29,10 @@ public interface PriceDao {
     void updatePrice(Store record);
     
     //取得所有进价
-    List<Price> selectAllPriceRecord();
+    List<Price> selectAllPriceRecord(Page page);
+    
+  //取得所有进价 记录个数
+    int selectAllPriceRecordCount(Page page);
     
 
 }

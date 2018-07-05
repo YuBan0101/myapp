@@ -35,56 +35,96 @@
      order by date DESC limit 7
   </select>
   
-   <select id="selectAllDeliverRecord" resultMap="BaseResultMap">
+<!--   获取所有出库信息  数量 -->
+   <select id="selectAllDeliverRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
+    from deliver 
+     order by date DESC limit #{pageOffset},#{pageSize}
+  </select>
+  <select id="selectAllDeliverRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select 
+    count(*)
     from deliver 
      order by date DESC 
   </select>
   
-  <select id="selectThisTypeDeliverRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
+ <!--  获取指定type出库信息 数量 -->
+  <select id="selectThisTypeDeliverRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
   	select
   	<include refid="Base_Column_List" />
+  	from (SELECT d.* ,p.type FROM deliver as d LEFT JOIN product as p ON d.brand = p.brand and d.model= p.model)t
+  	where type = #{type,jdbcType=VARCHAR}
+  	order by date DESC limit #{pageOffset},#{pageSize}
+  </select>
+  <select id="selectThisTypeDeliverRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+  	select
+  	count(*)
   	from (SELECT d.* ,p.type FROM deliver as d LEFT JOIN product as p ON d.brand = p.brand and d.model= p.model)t
   	where type = #{type,jdbcType=VARCHAR}
   	order by date DESC
   </select>
   
+  
+<!--   当月出库数 -->
   <select id="selectThisMonthDeliverCount"  resultType="java.lang.Integer">
     select sum(count)
     from deliver
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
   
+<!--   当月销售金额 -->
   <select id="selectThisMonthDeliverPrice"  resultType="java.lang.Double">
     select ifnull(SUM(p),0) from (select price*count as p from deliver
   
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
   </select>
   
+<!--   当月盈利金额 -->
   <select id="selectThisMonthProfit"  resultType="java.lang.Double">
      SELECT ifnull(SUM(s),0) FROM (SELECT (d.price-s.price)*d.count as s FROM price as s RIGHT JOIN  deliver as d 
      ON s.brand =d.brand AND s.model=d.model
      where DATE_FORMAT( d.date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ))t
   </select>
   
-  <select id="searchDeliverRecord" resultMap="BaseResultMap">
+  <!-- 查找 -->
+  <select id="searchDeliverRecord"  parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
+    from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%') limit #{pageOffset},#{pageSize}
+  </select>
+  <select id="searchDeliverRecordByModel"  parameterType="cn.myapp.model.Page"  resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from deliver where model like CONCAT(CONCAT('%',#{model}),'%') limit #{pageOffset},#{pageSize}
+  </select>
+  <select id="searchDeliverRecordByBrand" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%') limit #{pageOffset},#{pageSize}
+  </select>
+  
+  
+  <!-- 查找记录数量 -->
+  <select id="searchDeliverRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   
+    count(*)
     from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
   </select>
-  
-  <select id="searchDeliverRecordByModel" resultMap="BaseResultMap">
+  <select id="searchDeliverRecordByModelCount"  parameterType="cn.myapp.model.Page"  resultType="java.lang.Integer">
     select   
-    <include refid="Base_Column_List" />
+    count(*)
     from deliver where model like CONCAT(CONCAT('%',#{model}),'%')
   </select>
-  
-  <select id="searchDeliverRecordByBrand" resultMap="BaseResultMap">
+  <select id="searchDeliverRecordByBrandCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
     select   
-    <include refid="Base_Column_List" />
+    count(*)
     from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%')
   </select>
+  
+  
+  
+  
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from deliver

@@ -24,9 +24,17 @@
     where brand = #{brand} and model =#{model}
   </select>
   
-  <select id="selectAllPriceRecord"  resultMap="BaseResultMap">
+  <!-- 获取所有记录 -->
+  <select id="selectAllPriceRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
+    from price
+    order by brand limit #{pageOffset},#{pageSize}
+  </select>
+  
+<!--   获取所有记录数量 -->
+  <select id="selectAllPriceRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select count(*)
     from price
     order by brand
   </select>

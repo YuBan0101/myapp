@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.myapp.model.Page;
 import cn.myapp.model.Price;
 import cn.myapp.service.PriceService;
 
@@ -25,11 +26,18 @@ public class PriceController {
 	@RequestMapping(value="/showAllPriceRecord",method = RequestMethod.GET)
 	@ResponseBody
 	//显示所有Price记录
-	public List<Price> showAllPriceRecord() {
+	public List<Price> showAllPriceRecord(Page page) {
 		
-		return priceService.getAllPriceRecord();
+		return priceService.getAllPriceRecord(page);
 	}
 	
+	@RequestMapping(value="/showAllPriceRecordCount",method = RequestMethod.GET)
+	@ResponseBody
+	//获取所有Price记录 数量
+	public Page showAllPriceRecordCount(Page page) {
+		
+		return priceService.getAllPriceRecordCount(page);
+	}
 	
 	
 }

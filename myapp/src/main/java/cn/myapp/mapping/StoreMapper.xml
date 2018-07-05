@@ -21,12 +21,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-   <select id="selectLastStoreDate"  resultMap="BaseResultMap">
+   <select id="selectLastStoreDate" parameterType="java.lang.String" resultMap="BaseResultMap">
     select date
     from store 
     where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 1
   </select>
   
+  <!-- 维修工 -->
   <select id="selectTwoLastStoreRecord"  resultMap="BaseResultMap">
     select 
 	<include refid="Base_Column_List" />
@@ -34,7 +35,7 @@
     where brand = #{brand,jdbcType=VARCHAR} and model = #{model,jdbcType=VARCHAR} order by date DESC limit 2
   </select>
   
-
+	<!-- 获取当月入库数 -->
     <select id="selectThisMonthStoreCount"  resultType="java.lang.Integer">
     select sum(count)
     
@@ -42,37 +43,74 @@
     where DATE_FORMAT( date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   </select>
   
-  <select id="selectAllStoreRecord"  resultMap="BaseResultMap">
+  
+  <!-- 获取全部入库记录 limit -->
+  <select id="selectAllStoreRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from store order by date DESC
-  </select>
-  <select id="selectThisTypeStoreRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
-   select 
-      <include refid="Base_Column_List" />
-     from store where type = #{type,jdbcType=VARCHAR} order by date DESC
-  </select>
-  <select id="searchStoreRecord"  resultMap="BaseResultMap">
-    select   
-    <include refid="Base_Column_List" />
-    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') or model like CONCAT(CONCAT('%',#{model}),'%')
+    from store order by date DESC limit  #{pageOffset}, #{pageSize}
   </select>
   
+  <!-- 获取全部入库记录   数量 limit  -->
+   <select id="selectAllStoreRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select count(*)
+    from store order by date DESC
+  </select>
+  
+  <!-- 获取指定入库记录 limit -->
+  <select id="selectThisTypeStoreRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+   select 
+      <include refid="Base_Column_List" />
+     from store where type = #{type,jdbcType=VARCHAR} order by date DESC limit  #{pageOffset}, #{pageSize}
+  </select>
+  
+  <!-- 获取指定入库记录    数量   limit -->
+  <select id="selectThisTypeStoreRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+   select 
+      count(*)
+     from store where type = #{type,jdbcType=VARCHAR} order by date DESC
+  </select>
+  
+  <!-- 获取查找的 入库记录 数量  -->
+  <select id="selectSearchedStoreRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="selectSearchedStoreRecordCountByModel" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from store where  model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="selectSearchedStoreRecordCountByBrand" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') 
+  </select>
+  
+  
+  <!-- 获取查找的 入库记录  limit-->
+  <select id="searchStoreRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%') limit  #{pageOffset}, #{pageSize}
+  </select>
+  
+  
+  <!-- 维修工 -->
   <select id="searchStoreRecordDes"  resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
     from store where brand = #{brand} and model = #{model}
   </select>
   
-  <select id="searchStoreRecordByModel"  resultMap="BaseResultMap">
+  
+  <select id="searchStoreRecordByModel" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select   
     <include refid="Base_Column_List" />
-    from store where model like CONCAT(CONCAT('%',#{model}),'%')
+    from store where model like CONCAT(CONCAT('%',#{model}),'%') limit  #{pageOffset}, #{pageSize}
   </select>
-  <select id="searchStoreRecordByBrand"  resultMap="BaseResultMap">
+  <select id="searchStoreRecordByBrand" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
    select   
     <include refid="Base_Column_List" />
-    from store where brand like CONCAT(CONCAT('%',#{brand}),'%')
+    from store where brand like CONCAT(CONCAT('%',#{brand}),'%') limit  #{pageOffset}, #{pageSize}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

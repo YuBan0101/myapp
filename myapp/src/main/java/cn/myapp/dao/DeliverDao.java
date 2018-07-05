@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.myapp.model.Deliver;
+import cn.myapp.model.Page;
 import cn.myapp.model.Product;
 
 public interface DeliverDao {
@@ -30,15 +31,24 @@ public interface DeliverDao {
     
     List<Deliver> selectDeliverRecord();
     
-    List<Deliver> selectAllDeliverRecord();
+    //获取所有出库记录    数量
+    List<Deliver> selectAllDeliverRecord(Page page);
+    int selectAllDeliverRecordCount(Page page);
     
-    List<Deliver> selectThisTypeDeliverRecord(@Param(value="type")String type);
+    //获取指定 type 出库记录    数量
+    List<Deliver> selectThisTypeDeliverRecord(Page page);
+    int selectThisTypeDeliverRecordCount(Page page);
     
-    List<Deliver> searchDeliverRecord(@Param(value="brand")String brand,@Param(value="model")String model);
     
-    List<Deliver> searchDeliverRecordByModel(@Param(value="model")String model);
+    // 查找 关键字 出库 信息
+    List<Deliver> searchDeliverRecord(Page page);
+    List<Deliver> searchDeliverRecordByModel(Page page);
+    List<Deliver> searchDeliverRecordByBrand(Page page);
     
-    List<Deliver> searchDeliverRecordByBrand(@Param(value="brand")String brand);
+    // 查找 关键字 出库 信息   数量
+    int searchDeliverRecordCount(Page page);
+    int searchDeliverRecordByModelCount(Page page);
+    int searchDeliverRecordByBrandCount(Page page);
     
     
 }

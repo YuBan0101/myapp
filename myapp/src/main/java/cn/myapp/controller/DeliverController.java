@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import cn.myapp.model.Deliver;
+import cn.myapp.model.Page;
 import cn.myapp.service.DeliverService;
 @Controller
 @RequestMapping("/deliver")
@@ -66,24 +67,50 @@ public class DeliverController {
 	@RequestMapping(value="/showAllDeliverRecord")
 	@ResponseBody
 	//所有出库记录
-	public List<Deliver> showAllDeliverRecord() {
+	public List<Deliver> showAllDeliverRecord(Page page) {
 
-		return deliverService.getAllDeliverRecord();
+		return deliverService.getAllDeliverRecord(page);
 	}
+	
+	@RequestMapping(value="/showAllDeliverRecordCount")
+	@ResponseBody
+	//所有出库记录 数量
+	public Page showAllDeliverRecordCount(Page page) {
+
+		return deliverService.getAllDeliverRecordCount(page);
+	}
+	
 	
 	@RequestMapping(value="/showThisTypeDeliverRecord")
 	@ResponseBody
-	//type 信息
-	public List<Deliver> showThisTypeDeliverRecord(HttpServletRequest req) {
+	//指定  type 信息
+	public List<Deliver> showThisTypeDeliverRecord(Page page) {
 
-		return deliverService.getThisTypeDeliverRecord(req.getParameter("type"));
+		return deliverService.getThisTypeDeliverRecord(page);
 	}
+	
+	@RequestMapping(value="/showThisTypeDeliverRecordCount")
+	@ResponseBody
+	//指定  type 记录数量
+	public Page showThisTypeDeliverRecordCount(Page page) {
+
+		return deliverService.getThisTypeDeliverRecordCount(page);
+	}
+	
 	
 	@RequestMapping(value="/searchDeliverRecord")
 	@ResponseBody
 	//查找
-	public List<Deliver> searchDeliverRecord(HttpServletRequest req) {
+	public List<Deliver> searchDeliverRecord(Page page) {
 
-		return deliverService.searchDeliverRecord(req.getParameter("keyword"));
+		return deliverService.searchDeliverRecord(page);
+	}
+	
+	@RequestMapping(value="/searchDeliverRecordCount")
+	@ResponseBody
+	//查找 符合关键字   记录数量
+	public Page searchDeliverRecordCount(Page page) {
+
+		return deliverService.searchDeliverRecordCount(page);
 	}
 }
