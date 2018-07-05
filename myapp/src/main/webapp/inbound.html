@@ -666,7 +666,21 @@
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
            	 				});
-                      		
+                      		//初始化类别显示页面
+                       		$.ajax({
+                     			type:'GET',
+                       			contentType:"allication/json",
+                         		dataType: "json",
+                         		url:'/product/showAllProductType',
+                         		success: function(data){
+                         			for(var o in data){
+                         				$("#typeUl").append('<li class="nav-item">'+
+                                         '<a href="javascript:void(0)" class="nav-link">'+
+                                         '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
+                         			}
+                         		}
+                     		});
+                      		//当前类别
                     		$("#typeUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
                     			$(this).addClass("active");
@@ -675,6 +689,13 @@
                     		 $("#home").on("click",function(){
                        		  window.location.reload();
                        	  });
+                    		 //2次进货差价
+                    		 $("#optionUl").on("click","li a",function(){
+                     			$("#typeUl li a").removeClass("active");
+                     			$("#optionUl li a").removeClass("active");
+                     			$(this).addClass("active");
+                    			showContent("price","/price/showAllPriceRecordCount","/price/showAllPriceRecord");
+                    		 });
                       	});
               		</script>
               

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cn.myapp.dao.PriceDao;
 import cn.myapp.dao.StoreDao;
+import cn.myapp.model.Page;
 import cn.myapp.model.Price;
 import cn.myapp.service.PriceService;
 @Service("PriceService")
@@ -21,10 +22,11 @@ public class PriceServiceImpl implements PriceService {
 	private StoreDao storeDao;
 	@Override
 	//获取所有price表所有记录 
-	public List<Price> getAllPriceRecord() {
+	public List<Price> getAllPriceRecord(Page page) {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		List<Price> list = new ArrayList<Price>();
-		list = priceDao.selectAllPriceRecord();
+		page.setPageOffset();
+		list = priceDao.selectAllPriceRecord(page);
 		for(int i=0;i<list.size();i++) {
 			if(storeDao.selectTwoLastStoreRecord(list.get(i).getBrand(), list.get(i).getModel()).size() == 1) {
 				list.get(i).setDateNow("无更新");
@@ -38,6 +40,12 @@ public class PriceServiceImpl implements PriceService {
 			}
 		}
 		return list;
+	}
+	//获取所有price表所有记录  数量
+	@Override
+	public Page getAllPriceRecordCount(Page page) {
+		page.setPageCount(priceDao.selectAllPriceRecordCount(page));
+		return page;
 	}
 
 }

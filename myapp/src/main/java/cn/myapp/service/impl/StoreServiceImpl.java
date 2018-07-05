@@ -73,6 +73,7 @@ public class StoreServiceImpl implements StoreService {
         while ( m.find() ) {
             arr.add(m.group());
         }
+        page.setPageOffset();
       //此处有逻辑错误 
         if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == false) {
         	page.setModel(arr.get(0));

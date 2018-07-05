@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> list = new ArrayList<Product>();
 		ArrayList<String> arr = new ArrayList<String>();
 		page.setPageOffset();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\\\-]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());

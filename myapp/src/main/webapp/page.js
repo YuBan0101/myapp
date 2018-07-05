@@ -22,20 +22,7 @@ function showContent(pageindex,counturl,url,type,key){
                 			}
                 		}
               		});
-              		//初始化类别显示页面
-              		$.ajax({
-            			type:'GET',
-              			contentType:"allication/json",
-                		dataType: "json",
-                		url:'/product/showAllProductType',
-                		success: function(data){
-                			for(var o in data){
-                				$("#typeUl").append('<li class="nav-item">'+
-                                '<a href="javascript:void(0)" class="nav-link">'+
-                                '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
-                			}
-                		}
-            		});
+              		
             		
         	  		//初始化显示页面
         	  		$.ajax({
@@ -200,11 +187,37 @@ function showStoreTable(data,currentPage){
             			}
 }
 
+function showPriceTable(data,currentPage){
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+            '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>最新进价</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>更新时间</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>上次进价</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>上次进货时间</td>'+
+            '<td class="mailbox-subject" style="text-align:center">两次差价</td></tr>'
+			);
+			for(var i= 0;i<data.length;i++){
+			   $("#plist tbody").append("<tr>"+
+			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].dateNow+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].oldPrice+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].datePass+'</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+(data[i].price-data[i].oldPrice)+'</a></td>'+
+			   '</tr>');
+	       
+		}
+}
+
 function showTableChoose(pageindex,data,currentPage){
 	switch(pageindex){
 		case "product" : showProductTable(data,currentPage); break;
 		case "shortSupplyProduct" :showShortSupplyProductTable (data,currentPage); break;
 		case "store" : showStoreTable(data,currentPage); break;
+		case "price" : showPriceTable(data,currentPage); break;
 		default :break;
 		}
 }

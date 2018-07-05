@@ -67,21 +67,21 @@
   <!-- 获取指定入库记录    数量   limit -->
   <select id="selectThisTypeStoreRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
    select 
-      <include refid="Base_Column_List" />
+      count(*)
      from store where type = #{type,jdbcType=VARCHAR} order by date DESC
   </select>
   
   <!-- 获取查找的 入库记录 数量  -->
   <select id="selectSearchedStoreRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
-    select   ccount(*)
+    select   count(*)
     from store where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%')
   </select>
   <select id="selectSearchedStoreRecordCountByModel" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
-    select   ccount(*)
+    select   count(*)
     from store where  model like CONCAT(CONCAT('%',#{model}),'%')
   </select>
   <select id="selectSearchedStoreRecordCountByBrand" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
-    select   ccount(*)
+    select   count(*)
     from store where brand like CONCAT(CONCAT('%',#{brand}),'%') 
   </select>
   
