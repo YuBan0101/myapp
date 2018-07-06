@@ -1,6 +1,7 @@
 package cn.myapp.service;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.myapp.model.Deliver;
 import cn.myapp.model.Page;
@@ -12,7 +13,11 @@ public interface DeliverService {
 
 	public double getThisMonthDeliverPrice();
 	
+	//获取本月盈利
 	public double getThisMonthProfit();
+	
+	//获取一年 当中所有月份的销售金额
+	public Map<String,Object> getMonthSalesMoney();
 	
 	public Deliver getDeliverRecordAfterAdd(Deliver record);
 	
