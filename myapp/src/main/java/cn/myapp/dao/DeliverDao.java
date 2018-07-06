@@ -1,9 +1,11 @@
 package cn.myapp.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.myapp.model.Jsdata;
 import cn.myapp.model.Deliver;
 import cn.myapp.model.Page;
 import cn.myapp.model.Product;
@@ -24,6 +26,10 @@ public interface DeliverDao {
     int selectThisMonthDeliverCount();
     
     double selectThisMonthDeliverPrice();
+    
+    //获取一年中的月份 销售金额
+    List<Jsdata> selectMonthSalesMoney();
+    
     
     double selectThisMonthProfit();
     

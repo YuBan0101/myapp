@@ -3,7 +3,9 @@ package cn.myapp.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,7 @@ import cn.myapp.dao.DeliverDao;
 import cn.myapp.dao.PriceDao;
 import cn.myapp.dao.ProductDao;
 import cn.myapp.dao.StoreDao;
+import cn.myapp.model.Jsdata;
 import cn.myapp.model.Deliver;
 import cn.myapp.model.Page;
 import cn.myapp.service.DeliverService;
@@ -179,6 +182,26 @@ public class DeliverServiceImpl implements DeliverService{
 	public Page getThisTypeDeliverRecordCount(Page page) {
 		page.setPageCount(deliverDao.selectThisTypeDeliverRecordCount(page));
 		return page;
+	}
+	
+	@Override
+	//获取一年中的月份 销售金额
+	public Map<String,Object> getMonthSalesMoney() {
+		List<Jsdata> list = new ArrayList<Jsdata>();
+		list = deliverDao.selectMonthSalesMoney();
+		ArrayList<Integer> label = new ArrayList<Integer>();
+		ArrayList<Double> datasets = new ArrayList<Double>();
+		for(int i =0;i<list.size();i++) {
+			label.add(list.get(i).getMonth());
+			datasets.add(i,list.get(i).getMoney());
+			//label.add(1);
+			System.out.println(list.get(i).getMonth()+""+list.get(i).getMoney());
+			
+		}
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("labels", label);
+		map.put("datasets", datasets);
+		return map;
 	}
 	
 }

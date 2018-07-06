@@ -8,6 +8,11 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    </resultMap>
+    
+    <resultMap id="TPResultMap" type="cn.myapp.model.Jsdata">
+     <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
     
    
   </resultMap>
@@ -122,8 +127,14 @@
     from deliver where brand like CONCAT(CONCAT('%',#{brand}),'%')
   </select>
   
-  
-  
+  <!-- 获取一年中的月份 销售金额 -->
+  <select id="selectMonthSalesMoney"  resultMap="TPResultMap">
+    select   
+    month(d.date) 'month',sum(p.price*d.count) 'money' from deliver as d,price as p
+    where d.brand = p.brand and d.model = p.model
+    group by month(date)
+    
+  </select>
   
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
