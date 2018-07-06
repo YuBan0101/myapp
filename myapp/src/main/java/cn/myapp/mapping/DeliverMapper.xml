@@ -13,6 +13,7 @@
     <resultMap id="TPResultMap" type="cn.myapp.model.Jsdata">
      <result column="month" jdbcType="INTEGER" property="month" />
     <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="salesmoney" jdbcType="DOUBLE" property="salesMoney" />
     
    
   </resultMap>
@@ -130,7 +131,7 @@
   <!-- 获取一年中的月份 销售金额 -->
   <select id="selectMonthSalesMoney"  resultMap="TPResultMap">
     select   
-    month(d.date) 'month',sum(p.price*d.count) 'money' from deliver as d,price as p
+    month(d.date) 'month',sum(p.price*d.count) 'money',sum(d.count*d.price) 'salesmoney' from deliver as d,price as p
     where d.brand = p.brand and d.model = p.model
     group by month(date)
     

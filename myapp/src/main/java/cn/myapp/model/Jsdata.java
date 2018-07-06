@@ -19,6 +19,16 @@ public class Jsdata {
 	public void setMoney(double money) {
 		this.money = money;
 	}
+	
+	private double salesMoney;
+
+	public double getSalesMoney() {
+		return salesMoney;
+	}
+
+	public void setSalesMoney(double salesMoney) {
+		this.salesMoney = salesMoney;
+	}
 
 	private double money;
 
