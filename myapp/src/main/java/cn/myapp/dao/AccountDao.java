@@ -29,7 +29,7 @@ public interface AccountDao {
     //获取账单信息
     List<Account> selectAccountInfo(Page record);
     
-    
-    
+    //获取账单信息 数量
+    int selectAccountInfoCount();
     
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myapp.dao.AccountMapper">
+<mapper namespace="cn.myapp.dao.AccountDao">
   <resultMap id="BaseResultMap" type="cn.myapp.model.Account">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -26,6 +26,11 @@
     select 
     <include refid="Base_Column_List" />
     from account order by date DESC limit #{pageOffset},#{pageSize}
+  </select>
+  
+   <!-- 获取账单信息 数量 -->
+  <select id="selectAccountInfoCount"  resultType="java.lang.Integer">
+    select  count(*)  from account 
   </select>
   
   

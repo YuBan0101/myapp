@@ -24,4 +24,8 @@ public interface AccountService {
     
     //获取选中账单信息
     Account getSelectedAccount(Integer id);
+    
+  //获取选中账单信息 数量
+    Page getSelectAccountInfoCount(Page record);
+
 }

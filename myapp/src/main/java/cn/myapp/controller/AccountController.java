@@ -34,7 +34,14 @@ public class AccountController {
 		return accountService.getAccountInfo(record);
 	}
 	
-	
+	@RequestMapping(value="/showAccountInfoCount",method = RequestMethod.GET)
+	@ResponseBody
+	//获取账单数量
+	public Page showAccountInfoCount(Page record) {
+		
+		
+		return accountService.getSelectAccountInfoCount(record);
+	}
 	
 	
 

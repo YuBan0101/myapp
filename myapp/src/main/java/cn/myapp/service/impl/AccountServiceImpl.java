@@ -84,5 +84,14 @@ public class AccountServiceImpl implements AccountService {
 		
 		return account;
 	}
+
+	
+	
+	//获取账单数量
+	@Override
+	public Page getSelectAccountInfoCount(Page record) {
+		record.setPageCount(accountDao.selectAccountInfoCount());
+		return record;
+	}
 }
 	
