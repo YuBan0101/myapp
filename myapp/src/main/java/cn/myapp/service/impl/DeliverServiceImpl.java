@@ -189,17 +189,14 @@ public class DeliverServiceImpl implements DeliverService{
 	public Map<String,Object> getMonthSalesMoney() {
 		List<Jsdata> list = new ArrayList<Jsdata>();
 		list = deliverDao.selectMonthSalesMoney();
-		ArrayList<Integer> label = new ArrayList<Integer>();
+		ArrayList<String> label = new ArrayList<String>();
 		List<Object> datasets = new ArrayList<Object>();
 		ArrayList<Double> data1 = new ArrayList<Double>();
 		ArrayList<Double> data2 = new ArrayList<Double>();
 		for(int i =0;i<list.size();i++) {
-			label.add(list.get(i).getMonth());
+			label.add(list.get(i).getMonth()+" 月");
 			data1.add(i,list.get(i).getMoney());
 			data2.add(i,list.get(i).getSalesMoney());
-			//label.add(1);
-			System.out.println(list.get(i).getMonth()+""+list.get(i).getMoney());
-			
 		}
 		datasets.add(data1);
 		datasets.add(data2);
