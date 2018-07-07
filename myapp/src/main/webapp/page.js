@@ -239,6 +239,29 @@ function showDeliverTable(data,currentPage){
 		}
 }
 
+function showAccountinfoTable(data,currentPage){
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>详细信息</td>'+
+            '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>赊帐金额</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>联系电话</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>日期</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>备注信息</td>'+
+            '<td class="mailbox-subject" style="text-align:center">状态</td></tr>'
+			);
+			for(var i= 0;i<data.length;i++){
+			   $("#plist tbody").append("<tr>"+
+			   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].content+'</a></td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].money+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].phone+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].dateString+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].remark+'</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].statusString+'</a></td>'+
+			   '</tr>');
+	       
+		}
+}
+
 function showTableChoose(pageindex,data,currentPage){
 	switch(pageindex){
 		case "product" : showProductTable(data,currentPage); break;
@@ -246,6 +269,7 @@ function showTableChoose(pageindex,data,currentPage){
 		case "store" : showStoreTable(data,currentPage); break;
 		case "price" : showPriceTable(data,currentPage); break;
 		case "deliver" : showDeliverTable(data,currentPage); break;
+		case "account" : showAccountinfoTable(data,currentPage); break;
 		default :break;
 		}
 }
