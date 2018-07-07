@@ -16,6 +16,26 @@ public class Account {
     private String phone;
 
     private String remark;
+    
+    private String statusString;
+    
+    public String getStatusString() {
+		return statusString;
+	}
+
+	public void setStatusString(String statusString) {
+		this.statusString = statusString;
+	}
+
+	public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
+
+	private String dateString;
 
     public Integer getId() {
         return id;

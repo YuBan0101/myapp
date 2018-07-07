@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>补仓&售罄</title>
+  <title>记账本</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -25,10 +25,33 @@
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  
+  <style>
+  .box{
+  	position:absolute;
+    width:55%; top:20%; left:25%; padding:20px;
+    height:auto; border:2px solid orange;
+    z-index:1002; overflow:auto;
+    background-color :white;
+    display:none;            /* 默认对话框隐藏 */
+   }
+   .boxback{
+   	 display: block; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.2; 
+            opacity:.20; 
+            filter: alpha(opacity=20); 
+   }
+  </style>
   <script type="text/javascript" src ="./plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
+<div  id="boxback" class="">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -106,7 +129,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./product.html" class="nav-link active">
+                <a href="./product.html" class="nav-link ">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>售罄商品</p>
                 </a>
@@ -148,7 +171,7 @@
           
           <li class="nav-header">出入库管理</li>
           <li class="nav-item">
-            <a href="./inbound.html" class="nav-link">
+            <a href="./inbound.html" class="nav-link active">
               <i class="nav-icon fa fa-tree"></i>
               <p>
                 入库登记
@@ -156,7 +179,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="./outbound.html" class="nav-link">
+            <a href="./outbound.html" class="nav-link ">
               <i class="nav-icon fa fa-envelope-o"></i>
               <p>
                 出库登记
@@ -165,16 +188,7 @@
             </a>
             
           </li>
-          <li class="nav-item">
-            <a href="./account.html" class="nav-link">
-              <i class="nav-icon fa fa-envelope-o"></i>
-              <p>
-                记账小本本
-               
-              </p>
-            </a>
-            
-          </li>
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -191,15 +205,15 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>补仓&售罄</h1>
+            <h1>记账本</h1>
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
-          $("document").ready(function(){
+         /*  $("document").ready(function(){
         	  $("#home").on("click",function(){
         		  window.location.reload();
         	  });
-          });
+          }); */
           </script>
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a id ="home" href="#">刷新页面</a></li>
@@ -214,7 +228,7 @@
 
   <!-- 商品分类type初始化 -->
 <script type="text/javascript">
-/*$("document").ready(function(){
+	/* $("document").ready(function(){
 		$.ajax({
 			type:'GET',
   			contentType:"allication/json",
@@ -231,122 +245,52 @@
 		
 		$("#typeUl").on("click","li a",function(){
 			$("#typeUl li a").removeClass("active");
+			$("#optionUl li a").removeClass("active");
 			$(this).addClass("active");
-			 $.ajax({
+			$.ajax({
 				type:'GET',
 	  			contentType:"allication/json",
 	  			data:{type:$(this).text().trim()},
 	    		dataType: "json",
-	    		url:'/product/showThisTypeShortSupplyProduct',
+	    		url:'/store/showThisTypeStoreRecord',
 	    		success: function(data){
 	    			
 	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
 	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>库存余量</td>'+
-	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
+	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库单价</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库小计</td>'+
+	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
+	                    '<td class="mailbox-subject" style="text-align:center">入库时间</td></tr>'
 	    				);
 	    				for(var i= 0;i<data.length;i++){
-	    					if(data[i].count == 0){
-	    						$("#plist tbody").append("<tr>"+
-	    			    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
-	    			    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
-	    			    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    			    				   '<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">库存已空！</a></td>'+
-	    			    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
-	    			    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
-	    			    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
-	    			    				   '</tr>');
-	    					}else {
 	    				   $("#plist tbody").append("<tr>"+
-	    				   '<td class="mailbox-subject" style="text-align:center">'+data[i].id+'</td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-	    				   '<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[i].count+' 个</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
 	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
-	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
-	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
+	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 	    				   '</tr>');
-	    				}
+	    		       
 	    			}
 	    		}
-	    	  }); 
+	    	  });
 	       });
 		
-	});*/
+	}); */
 </script>
 
 
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-3">
-         
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title" id="typec"><a href="javascript:viod(0)" style ="color:black">商品分类</a></h3>
-                 <script type="text/javascript">
-       				/*    $("document").ready(function(){
-        				  $("#typec").on("click",function(){
-        					  window.location.reload();
-        	 		 });
-        		  }); */
-          </script>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body p-0">
-              <ul class="nav nav-pills flex-column" id="typeUl">
-                <li class="active"></li>
-              </ul>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /. box -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Labels</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body p-0">
-              <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o text-danger"></i>
-                    Important
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o text-warning"></i> Promotions
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o text-primary"></i>
-                    Social
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
+  
         <div class="col-md-9">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">短缺产品</h3>
+              <h3 class="card-title">记账本</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" id="ss">
@@ -354,33 +298,36 @@
                   <div class="input-group-append">
                   
                   <script type="text/javascript">
-                  	/* $("document").ready(function(){
+                  /* 	$("document").ready(function(){
                   		$("#search").on("click",function(){
                   			$.ajax({
                   				type:'GET',
                       			contentType:"allication/json",
                         		dataType: "json",
                         		data:{keyword:$("#ss input").val().trim()},
-                        		url:'/product/searchProduct',
+                        		url:'/store/searchStoreRecord',
                         		success: function(data){
-                        			$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>'+
-                    	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>'+
-                    	                    '<td class="mailbox-subject" style="text-align:center">最后一次入库时间</td></tr>'
-                    	    				);
-                        			for(var o in data){
-                        				$("#plist tbody").append("<tr>"+
-                        				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                        				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].count+'</a></td>'+
-                        				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                        				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-                        				'</tr>');
+                        			
+	    				$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
+	                    '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库单价</td>'+
+						'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库小计</td>'+
+	                    '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
+	                    '<td class="mailbox-subject" style="text-align:center">入库时间</td></tr>'
+	    				);
+	    				for(var i= 0;i<data.length;i++){
+	    				   $("#plist tbody").append("<tr>"+
+	    				   '<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+	    				   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+						   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+	    				   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+	    				   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
+	    				   '</tr>');
                         			}
                         		}
                       		});
@@ -405,9 +352,14 @@
                 <!-- /.btn-group -->
               <!--   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> --> 
                 <div class="float-right">
-                 <span> 1-50/200</span>
-                    <input  type="text" hidden="hidden" name="currentPage" value="1"  />
-                     <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+                    <span> 1-50/200</span>
+                 
+                 <!--  撒旦 -->
+                  <input  type="text" hidden="hidden" name="currentPage" value="1"  />
+                  <input  type="text" hidden="hidden" name="pageCount" value="1"  />
+                  
+                  
+                  
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -423,30 +375,19 @@
               			type:'GET',
               			contentType:"allication/json",
                 		dataType: "json",
-                		url:'/product/showAllShortSupplyProduct',
+                		url:'/store/showAllStoreRecord',
                 		success: function(data){
-                			for(var o in data){
-                				if(data[o].count == 0){
-                					$("#plist tbody").append("<tr>"+
-                            				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                            				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                            				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">库存已空！</a></td>'+
-                            				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                            				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
-                            				'</tr>');
-                				}else {
+                			for(var i= 0;i<data.length;i++){
                 				$("#plist tbody").append("<tr>"+
-                				'<td class="mailbox-subject" style="text-align:center">'+data[o].id+'</td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].brand+'</a></td>'+
-                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[o].model+'</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[o].count+' 个</a></td>'+
-                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[o].type+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastDeliverDate+'</a></td>'+
-                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[o].lastStoreDate+'</a></td>'+
+                				'<td class="mailbox-subject" style="text-align:center">'+(i+1)+'</td>'+
+                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
+                				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
+                				'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].count+'</a></td>'+
+								'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].price+'</a></td>'+
+								'<td class="mailbox-name" style="text-align:center"><a href="#" ">'+data[i].count*data[i].price+'</a></td>'+
+                				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
+                				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
                 				'</tr>');
-                				}
                 			}
                 		}
               		});
@@ -459,11 +400,12 @@
                     <td class="mailbox-subject" style="text-align:center">ID</td>
                     <td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>
                     <td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>
-                    <td class="mailbox-subject" style="text-align:center"><a href="#"></a>库存余量</td>
-                    <td class="mailbox-attachment" style="text-align:center">产品类型</td>
-                    <td class="mailbox-subject" style="text-align:center">最后一次出库时间</td>
-                    <td class="mailbox-subject" style="text-align:center">最后一次入库时间</td>
-                  
+                    <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库数量</td>
+					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库单价</td>
+					  <td class="mailbox-subject" style="text-align:center"><a href="#"></a>入库小计</td>
+					  <td class="mailbox-attachment" style="text-align:center">产品类型</td>
+                    <td class="mailbox-subject" style="text-align:center">入库时间</td>
+					  </tr>
                   </tbody>
                 </table>
                 <!-- /.table -->
@@ -476,7 +418,7 @@
                 
               <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="float-right">
-                  <span> 1-50/200</span>
+                 <span> 1-50/200</span>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                     <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
@@ -489,10 +431,7 @@
           </div>
           <!-- /. box -->
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
+
     <!-- /.content -->
   </div>
 	
@@ -511,43 +450,123 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+<!-- 登记出库 -->
+<script>  
+        function msgbox(n){
+            document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+            if(n==1){
+              $("#boxback").addClass("boxback");
+            }
+            else{
+            	$("#boxback").removeClass("boxback");
+            }
+        } 
+        </script>
+        <script type="text/javascript">
+        $("document").ready(function(){
+        	 $("#sub").on("click",function(){
+        			$.ajax({
+                		type:'POST',
+                		dataType: 'json',
+                		url:'/store/showStoreRecordAfterAdd',
+                		data:{"brand":$("#fd input[name='brand']").val().trim(),
+                			  "model":$("#fd input[name='model']").val().trim(),
+                			  "price":$("#fd input[name='price']").val().trim(),
+                			  "count":$("#fd input[name='count']").val().trim(),
+                			  "type":$("#fd input[name='type']").val().trim()
+                			 },
+                		success: function(data){
+                			alert("登记成功");
+                			msgbox(0);
+                			window.location.reload();
+                		 }
+                	});
+        		});
+        	 
+             	$.ajax({
+         			type:'GET',
+           			contentType:"allication/json",
+             		dataType: "json",
+             		url:'/product/showAllProductType',
+             		success: function(data){
+             			$("#typelist").html("");
+             			for(var o in data){
+             				$("#typelist").append(' <option>'+data[o]+'</option>');
+             			}
+             		}
+             });
+        	 
+        });
+        
+     </script> 
+</div>
+<div class="card-body register-card-body box" id="inputbox">
+	<div style="padiing-top:10%">
+      <p class="login-box-msg">登记入库</p>
+	
+      <form action="#" method="post" id="fd">
+        <div class="form-group has-feedback">
+       	  产品品牌：	
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
+        </div>
+         <div class="form-group has-feedback">
+      	    产品型号：                 
+          <input type="text" class="form-control" placeholder="型号" name="model">
+        </div>
+         <div class="form-group has-feedback">
+    	     进价：                 
+           <input type="text" class="form-control" placeholder="进价" name="price">
+        </div>
+        <div class="form-group has-feedback">
+    	     数量：<label>
+           <input type="text" class="form-control" placeholder="请输入数量" name="count" >
+           </label>
+        </div>
+        <div class="form-group has-feedback">
+    	     分类：      
+    	    <label>
+           <input type="text" list="typelist" class="form-control" placeholder="产品分类" name="type">
+           <datalist id="typelist">
+  			  <option>item1</option>
+   		      <option>item2</option>
+           </datalist> 
+           </label>
+        </div>
+        <br/><br/>
+        <div class="row">
+          <div class="col-4">
+                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox(0)"> 取消 </button>
+          </div>
+          <!-- /.col -->
+          <div class="col-4" style="margin-left:310px;">
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+      </form>
+</div>
+    </div>
+    <!-- /.form-box -->
+
    <!-- 分页 -->
               		<script type="text/javascript" src="./page.js"></script>
               		<script type="text/javascript">
-              			$("document").ready(showContent("shortSupplyProduct","/product/showAllShortSupplyProductCount","/product/showAllShortSupplyProduct"));
+              			$("document").ready(showContent("account","/account/showAccountInfoCount","/account/showAccountInfo"));
               			$("document").ready(function(){
                       		$("#search").on("click",function(){
-                      			showContent("shortSupplyProduct","/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
+                      			showContent("store","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss input").val().trim());
                       		});
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
            	 				});
-                      		//初始化类别显示页面
-                       		$.ajax({
-                     			type:'GET',
-                       			contentType:"allication/json",
-                         		dataType: "json",
-                         		url:'/product/showAllProductType',
-                         		success: function(data){
-                         			for(var o in data){
-                         				$("#typeUl").append('<li class="nav-item">'+
-                                         '<a href="javascript:void(0)" class="nav-link">'+
-                                         '<i class="fa fa-inbox"></i>   '+ data[o]+'</a></li>');
-                         			}
-                         		}
-                     		});
-                    		$("#typeUl").on("click","li a",function(){
-                    			$("#typeUl li a").removeClass("active");
-                    			$(this).addClass("active");
-                    			showContent("shortSupplyProduct","/product/showThisTypeShortSupplyProductCount","/product/showThisTypeShortSupplyProduct",$(this).text().trim());
-                    	       });
-                    		 $("#home").on("click",function(){
-                       		  window.location.reload();
-                       	  });
                       	});
               		</script>
               
               <!-- 分页 -->
+
+
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

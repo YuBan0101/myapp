@@ -19,6 +19,16 @@
     from account
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
+  <!-- 获取账单信息 -->
+  <select id="selectAccountInfo"  parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account order by date DESC limit #{pageOffset},#{pageSize}
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where id = #{id,jdbcType=INTEGER}
@@ -114,4 +124,14 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 结账 -->
+   <update id="updateStatusById" parameterType="cn.myapp.model.Account">
+    update account
+    set 
+      status = #{status,jdbcType=TINYINT}
+    	where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
 </mapper>
