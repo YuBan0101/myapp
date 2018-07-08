@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>出库登记</title>
+  <title>记账本</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -214,7 +214,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>出库登记</h1>
+            <h1>记账本</h1>
           </div>
           <div class="col-sm-6">
           <script type="text/javascript">
@@ -362,7 +362,7 @@
         <div class="col-md-9">
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">销售（出库）记录</h3>
+              <h3 class="card-title">记账本</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" id="ss">
@@ -617,6 +617,16 @@
            						  window.location.reload();
            	 				});
                       	});
+              			
+              			
+              			$(function(){
+              				
+              				$("#plist tbody tr[name='d2']").hide();
+              				$("#plist tbody tr[name='d1']").on("click",function(){
+              					$(this).next().toggle();
+              				})
+              			})
+              			
               		</script>
               
               <!-- 分页 -->
