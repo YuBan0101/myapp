@@ -344,14 +344,14 @@
                 <li class="nav-item">
                   <a href="javascript:void(0);" onclick="msgbox(1)" class="nav-link">
                     <i class="fa fa-circle-o text-danger"></i>
-                                                                 更新/结账
+                                                                 更新账单
                   </a>
                 </li>
                
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="javascript:void(0);" onclick="commit()" class="nav-link">
                     <i class="fa fa-circle-o text-primary"></i>
-                    Social
+                    结账
                   </a>
                 </li>
               </ul>
@@ -561,6 +561,28 @@
               		</script>
               
               <!-- 分页 -->
+
+<!-- 结账 -->
+<script type="text/javascript">
+function commit(){
+	$(function(){
+		 $.ajax({
+    			type:'GET',
+      			contentType:"allication/json",
+        		dataType: "json",
+        		data:{"id":$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").val(),
+        			"status":0},
+        		url:'/account/changeStatus',
+        		success: function(data){
+        				alert($("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent("tr").find("td[name='status'] a").val());
+        					$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent().siblings("[name='status'] a").val("已结清");
+        					
+        		}
+        });
+		
+	});
+}
+</script>
 
 
 

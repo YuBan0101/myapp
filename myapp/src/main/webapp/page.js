@@ -267,7 +267,7 @@ function showAccountinfoTable(data,currentPage){
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].phone+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].dateString+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].remark+'</a></td>'+
-			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].statusString+'</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center" name="status"><a href="#">'+data[i].statusString+'</a></td>'+
                '</tr><tr name="d2"><td></td><td colspan ="8" class="mailbox-subject">'+data[i].content+'</td></tr>');
 	       
 		}
