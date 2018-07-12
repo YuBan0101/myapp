@@ -516,6 +516,11 @@
               		<script type="text/javascript">
               			$("document").ready(showContent("shortSupplyProduct","/product/showAllShortSupplyProductCount","/product/showAllShortSupplyProduct"));
               			$("document").ready(function(){
+              				$("#ss input").keyup(function(event){
+                  				if(event.keyCode == 13){
+                  					$("#search").click();
+                  					}
+                  				});
                       		$("#search").on("click",function(){
                       			showContent("shortSupplyProduct","/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
                       		});

@@ -379,6 +379,11 @@
               		<script type="text/javascript">
               			$("document").ready(showContent("product","/product/showAllProductCount","/product/showAllProduct"));
               			$("document").ready(function(){
+              				$("#ss input").keyup(function(event){
+                  				if(event.keyCode == 13){
+                  					$("#search").click();
+                  					}
+                  				});
                       		$("#search").on("click",function(){
                       			showContent("product","/product/searchProductCount","/product/searchProduct","",$("#ss input").val().trim());
                       		});
