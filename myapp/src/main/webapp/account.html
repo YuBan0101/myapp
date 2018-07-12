@@ -574,9 +574,8 @@ function commit(){
         			"status":0},
         		url:'/account/changeStatus',
         		success: function(data){
-        				alert($("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent("tr").find("td[name='status'] a").val());
-        					$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent().siblings("[name='status'] a").val("已结清");
-        					
+/*         					$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent().siblings("[name='status'] a").val("已结清");
+ */        					window.location.reload();
         		}
         });
 		
