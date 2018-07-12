@@ -193,10 +193,18 @@ public class DeliverServiceImpl implements DeliverService{
 		List<Object> datasets = new ArrayList<Object>();
 		ArrayList<Double> data1 = new ArrayList<Double>();
 		ArrayList<Double> data2 = new ArrayList<Double>();
-		for(int i =0;i<list.size();i++) {
-			label.add(list.get(i).getMonth()+" 月");
-			data1.add(i,list.get(i).getMoney());
-			data2.add(i,list.get(i).getSalesMoney());
+		for(int i =1,j=0 ;i< 12 && j <list.size();i++) {
+			if(list.get(j).getMonth() == i) {
+			label.add(list.get(j).getMonth()+" 月");
+			data1.add(i-1,list.get(j).getMoney());
+			data2.add(i-1,list.get(j).getSalesMoney());
+			j++;
+			}else {
+				label.add(i+" 月");
+				data1.add(i-1,0.0);
+				data2.add(i-1,0.0);
+			}
+			
 		}
 		datasets.add(data1);
 		datasets.add(data2);
