@@ -2,6 +2,7 @@ package cn.myapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -49,7 +50,12 @@ public class AccountServiceImpl implements AccountService {
 	//修改账单信息
 	@Override
 	public int changeAccountInfo(Account record) {
-		
+		if(record.getStatusString() == "已支付") {
+			record.setStatus((byte) 0);
+		}else {
+			record.setStatus((byte) 1);
+		}
+		record.setDate(new Date());
 		return accountDao.updateByPrimaryKeySelective(record);
 	}
 	
@@ -58,7 +64,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	//新增账单
 	public int addAccount(Account record) {
-		
+		record.setStatus((byte) 1);
+		record.setDate(new Date());
 		return accountDao.insertSelective(record);
 	}
 
@@ -92,6 +99,14 @@ public class AccountServiceImpl implements AccountService {
 	public Page getSelectAccountInfoCount(Page record) {
 		record.setPageCount(accountDao.selectAccountInfoCount());
 		return record;
+	}
+
+	
+	//获取账单状态 by id
+	@Override
+	public Account getSelectAccountInfoById(Account record) {
+		return accountDao.selectByPrimaryKey(record.getId());
+		
 	}
 }
 	

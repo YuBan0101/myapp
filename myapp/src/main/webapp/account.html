@@ -48,6 +48,7 @@
             filter: alpha(opacity=20); 
    }
   </style>
+ 
   <script type="text/javascript" src ="./plugins/jquery/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -335,17 +336,18 @@
             </div>
             <div class="card-body p-0">
               <ul class="nav nav-pills flex-column">
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="msgbox1(1)"  class="nav-link">
+                    <i class="fa fa-circle-o text-warning"></i> 新建账单
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a href="javascript:void(0);" onclick="msgbox(1)" class="nav-link">
                     <i class="fa fa-circle-o text-danger"></i>
-                                                                 登记出售
+                                                                 更新/结账
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o text-warning"></i> Promotions
-                  </a>
-                </li>
+               
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="fa fa-circle-o text-primary"></i>
@@ -530,82 +532,8 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<!-- 登记出库 -->
-<script>  
-        function msgbox(n){
-            document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
-            if(n==1){
-              $("#boxback").addClass("boxback");
-            }
-            else{
-            	$("#boxback").removeClass("boxback");
-            }
-        } 
-        </script>
-        <script type="text/javascript">
-        $("document").ready(function(){
-        	 $("#sub").on("click",function(){
-        			$.ajax({
-                		type:'POST',
-                		dataType: 'json',
-                		url:'/deliver/showDeliverRecordAfterAdd',
-                		data:{"brand":$("#fd input[name='brand']").val().trim(),
-                			  "model":$("#fd input[name='model']").val().trim(),
-                			  "price":$("#fd input[name='price']").val().trim(),
-                			  "count":$("#fd input[name='count']").val().trim()
-                			 },
-                		success: function(data){
-                			alert("登记成功");
-                			msgbox(0);
-                			window.location.reload();
-                		 }
-                	});
-        		});
-        	});
-     </script> 
 
-
-
-</div>
-<div class="card-body register-card-body box" id="inputbox">
-	<div style="padiing-top:10%">
-      <p class="login-box-msg">登记出售</p>
-	
-      <form action="#" method="post" id="fd">
-        <div class="form-group has-feedback">
-       	  产品品牌：	
-          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
-        </div>
-         <div class="form-group has-feedback">
-      	    产品型号：                 
-          <input type="text" class="form-control" placeholder="型号" name="model">
-        </div>
-         <div class="form-group has-feedback">
-    	     售价：                 
-           <input type="text" class="form-control" placeholder="售价" name="price">
-        </div>
-        <div class="form-group has-feedback">
-    	     个(米)数：                 
-           <input type="text" class="form-control" placeholder="默认为1个，可不填" name="count" value ="1">
-        </div>
-        <br/><br/>
-        <div class="row">
-          <div class="col-4">
-                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox(0)"> 取消 </button>
-          </div>
-          <!-- /.col -->
-          <div class="col-4" style="margin-left:310px;">
-            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
-          </div>
-          <!-- /.col -->
-        </div>
-        
-      </form>
-</div>
-    </div>
-    <!-- /.form-box -->
-
-   <!-- 分页 -->
+<!-- 分页 -->
               		<script type="text/javascript" src="./page.js"></script>
               		<script type="text/javascript">
               			$("document").ready(showContent("account","/account/showAccountInfoCount","/account/showAccountInfo"));
@@ -623,7 +551,14 @@
               				
               				$("#plist tbody tr[name='d2']").hide();
               				$("#plist tbody tr[name='d1']").on("click",function(){
-              					$(this).next().toggle();
+              					if($(this).find("input").is(":checked") != true){
+              						$(this).find("input").prop("checked",true);
+              						$(this).next().show();
+              					}else{
+              						$(this).find("input").prop("checked",false);
+              						$(this).next().hide();
+              					}
+              					
               				})
               			})
               			
@@ -631,6 +566,218 @@
               
               <!-- 分页 -->
 
+
+
+<!-- 更新账单信息 -->
+<script>  
+        function msgbox(n){
+            document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+            if(n==1){
+              $("#boxback").addClass("boxback");
+              $(function(){
+                  //获取status
+                  $.ajax({
+           			type:'GET',
+             			contentType:"allication/json",
+               		dataType: "json",
+               		data:{"id":$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").val()},
+               		url:'/account/showUpdateInfo',
+               		success: function(data){
+               			
+               				if(data.status == 1){
+               					$("#statuslist").append(' <option>未结账</option>');
+               					$("#fd input[name='status']").val("未结账");
+               				}else{
+               					$("#statuslist").append(' <option>已结账</option>');
+               					$("#fd input[name='status']").val("已结账");
+               					}
+               				
+               				$("#fd textarea[name='content']").val(data.content);
+              			    $("#fd input[name='phone']").val(data.phone);
+              			    $("#fd input[name='money']").val(data.money);
+              			    $("#fd textarea[name='remark']").val(data.remark);
+              			    $("#fd input[name='id']").val(data.id);
+               			
+               		}
+               });
+              });
+             
+            }
+            else{
+            	$("#boxback").removeClass("boxback");
+            }
+           
+        } 
+        </script>
+        <script type="text/javascript">
+        $("document").ready(function(){
+        	 $("#sub").on("click",function(){
+        			$.ajax({
+                		type:'POST',
+                		dataType: 'json',
+                		url:'/account/showAccountInfoChange',
+                		data:{"content":$("#fd textarea[name='content']").val().trim(),
+                			  "phone":$("#fd input[name='phone']").val().trim(),
+                			  "statusString":$("#fd input[name='status']").val().trim(),
+                			  "money":$("#fd input[name='money']").val().trim(),
+                			  "remark":$("#fd textarea[name='remark']").val().trim(),
+                			  "id":$("#fd input[name='id']").val().trim()
+                			 },
+                		success: function(data){
+                			msgbox(0);
+                			window.location.reload();
+                		 }
+                	});
+     		});
+        	 $("#sub2").on("click",function(){
+     			$.ajax({
+             		type:'POST',
+             		dataType: 'json',
+             		url:'/account/showAccountInfoChange',
+             		data:{"content":$("#fd textarea[name='content']").val().trim(),
+             			  "phone":$("#fd input[name='phone']").val().trim(),
+             			  "statusString":$("#fd input[name='status']").val().trim(),
+             			  "money":$("#fd input[name='money']").val().trim(),
+             			  "remark":$("#fd textarea[name='remark']").val().trim(),
+             			  "id":$("#fd input[name='id']").val().trim()
+             			 },
+             		success: function(data){
+             			msgbox(0);
+             			window.location.reload();
+             		 }
+             	});
+  		});
+    	});
+        	
+       
+        
+        
+     </script> 
+
+
+
+</div>
+<div class="card-body register-card-body box" id="inputbox">
+	<div style="padiing-top:10%">
+      <p class="login-box-msg">更新账单信息</p>
+	
+      <form action="#" method="post" id="fd">
+      <input hidden="hidden" name="id" value="">
+        <div class="form-group has-feedback">
+       	  详细内容：	
+          <textarea id ="yt"  class="form-control" placeholder="" name="content" ></textarea>
+        </div>
+         <div class="form-group has-feedback">
+      	赊欠金额：                 
+          <input type="text" class="form-control" placeholder="" name="money">
+        </div>
+         <div class="form-group has-feedback">
+    	   联系号码：                 
+           <input type="text" class="form-control" placeholder="" name="phone">
+        </div>
+        <div class="form-group has-feedback">
+    	     备注：                 
+           <textarea  class="form-control" placeholder="" name="remark" ></textarea>
+        </div>
+        <div class="form-group has-feedback">
+    	     状态：
+    	    <label>      
+           <input type="text" list="statuslist" class="form-control" placeholder="" name="status" >
+           <datalist id="statuslist">
+   		      <option>未结账</option>
+   		      <option>已结账</option>
+           </datalist> 
+           </label> 
+        </div>
+        
+        <br/><br/>
+        <div class="row">
+          <div class="col-4">
+                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox(0)"> 取消 </button>
+          </div>
+          <div class="col-4" >
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" >更新账单</button>
+          </div>
+          <!-- /.col -->
+          <div class="col-4" >
+            <button id="sub2" type="button" class="btn btn-primary btn-block btn-flat" > 结账 </button>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+      </form>
+</div>
+    </div>
+    <!-- /.form-box -->
+<script type="text/javascript">
+function msgbox1(n){
+    document.getElementById('inputbox1').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+    if(n==1){
+      $("#boxback").addClass("boxback");
+    }else{
+    	 $("#boxback").removeClass("boxback");  	
+    }
+  }
+  
+$("document").ready(function(){
+	 $("#sub1").on("click",function(){
+			$.ajax({
+       		type:'POST',
+       		dataType: 'json',
+       		url:'/account/addNewAccount',
+       		data:{"content":$("#fd1 textarea[name='content']").val().trim(),
+       			  "phone":$("#fd1 input[name='phone']").val().trim(),
+       			  "money":$("#fd1 input[name='money']").val().trim(),
+       			  "remark":$("#fd1 textarea[name='remark']").val().trim()
+       			 },
+       		success: function(data){
+       			msgbox(0);
+       			window.location.reload();
+       		 }
+       	});
+	});
+});
+</script>
+<div class="card-body register-card-body box" id="inputbox1">
+	<div style="padiing-top:10%">
+      <p class="login-box-msg">新增账单信息填写</p>
+	
+      <form action="#" method="post" id="fd1">
+      <input hidden="hidden" name="id" value="">
+        <div class="form-group has-feedback">
+       	  详细内容：	
+          <textarea id ="yt1"  class="form-control" placeholder="" name="content" ></textarea>
+        </div>
+         <div class="form-group has-feedback">
+      	赊欠金额：                 
+          <input type="text" class="form-control" placeholder="" name="money">
+        </div>
+         <div class="form-group has-feedback">
+    	   联系号码：                 
+           <input type="text" class="form-control" placeholder="" name="phone">
+        </div>
+        <div class="form-group has-feedback">
+    	     备注：                 
+           <textarea  class="form-control" placeholder="" name="remark" ></textarea>
+        </div>
+    
+        
+        <br/><br/>
+        <div class="row">
+          <div class="col-4">
+                <button  style="background-color:red;border:none" type="reset" class="btn btn-primary btn-block btn-flat" onclick ="msgbox1(0)"> 取消 </button>
+          </div>
+          
+          <div class="col-4" >
+            <button id="sub1" type="button" class="btn btn-primary btn-block btn-flat" style="margin-left: 320px;" > 新增账单 </button>
+          </div>
+          <!-- /.col -->
+        </div>
+        
+      </form>
+</div>
+    </div>
+    <!-- /.form-box -->
 
 
 <!-- jQuery UI 1.11.4 -->

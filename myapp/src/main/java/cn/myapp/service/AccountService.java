@@ -28,4 +28,8 @@ public interface AccountService {
   //获取选中账单信息 数量
     Page getSelectAccountInfoCount(Page record);
 
+    //获取账单状态 byID
+	public Account getSelectAccountInfoById(Account record);
+
+	
 }
