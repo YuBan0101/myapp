@@ -86,5 +86,14 @@ public class AccountController {
 		
 		return accountService.getSearchAccountInfoCount(record);
 	}
+	
+	@RequestMapping(value="/changeStatus")
+	@ResponseBody
+	//更新账单 状态
+	public int changeStatus(Account record) {
+		
+		
+		return accountService.changeStatus(record);
+	}
 
 }
