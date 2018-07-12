@@ -129,7 +129,7 @@ function showProductTable(data,currentPage){
 				'<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+'</a></td>'+
+				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+' 台/米</a></td>'+
 				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
@@ -187,9 +187,9 @@ function showStoreTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 			   '</tr>');
@@ -211,11 +211,11 @@ function showPriceTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].dateNow+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].oldPrice+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].oldPrice+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].datePass+'</a></td>'+
-			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+(data[i].price-data[i].oldPrice)+'</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+(data[i].price-data[i].oldPrice)+' 元</a></td>'+
 			   '</tr>');
 	       
 		}
@@ -237,10 +237,10 @@ function showDeliverTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+'</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 			   '</tr>');
@@ -263,7 +263,7 @@ function showAccountinfoTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].content.substring(0,10)+'</a></td>'+
 			   
-			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].money+'</a></td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].money+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].phone+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].dateString+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].remark+'</a></td>'+

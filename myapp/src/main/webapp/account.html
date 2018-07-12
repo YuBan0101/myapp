@@ -574,9 +574,8 @@ function commit(){
         			"status":0},
         		url:'/account/changeStatus',
         		success: function(data){
-        				alert($("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent("tr").find("td[name='status'] a").val());
-        					$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent().siblings("[name='status'] a").val("已结清");
-        					
+/*         					$("#plist tbody tr[name='d1'] input[type='checkbox']:checked").parent().siblings("[name='status'] a").val("已结清");
+ */        					window.location.reload();
         		}
         });
 		
@@ -686,8 +685,9 @@ function commit(){
           <textarea id ="yt"  class="form-control" placeholder="" name="content" ></textarea>
         </div>
          <div class="form-group has-feedback">
-      	赊欠金额：                 
+      	赊欠金额： <label>            
           <input type="text" class="form-control" placeholder="" name="money">
+          </label>  元
         </div>
          <div class="form-group has-feedback">
     	   联系号码：                 
@@ -767,8 +767,9 @@ $("document").ready(function(){
           <textarea id ="yt1"  class="form-control" placeholder="" name="content" ></textarea>
         </div>
          <div class="form-group has-feedback">
-      	赊欠金额：                 
+      	赊欠金额：                 <label>
           <input type="text" class="form-control" placeholder="" name="money">
+          </label>元
         </div>
          <div class="form-group has-feedback">
     	   联系号码：                 
