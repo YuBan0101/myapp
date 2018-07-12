@@ -2,6 +2,7 @@ package cn.myapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 		//更改status 1 为欠账  0 为已还账
 		for(int i=0;i <list.size();i++) {
 			if(list.get(i).getStatus() == 1) {
-				list.get(i).setStatusString("欠账"+list.get(i).getMoney()+" 元");
+				list.get(i).setStatusString("欠款"+list.get(i).getMoney()+" 元");
 			}else {
 				list.get(i).setStatusString("已结清");
 			}
@@ -49,7 +50,12 @@ public class AccountServiceImpl implements AccountService {
 	//修改账单信息
 	@Override
 	public int changeAccountInfo(Account record) {
-		
+		if(record.getStatusString() == "已支付") {
+			record.setStatus((byte) 0);
+		}else {
+			record.setStatus((byte) 1);
+		}
+		record.setDate(new Date());
 		return accountDao.updateByPrimaryKeySelective(record);
 	}
 	
@@ -58,7 +64,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	//新增账单
 	public int addAccount(Account record) {
-		
+		record.setStatus((byte) 1);
+		record.setDate(new Date());
 		return accountDao.insertSelective(record);
 	}
 
@@ -91,6 +98,40 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Page getSelectAccountInfoCount(Page record) {
 		record.setPageCount(accountDao.selectAccountInfoCount());
+		return record;
+	}
+
+	
+	//获取账单状态 by id
+	@Override
+	public Account getSelectAccountInfoById(Account record) {
+		return accountDao.selectByPrimaryKey(record.getId());
+		
+	}
+
+	////获取关键字 账单信息
+	@Override
+	public List<Account> getSearchAccountInfo(Page record) {
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd"); 
+		List<Account> list = new ArrayList<Account>();
+		record.setPageOffset();
+		list = accountDao.selectSearchAccountInfo(record);
+		//更改status 1 为欠账  0 为已还账
+		for(int i=0;i <list.size();i++) {
+			if(list.get(i).getStatus() == 1) {
+				list.get(i).setStatusString("欠账"+list.get(i).getMoney()+" 元");
+			}else {
+				list.get(i).setStatusString("已结清");
+			}
+			list.get(i).setDateString(ft.format(list.get(i).getDate()));
+		}
+		return list;
+	}
+
+	//获取关键字 账单信息 个数
+	@Override
+	public Page getSearchAccountInfoCount(Page record) {
+		record.setPageCount(accountDao.selectSearchAccountInfoCount(record));
 		return record;
 	}
 }

@@ -34,6 +34,20 @@
   </select>
   
   
+   <!-- 获取关键字  账单信息 -->
+  <select id="selectSearchAccountInfo"  parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account where phone=#{key} order by date DESC limit #{pageOffset},#{pageSize}
+  </select>
+  
+   <!-- 获取关键字   账单信息 数量 -->
+  <select id="selectSearchAccountInfoCount"  resultType="java.lang.Integer">
+    select  count(*)  from account  where phone = #{key}
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where id = #{id,jdbcType=INTEGER}
