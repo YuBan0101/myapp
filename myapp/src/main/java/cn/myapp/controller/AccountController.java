@@ -67,5 +67,24 @@ public class AccountController {
 		
 		return accountService.addAccount(record);
 	}
+	
+	
+	@RequestMapping(value="/searchAccount")
+	@ResponseBody
+	//获取账单信息
+	public List<Account> searchAccount(Page record) {
+		
+		
+		return accountService.getSearchAccountInfo(record);
+	}
+	
+	@RequestMapping(value="/searchAccountCount")
+	@ResponseBody
+	//获取账单数量
+	public Page searchAccountCount(Page record) {
+		
+		
+		return accountService.getSearchAccountInfoCount(record);
+	}
 
 }

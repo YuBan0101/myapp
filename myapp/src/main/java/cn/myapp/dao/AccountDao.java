@@ -32,4 +32,10 @@ public interface AccountDao {
     //获取账单信息 数量
     int selectAccountInfoCount();
     
+    //获取关键字 账单信息
+    List<Account> selectSearchAccountInfo(Page record);
+    
+    //获取关键字 账单信息 数量
+    int selectSearchAccountInfoCount(Page record);
+    
 }

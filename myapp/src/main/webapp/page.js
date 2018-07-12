@@ -34,8 +34,10 @@ function showContent(pageindex,counturl,url,type,key){
         	  			data:{'currentPage':currentPage,'pageSize':15,"type":type,"key":key},
         	  			success: function(data){
         	  				showTableChoose(pageindex,data,currentPage);
+        	  				
         	  			}
         	  		});
+        	  		
               		var pageCount = $(".float-right input[name='pageCount']").val();
 						$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
               		if(pageCount < 15){
@@ -56,6 +58,7 @@ function showContent(pageindex,counturl,url,type,key){
 	              			type:'GET',
 	              			contentType:"allication/json",
 	                		dataType: "json",
+	                		async:false,
 	                		url:url,
 	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
 	                		success: function(data){
@@ -68,9 +71,10 @@ function showContent(pageindex,counturl,url,type,key){
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
 	                			showTableChoose(pageindex,data,currentPage);
+	                			hideDiv();
 	                		}
 	              		});
-						
+					
 					}) ;  
 					
               	//像后翻页
@@ -86,6 +90,7 @@ function showContent(pageindex,counturl,url,type,key){
 	              			contentType:"allication/json",
 	                		dataType: "json",
 	                		url:url,
+	                		async:false,
 	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
 	                		success: function(data){
 	                			currentPage = $("input[name='currentPage']").val();
@@ -97,9 +102,13 @@ function showContent(pageindex,counturl,url,type,key){
 	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
 	                			}
 	                			showTableChoose(pageindex,data,currentPage);
+	                			hideDiv();
 	                		}
 	              		});
+						
 					});
+					
+					hideDiv();
 					}); 
 				}
 
@@ -252,7 +261,7 @@ function showAccountinfoTable(data,currentPage){
 			for(var i= 0;i<data.length;i++){
 			   $("#plist tbody").append('<tr name="d1"><td class="mailbox-subject" style="text-align:center"><input type="checkbox" name="aid" value='+data[i].id+'></td></div>'+
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
-			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].content.substring(1)+'</a></td>'+
+			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].content.substring(0,10)+'</a></td>'+
 			   
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].money+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].phone+'</a></td>'+
@@ -264,7 +273,20 @@ function showAccountinfoTable(data,currentPage){
 		}
 }
 
-
+function hideDiv(){
+		
+		$("#plist tbody tr[name='d2']").hide();
+		$("#plist tbody tr[name='d1']").on("click",function(){
+			if($(this).find("input").is(":checked") != true){
+				$(this).find("input").prop("checked",true);
+				$(this).next().show();
+			}else{
+				$(this).find("input").prop("checked",false);
+				$(this).next().hide();
+			}
+			
+		})
+	}
 
 function showTableChoose(pageindex,data,currentPage){
 	switch(pageindex){
@@ -277,3 +299,4 @@ function showTableChoose(pageindex,data,currentPage){
 		default :break;
 		}
 }
+

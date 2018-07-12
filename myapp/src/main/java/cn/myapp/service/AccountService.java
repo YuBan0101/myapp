@@ -31,5 +31,11 @@ public interface AccountService {
     //获取账单状态 byID
 	public Account getSelectAccountInfoById(Account record);
 
+	//获取关键字 账单信息
+	public List<Account> getSearchAccountInfo(Page record);
+
+	//获取关键字 账单信息 个数
+	public Page getSearchAccountInfoCount(Page record);
+
 	
 }

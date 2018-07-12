@@ -108,5 +108,31 @@ public class AccountServiceImpl implements AccountService {
 		return accountDao.selectByPrimaryKey(record.getId());
 		
 	}
+
+	////获取关键字 账单信息
+	@Override
+	public List<Account> getSearchAccountInfo(Page record) {
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd"); 
+		List<Account> list = new ArrayList<Account>();
+		record.setPageOffset();
+		list = accountDao.selectSearchAccountInfo(record);
+		//更改status 1 为欠账  0 为已还账
+		for(int i=0;i <list.size();i++) {
+			if(list.get(i).getStatus() == 1) {
+				list.get(i).setStatusString("欠账"+list.get(i).getMoney()+" 元");
+			}else {
+				list.get(i).setStatusString("已结清");
+			}
+			list.get(i).setDateString(ft.format(list.get(i).getDate()));
+		}
+		return list;
+	}
+
+	//获取关键字 账单信息 个数
+	@Override
+	public Page getSearchAccountInfoCount(Page record) {
+		record.setPageCount(accountDao.selectSearchAccountInfoCount(record));
+		return record;
+	}
 }
 	

@@ -539,28 +539,19 @@
               			$("document").ready(showContent("account","/account/showAccountInfoCount","/account/showAccountInfo"));
               			$("document").ready(function(){
                       		$("#search").on("click",function(){
-                      			showContent("store","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss input").val().trim());
+                      			showContent("account","/account/searchAccountCount","/account/searchAccount","",$("#ss input").val().trim());
                       		});
                       		 $("#typec").on("click",function(){
            						  window.location.reload();
            	 				});
                       	});
               			
+
               			
-              			$(function(){
-              				
-              				$("#plist tbody tr[name='d2']").hide();
-              				$("#plist tbody tr[name='d1']").on("click",function(){
-              					if($(this).find("input").is(":checked") != true){
-              						$(this).find("input").prop("checked",true);
-              						$(this).next().show();
-              					}else{
-              						$(this).find("input").prop("checked",false);
-              						$(this).next().hide();
-              					}
               					
-              				})
-              			})
+              				
+              				
+              			
               			
               		</script>
               
@@ -778,7 +769,21 @@ $("document").ready(function(){
 </div>
     </div>
     <!-- /.form-box -->
-
+<script type="text/javascript">
+/* $(function(){
+$("#plist tbody tr[name='d2']").hide();
+	$("#plist tbody tr[name='d1']").on("click",function(){
+		if($(this).find("input").is(":checked") != true){
+			$(this).find("input").prop("checked",true);
+			$(this).next().show();
+		}else{
+			$(this).find("input").prop("checked",false);
+			$(this).next().hide();
+		}
+		
+	})
+}) */
+</script>
 
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
