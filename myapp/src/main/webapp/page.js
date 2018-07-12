@@ -278,8 +278,11 @@ function hideDiv(){
 		$("#plist tbody tr[name='d2']").hide();
 		$("#plist tbody tr[name='d1']").on("click",function(){
 			if($(this).find("input").is(":checked") != true){
+				$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+				$("#plist tbody tr[name='d2']").hide();
 				$(this).find("input").prop("checked",true);
 				$(this).next().show();
+				
 			}else{
 				$(this).find("input").prop("checked",false);
 				$(this).next().hide();

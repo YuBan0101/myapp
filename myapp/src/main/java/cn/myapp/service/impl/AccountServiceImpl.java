@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 		//更改status 1 为欠账  0 为已还账
 		for(int i=0;i <list.size();i++) {
 			if(list.get(i).getStatus() == 1) {
-				list.get(i).setStatusString("欠账"+list.get(i).getMoney()+" 元");
+				list.get(i).setStatusString("欠款"+list.get(i).getMoney()+" 元");
 			}else {
 				list.get(i).setStatusString("已结清");
 			}
