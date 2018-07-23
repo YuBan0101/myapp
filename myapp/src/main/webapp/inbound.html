@@ -697,6 +697,7 @@
                       		//当前类别
                     		$("#typeUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
+                    			$("#optionUl li a").removeClass("active");
                     			$(this).addClass("active");
                     			showContent("store","/store/showThisTypeStoreRecordCount","/store/showThisTypeStoreRecord",$(this).text().trim());
                     	       });
