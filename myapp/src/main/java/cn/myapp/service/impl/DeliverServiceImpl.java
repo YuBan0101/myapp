@@ -57,7 +57,7 @@ public class DeliverServiceImpl implements DeliverService{
 	//插入一条数据deliver 并在product里对count -delivercount;
 	public Deliver getDeliverRecordAfterAdd(Deliver record) {
 		
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		record.setDate(new Date());
 		//插入
 		deliverDao.insertSelective(record);
@@ -70,7 +70,7 @@ public class DeliverServiceImpl implements DeliverService{
 	}
 	@Override
 	public List<Deliver> getDeliverRecord() {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		list = deliverDao.selectDeliverRecord();
 		for(int i=0;i<list.size();i++) {
@@ -81,7 +81,7 @@ public class DeliverServiceImpl implements DeliverService{
 	//获取所有入库记录
 	@Override
 	public List<Deliver> getAllDeliverRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		page.setPageOffset();
 		list = deliverDao.selectAllDeliverRecord(page);
@@ -96,7 +96,7 @@ public class DeliverServiceImpl implements DeliverService{
 	//sql 大法好  指定type 出库记录
 	@Override
 	public List<Deliver> getThisTypeDeliverRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		page.setPageOffset();
 		list = deliverDao.selectThisTypeDeliverRecord(page);
@@ -112,7 +112,7 @@ public class DeliverServiceImpl implements DeliverService{
 	//查找关键字 出库记录
 	@Override
 	public List<Deliver> searchDeliverRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		ArrayList<String> arr = new ArrayList<String>();
 		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");

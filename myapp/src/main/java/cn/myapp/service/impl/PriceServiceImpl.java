@@ -23,7 +23,7 @@ public class PriceServiceImpl implements PriceService {
 	@Override
 	//获取所有price表所有记录 
 	public List<Price> getAllPriceRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Price> list = new ArrayList<Price>();
 		page.setPageOffset();
 		list = priceDao.selectAllPriceRecord(page);
