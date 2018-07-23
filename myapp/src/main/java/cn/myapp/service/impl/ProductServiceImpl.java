@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	//获取所有产品
 	public List<Product> getAllProduct(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		page.setPageOffset();
 		list = productDao.selectAllProduct(page);
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public List<Product> getThisTypeProduct(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		page.setPageOffset();
 		list = productDao.selectThisTypeProduct(page);
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public List<Product> searchProduct(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		ArrayList<String> arr = new ArrayList<String>();
 		page.setPageOffset();
@@ -114,7 +114,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public List<Product> getAllShortSupplyProduct(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		page.setPageOffset();
 		list = productDao.selectAllShortSupplyProduct(page);
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public List<Product> getThisTypeShotSupplyProduct(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Product> list = new ArrayList<Product>();
 		page.setPageOffset();
 		list = productDao.selectThisTypeShortSupplyProduct(page);

@@ -43,7 +43,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	@Override
 	public List<Store> getAllStoreRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Store> list = new ArrayList<Store>();
 		page.setPageOffset();
 		list = storeDao.selectAllStoreRecord(page);
@@ -54,7 +54,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	@Override
 	public List<Store> getThisTypeStoreRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Store> list = new ArrayList<Store>();
 		page.setPageOffset();
 		list = storeDao.selectThisTypeStoreRecord(page);
@@ -65,7 +65,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	@Override
 	public List<Store> searchStoreRecord(Page page) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Store> list = new ArrayList<Store>();
 		ArrayList<String> arr = new ArrayList<String>();
 		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
@@ -98,7 +98,7 @@ public class StoreServiceImpl implements StoreService {
 	@Transactional
 	//插入一条记录   product.count + store.count
 	public Store getStoreRecordAfterAdd(Store record) {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		record.setDate(new Date());
 		//record.setType(productDao.searchProductDes(record.getBrand(), record.getModel()).getType());
 		//插入
