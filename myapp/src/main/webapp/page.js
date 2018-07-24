@@ -179,6 +179,7 @@ function showStoreTable(data,currentPage){
             '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库单价</td>'+
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库小计</td>'+
+			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>指导售价</td>'+
             '<td class="mailbox-attachment" style="text-align:center">产品类型</td>'+                   	           
             '<td class="mailbox-subject" style="text-align:center">入库时间</td></tr>'
 			);
@@ -190,6 +191,7 @@ function showStoreTable(data,currentPage){
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].sales+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 			   '</tr>');

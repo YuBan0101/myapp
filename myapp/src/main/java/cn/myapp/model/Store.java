@@ -13,6 +13,8 @@ public class Store {
 
     private Double price;
 
+	private Double sales;
+
     private Integer count;
     
     private String type;
@@ -78,6 +80,13 @@ public class Store {
     public Integer getCount() {
         return count;
     }
+    public Double getSales() {
+		return sales;
+	}
+
+	public void setSales(Double sales) {
+		this.sales = sales;
+	}
 
     public void setCount(Integer count) {
         this.count = count;
