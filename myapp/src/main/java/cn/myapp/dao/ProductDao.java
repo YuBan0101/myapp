@@ -29,8 +29,10 @@ public interface ProductDao {
     //获取全部产品个数
     int selectAllProductCount();
   
-    List<Product> selectAllProductType();
+    List<Product> selectAllProductType(Page page);
+    List<Product> selectAllProductType1();
     
+    int selectAllProductTypeCount();
     
     
     //短缺产品

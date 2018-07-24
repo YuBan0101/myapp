@@ -42,9 +42,24 @@ public class ProductController {
 	@RequestMapping(value ="/showAllProductType",method=RequestMethod.GET)
 	@ResponseBody
 	//获取所有商品类别
-	public List<String> showAllProductType() {
+	public List<String> showAllProductType(Page page) {
 		
-		return productService.getAllProductType();
+		return productService.getAllProductType(page);
+	}
+	@RequestMapping(value ="/showAllProductType1",method=RequestMethod.GET)
+	@ResponseBody
+	//获取所有商品类别
+	public List<String> showAllProductType1() {
+		
+		return productService.getAllProductType1();
+	}
+	
+	@RequestMapping(value ="/showAllProductTypeCount",method=RequestMethod.GET)
+	@ResponseBody
+	//获取所有商品类别 数量
+	public Page showAllProductTypeCount(Page page) {
+		
+		return productService.getAllProductTypeCount(page);
 	}
 	
 	@RequestMapping(value ="/showThisTypeProduct",method=RequestMethod.GET)
