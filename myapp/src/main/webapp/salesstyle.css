@@ -32,9 +32,10 @@ body {
 }
 .search {
   text-align: center;
-  margin: 22em 0em 0em 0em;
+  
   position: relative;
 }
+
 .s-bar {
   width: 34%;
   margin: 0 auto;
@@ -275,6 +276,7 @@ body {
 /*--meadia quiries end here--*/
 
 	.tb {
+		display:none;
 		position:relative;
 		margin-top:3em;
 		margin-left:32%;
