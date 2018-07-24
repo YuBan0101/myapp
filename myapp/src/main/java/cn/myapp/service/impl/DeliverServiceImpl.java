@@ -117,7 +117,7 @@ public class DeliverServiceImpl implements DeliverService{
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
@@ -153,7 +153,7 @@ public class DeliverServiceImpl implements DeliverService{
 	@Override
 	public Page searchDeliverRecordCount(Page page) {
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
