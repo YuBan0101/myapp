@@ -7,12 +7,13 @@
     <result column="model" jdbcType="VARCHAR" property="model" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="sales" jdbcType="DOUBLE" property="sales" />
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, model, date, price, count, type
+    id, brand, model, date, price,sales, count, type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -119,10 +120,10 @@
   </delete>
   <insert id="insert" parameterType="cn.myapp.model.Store">
     insert into store (id, brand, model, 
-      date, price, count, type
+      date, price,sales, count, type
       )
     values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
-      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{count,jdbcType=INTEGER},#{type,jdbcType=VARCHAR}
+      #{date,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{sales,jdbcType=DOUBLE}, #{count,jdbcType=INTEGER},#{type,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.myapp.model.Store">
@@ -142,6 +143,9 @@
       </if>
       <if test="price != null">
         price,
+      </if>
+        <if test="sales != null">
+        sales,
       </if>
       <if test="count != null">
         count,
@@ -166,6 +170,9 @@
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
       </if>
+      <if test="sales != null">
+        #{sales,jdbcType=DOUBLE},
+      </if>
       <if test="count != null">
         #{count,jdbcType=INTEGER},
       </if>
@@ -189,6 +196,9 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
+       <if test="sales != null">
+        sales = #{sales,jdbcType=DOUBLE},
+      </if>
       <if test="count != null">
         count = #{count,jdbcType=INTEGER},
       </if>
@@ -204,6 +214,7 @@
       model = #{model,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
       price = #{price,jdbcType=DOUBLE},
+      sales = #{sales,jdbcType=DOUBLE},
       count = #{count,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
     where id = #{id,jdbcType=INTEGER}

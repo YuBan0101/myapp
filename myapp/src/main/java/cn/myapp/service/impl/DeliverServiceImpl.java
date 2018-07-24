@@ -73,7 +73,9 @@ public class DeliverServiceImpl implements DeliverService{
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Deliver> list = new ArrayList<Deliver>();
 		list = deliverDao.selectDeliverRecord();
+		
 		for(int i=0;i<list.size();i++) {
+			list.get(i).setType(productDao.searchProductDes(list.get(i).getBrand(), list.get(i).getModel()).getType());
 			list.get(i).setDateString(ft.format(list.get(i).getDate()));
 		}
 		return list;
