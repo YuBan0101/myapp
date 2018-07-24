@@ -48,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	@Override
-	public List<String> getAllProductType() {
-		
-		List<Product> list = productDao.selectAllProductType();
+	public List<String> getAllProductType(Page page) {
+		page.setPageOffset();
+		List<Product> list = productDao.selectAllProductType(page);
 		ArrayList<String> alist = new ArrayList<String>();
 		for(int i = 0 ;i < list.size(); i++) {
 			alist.add(list.get(i).getType());
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> list = new ArrayList<Product>();
 		ArrayList<String> arr = new ArrayList<String>();
 		page.setPageOffset();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
@@ -165,7 +165,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Page getSearchedProductCount(Page page) {
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
@@ -199,6 +199,27 @@ public class ProductServiceImpl implements ProductService {
 	public Page getThisTypeShotSupplyProductCount(Page page) {
 		page.setPageCount(productDao.selectThisTypeShortSupplyProductCount(page));
 		return page;
+	}
+
+
+	//所有type 个数
+	@Override
+	public Page getAllProductTypeCount(Page page) {
+		page.setPageCount(productDao.selectAllProductTypeCount());;
+		return page;
+	}
+
+
+
+	@Override
+	public List<String> getAllProductType1() {
+		List<Product> list = productDao.selectAllProductType1();
+		ArrayList<String> alist = new ArrayList<String>();
+		for(int i = 0 ;i < list.size(); i++) {
+			alist.add(list.get(i).getType());
+		}
+				
+		return alist;
 	}
 
 	

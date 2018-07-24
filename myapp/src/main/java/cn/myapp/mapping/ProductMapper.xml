@@ -19,8 +19,15 @@
   </select>
   
  
-  <select id="selectAllProductType" resultMap="BaseResultMap">
+  <select id="selectAllProductType" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select DISTINCT type from product limit #{pageOffset}, #{pageSize}
+  </select>
+   <select id="selectAllProductType1"  resultMap="BaseResultMap">
     select DISTINCT type from product 
+  </select>
+  
+  <select id="selectAllProductTypeCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select count(DISTINCT type) from product 
   </select>
   
   <!-- 库存不足产品 -->

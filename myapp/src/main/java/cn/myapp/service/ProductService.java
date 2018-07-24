@@ -11,7 +11,9 @@ public interface ProductService {
 	public List<Product> getAllProduct(Page page);
 	
 	//获取所有类别
-	public List<String> getAllProductType();
+	public List<String> getAllProductType(Page page);
+	public List<String> getAllProductType1();
+	public Page getAllProductTypeCount(Page page);
 	
 	//获取所有type产品
 	public List<Product> getThisTypeProduct(Page page);
