@@ -6,9 +6,10 @@
     <result column="brand" jdbcType="VARCHAR" property="brand" />
     <result column="model" jdbcType="VARCHAR" property="model" />
     <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="sales" jdbcType="DOUBLE" property="sales" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, model, price
+    id, brand, model, price,sales
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -39,15 +40,59 @@
     order by brand
   </select>
   
+   <!-- 获取查找的 记录 数量  -->
+  <select id="selectSearchedPriceRecordCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from price where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="selectSearchedPriceRecordCountByModel" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from price where  model like CONCAT(CONCAT('%',#{model}),'%')
+  </select>
+  <select id="selectSearchedPriceRecordCountByBrand" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
+    select   count(*)
+    from price where brand like CONCAT(CONCAT('%',#{brand}),'%') 
+  </select>
+  
+  
+  <!-- 获取查找的 记录  limit-->
+  <select id="searchPriceRecord" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from price where brand like CONCAT(CONCAT('%',#{brand}),'%') and model like CONCAT(CONCAT('%',#{model}),'%') limit  #{pageOffset}, #{pageSize}
+  </select>
+  
+  
+  <!-- 维修工 -->
+  <select id="searchPriceRecordDes"  resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from price where brand = #{brand} and model = #{model}
+  </select>
+  
+  
+  <select id="searchPriceRecordByModel" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from price where model like CONCAT(CONCAT('%',#{model}),'%') limit  #{pageOffset}, #{pageSize}
+  </select>
+  <select id="searchPriceRecordByBrand" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
+   select   
+    <include refid="Base_Column_List" />
+    from price where brand like CONCAT(CONCAT('%',#{brand}),'%') limit  #{pageOffset}, #{pageSize}
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from price
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.myapp.model.Price">
     insert into price (id, brand, model, 
-      price)
+      price,sales)
     values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DOUBLE})
+      #{price,jdbcType=DOUBLE}, #{sales,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="cn.myapp.model.Store">
     insert into price
@@ -64,6 +109,9 @@
       <if test="price != null">
         price,
       </if>
+      <if test="sales != null">
+        sales,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -77,6 +125,9 @@
       </if>
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
+      </if>
+       <if test="sales != null">
+        #{sales,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -92,6 +143,9 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
+      <if test="sales != null">
+        sales = #{sales,jdbcType=DOUBLE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -99,14 +153,16 @@
     update price
     set brand = #{brand,jdbcType=VARCHAR},
       model = #{model,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DOUBLE},
+       sales = #{sales,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
   <update id="updatePrice" parameterType="cn.myapp.model.Store">
     update price
     set 
-      price = #{price,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DOUBLE},
+      sales = #{sales,jdbcType=DOUBLE}
     where brand = #{brand} and model=#{model}
   </update>
   

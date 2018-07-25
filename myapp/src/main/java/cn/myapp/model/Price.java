@@ -15,6 +15,29 @@ public class Price {
     
     private String datePass;
     
+
+	private Double sales;
+	
+	private String type;
+	
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Double getSales() {
+		return sales;
+	}
+
+	public void setSales(Double sales) {
+		this.sales = sales;
+	}
+
+    
+    
     public Double getOldPrice() {
 		return oldPrice;
 	}

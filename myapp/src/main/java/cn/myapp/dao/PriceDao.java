@@ -33,6 +33,16 @@ public interface PriceDao {
     
   //取得所有进价 记录个数
     int selectAllPriceRecordCount(Page page);
+
+    //搜索
+	List<Price> searchPriceRecordByModel(Page page);
+	List<Price> searchPriceRecordByBrand(Page page);
+	List<Price> searchPriceRecord(Page page);
+
+	//搜索 count 数
+	Integer selectSearchedPriceRecordCountByModel(Page page);
+	Integer selectSearchedPriceRecordCountByBrand(Page page);
+	Integer selectSearchedPriceRecordCount(Page page);
     
 
 }
