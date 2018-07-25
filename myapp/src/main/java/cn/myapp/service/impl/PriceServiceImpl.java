@@ -58,17 +58,17 @@ public class PriceServiceImpl implements PriceService {
 	public List<Price> searchPriceRecord(Page page) {
 		List<Price> list = new ArrayList<Price>();
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
         }
         page.setPageOffset();
       //此处有逻辑错误 
-        if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == false) {
+        if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5/]+") == false) {
         	page.setModel(arr.get(0));
         	list = priceDao.searchPriceRecordByModel(page);
-        }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == true) {
+        }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5/]+") == true) {
         	page.setBrand(arr.get(0));
         	list = priceDao.searchPriceRecordByBrand(page);
         	if(list.isEmpty()) {
@@ -94,16 +94,16 @@ public class PriceServiceImpl implements PriceService {
 	@Override
 	public Page searchPriceRecordCount(Page page) {
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
         }
       //此处有逻辑错误 
-        if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == false) {
+        if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5/]+") == false) {
         	page.setModel(arr.get(0));
         	page.setPageCount(priceDao.selectSearchedPriceRecordCountByModel(page));
-        }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == true) {
+        }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5/]+") == true) {
         	page.setBrand(arr.get(0));
         	if(priceDao.selectSearchedPriceRecordCountByBrand(page)==0) {
         		page.setType(arr.get(0));
