@@ -30,7 +30,7 @@
 	
 	<div class="s-bar">
 	  
-		<input type="text" value="请输入查询关键字" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入查询关键字';}" id="ss"/>
+		<input type="text" value="请输入型号 或 品牌 或 品牌型号 或 产品类型" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入型号 或 品牌 或 品牌型号 或 产品类型';}" id="ss"/>
 		<input type="submit"  value="查询" id="search"/>
 	  
 	</div>
@@ -95,7 +95,7 @@ $("document").ready(function(){
 			});
 		$("#search").on("click",function(){
 			$("#s1").css("margin-top","7em");
-			showContent("sales","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss").val().trim());
+			showContent("sales","/price/searchPriceRecordCount","/price/searchPriceRecord","",$("#ss").val().trim());
 			$("#s3").slideDown("slow");
 		});
 });

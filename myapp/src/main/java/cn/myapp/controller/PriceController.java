@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.myapp.model.Page;
 import cn.myapp.model.Price;
+import cn.myapp.model.Store;
 import cn.myapp.service.PriceService;
 
 @Controller
@@ -39,5 +40,19 @@ public class PriceController {
 		return priceService.getAllPriceRecordCount(page);
 	}
 	
+	@RequestMapping(value ="/searchPriceRecord",method=RequestMethod.GET)
+	@ResponseBody
+	//搜索指定品牌或型号 price记录
+	public List<Price> searchStoreRecord(Page page) {
+
+		return priceService.searchPriceRecord(page);
+	}
 	
+	@RequestMapping(value ="/searchPriceRecordCount",method=RequestMethod.GET)
+	@ResponseBody
+	//搜索指定品牌或型号 price记录  数量
+	public Page searchStoreRecordCount(Page page) {
+
+		return priceService.searchPriceRecordCount(page);
+	}
 }

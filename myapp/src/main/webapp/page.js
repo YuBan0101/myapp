@@ -224,7 +224,8 @@ function showPriceTable(data,currentPage){
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>更新时间</td>'+
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>上次进价</td>'+
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>上次进货时间</td>'+
-            '<td class="mailbox-subject" style="text-align:center">两次差价</td></tr>'
+            '<td class="mailbox-subject" style="text-align:center">两次差价</td>'+
+            '<td class="mailbox-subject" style="text-align:center">指导售价</td></tr>'
 			);
 			for(var i= 0;i<data.length;i++){
 			   $("#plist tbody").append("<tr>"+
@@ -236,6 +237,7 @@ function showPriceTable(data,currentPage){
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].oldPrice+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].datePass+'</a></td>'+
 			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+(data[i].price-data[i].oldPrice)+' 元</a></td>'+
+			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].sales+' 元</a></td>'+
 			   '</tr>');
 	       
 		}
