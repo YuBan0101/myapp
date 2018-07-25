@@ -44,5 +44,6 @@ public interface PriceDao {
 	Integer selectSearchedPriceRecordCountByBrand(Page page);
 	Integer selectSearchedPriceRecordCount(Page page);
     
+	
 
 }

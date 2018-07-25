@@ -74,6 +74,19 @@
     from product where brand = #{brand} and model = #{model}
   </select>
   
+  <!-- 查找 by 类别 -->
+   <select id="searchProductByType"  parameterType="cn.myapp.model.Page"  resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+    from product where  type like CONCAT(CONCAT('%', #{type}),'%')
+  </select>
+   <select id="searchProductCountByType"  parameterType="cn.myapp.model.Page"  resultType="java.lang.Integer">
+    select   
+    count(*)
+    from product where  type like CONCAT(CONCAT('%', #{type}),'%')
+  </select>
+  
+  
   <!-- 获取分页产品 limit By model -->
   <select id="searchProductByModel" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
     select   

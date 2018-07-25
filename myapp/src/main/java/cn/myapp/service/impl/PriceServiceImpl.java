@@ -15,6 +15,7 @@ import cn.myapp.dao.ProductDao;
 import cn.myapp.dao.StoreDao;
 import cn.myapp.model.Page;
 import cn.myapp.model.Price;
+import cn.myapp.model.Product;
 import cn.myapp.model.Store;
 import cn.myapp.service.PriceService;
 @Service("PriceService")
@@ -70,6 +71,14 @@ public class PriceServiceImpl implements PriceService {
         }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == true) {
         	page.setBrand(arr.get(0));
         	list = priceDao.searchPriceRecordByBrand(page);
+        	if(list.isEmpty()) {
+        		page.setType(arr.get(0));
+        		List<Product> list1 = new ArrayList<Product>();
+        		list1 = productDao.searchProductByType(page);
+        		for(int i = 0;i<list1.size();i++) {
+        			list.add(priceDao.selectPriceByModelAndBrand(list1.get(i).getBrand(), list1.get(i).getModel()));
+        		}
+        	}
         }
         else {
         	page.setBrand(arr.get(0));
@@ -96,7 +105,13 @@ public class PriceServiceImpl implements PriceService {
         	page.setPageCount(priceDao.selectSearchedPriceRecordCountByModel(page));
         }else if(arr.size()==1 && arr.get(0).matches("[\\u4e00-\\u9fa5]+") == true) {
         	page.setBrand(arr.get(0));
-        	page.setPageCount(priceDao.selectSearchedPriceRecordCountByBrand(page));
+        	if(priceDao.selectSearchedPriceRecordCountByBrand(page)==0) {
+        		page.setType(arr.get(0));
+        		page.setPageCount(productDao.searchProductCountByType(page));
+        	}else {
+        		
+        		page.setPageCount(priceDao.selectSearchedPriceRecordCountByBrand(page));
+        	}
         }
         else {
         	page.setBrand(arr.get(0));

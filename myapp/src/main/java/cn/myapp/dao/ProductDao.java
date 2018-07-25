@@ -68,4 +68,9 @@ public interface ProductDao {
     void updateReduceProductCount(@Param(value="brand")String brand,@Param(value="model")String model, @Param(value="count")Integer count);
     
     void updateAddProductCount(@Param(value="brand")String brand,@Param(value="model")String model, @Param(value="count")Integer count);
+
+    //查找产品 by 类别
+	List<Product> searchProductByType(Page page);
+	Integer searchProductCountByType(Page page);
+	
 }
