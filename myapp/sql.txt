@@ -1,0 +1,45 @@
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL auto_increment,
+  `brand` varchar(20) default NULL,
+  `model` varchar(20) default NULL,
+  `count` int(11) default NULL,
+  `type` varchar(20) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `store` (
+  `id` int(11) NOT NULL auto_increment,
+  `brand` varchar(20) default NULL,
+  `model` varchar(20) default NULL,
+  `date` datetime default NULL,
+  `price` double default NULL,
+  `sales` double default NULL,
+  `count` int(11) default NULL,
+  `type` varchar(20) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL auto_increment,
+  `content` varchar(100) default NULL,
+  `money` double default NULL,
+  `date` datetime default NULL,
+  `status` tinyint(3) unsigned zerofill default NULL,
+  `phone` varchar(11) default '',
+  `remark` varchar(40) default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `deliver` (
+  `id` int(11) NOT NULL auto_increment,
+  `brand` varchar(20) default NULL,
+  `model` varchar(20) default NULL,
+  `date` datetime default NULL,
+  `price` double(20,2) default NULL,
+  `count` int(20) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `price` (
+  `id` int(11) NOT NULL auto_increment,
+  `brand` varchar(20) default NULL,
+  `model` varchar(20) default NULL,
+  `price` double(20,2) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
