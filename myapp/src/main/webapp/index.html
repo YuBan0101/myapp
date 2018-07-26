@@ -517,6 +517,7 @@
 </div>
 <!-- ./wrapper -->
 <!-- 登记出库 -->
+<script type="text/javascript" src="./page.js"></script>
 <script>  
         function msgbox(n){
             document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
@@ -546,7 +547,7 @@
                 			$("#dl").prepend('<li>'+
                             '<span class="handle ui-sortable-handle">'+
                             '<i class="fa fa-ellipsis-v"></i></span>'+
-                            '<span style="font-family:Microsoft Yahei">出售了'+data.brand+'  '+data.model+' '+data.type+' '+data.count +'个（米）.     售价为 ￥'+(data.price*data.count)+'元.</span>        '+
+                            '<span style="font-family:Microsoft Yahei">出售了'+data.brand+'  '+data.model+' '+data.type+' '+data.count +' '+unitShow(data[i].type)+'.     售价为 ￥'+(data.price*data.count)+'元.</span>        '+
                             '<small class="badge badge-info"><i class="fa fa-clock-o"></i> '+data.dateString+'</small>'+
                           '</li>');
                 		 }
@@ -573,7 +574,7 @@
          			$("#dl").append('<li>'+
                      '<span class="handle ui-sortable-handle">'+
                      '<i class="fa fa-ellipsis-v"></i></span>'+
-                     '<span style="font-family:Microsoft Yahei">出售了'+data[i].brand+'  '+data[i].model+' '+ data[i].type+' '+data[i].count +'个（米）.     售价为 ￥'+(data[i].price*data[i].count)+'元.</span>        '+
+                     '<span style="font-family:Microsoft Yahei">出售了'+data[i].brand+'  '+data[i].model+' '+ data[i].type+' '+data[i].count +' '+unitShow(data[i].type)+'.    售价为 ￥'+(data[i].price*data[i].count)+'元.</span>        '+
                      '<small class="badge '+info[i]+'"><i class="fa fa-clock-o"></i> '+data[i].dateString+'</small>'+
                    '</li>');
          			} 

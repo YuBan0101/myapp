@@ -30,7 +30,7 @@ public interface ProductDao {
     int selectAllProductCount();
   
     List<Product> selectAllProductType(Page page);
-    List<Product> selectAllProductType1();
+    List<Product> listAllProductType();
     
     int selectAllProductTypeCount();
     

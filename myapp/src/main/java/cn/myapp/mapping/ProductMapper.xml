@@ -20,10 +20,10 @@
   
  
   <select id="selectAllProductType" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
-    select DISTINCT type from product limit #{pageOffset}, #{pageSize}
+    select * from (select DISTINCT type 'type' from product ) p order by  convert(type using gbk) asc limit #{pageOffset}, #{pageSize}
   </select>
-   <select id="selectAllProductType1"  resultMap="BaseResultMap">
-    select DISTINCT type from product 
+   <select id="listAllProductType"  resultMap="BaseResultMap">
+    select * from (select DISTINCT type 'type' from product ) p order by  convert(type using gbk) asc
   </select>
   
   <select id="selectAllProductTypeCount" parameterType="cn.myapp.model.Page" resultType="java.lang.Integer">
