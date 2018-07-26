@@ -14,8 +14,7 @@
      <result column="month" jdbcType="INTEGER" property="month" />
     <result column="money" jdbcType="DOUBLE" property="money" />
     <result column="salesmoney" jdbcType="DOUBLE" property="salesMoney" />
-    
-   
+    <result column="year" jdbcType="VARCHAR" property="year" />
   </resultMap>
   <sql id="Base_Column_List">
     id, brand, model, date, price ,count
@@ -130,13 +129,18 @@
   
   <!-- 获取一年中的月份 销售金额 -->
   <select id="selectMonthSalesMoney"  resultMap="TPResultMap">
-    select   
-    month(d.date) 'month',sum(p.price*d.count) 'money',sum(d.count*d.price) 'salesmoney' from deliver as d,price as p
-    where d.brand = p.brand and d.model = p.model
-    group by month(date)
-    
-  </select>
+     select   
+    month(d.date) 'month',sum(d.price*d.count) 'money',sum(d.count*d.price-p.price*d.count) 'salesmoney' from deliver as d,price as p
+    where d.brand = p.brand and d.model = p.model and year(d.date) = #{year}
+    group by MONTH(d.date)
+   </select>
   
+  
+  <!-- 获取年份 -->
+  <select id="selectYear"  resultMap="TPResultMap">
+   select   
+    year(date) 'year' from deliver GROUP BY year(date) ORDER BY year(date) desc 
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from deliver

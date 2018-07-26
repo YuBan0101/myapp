@@ -28,8 +28,9 @@ public interface DeliverDao {
     double selectThisMonthDeliverPrice();
     
     //获取一年中的月份 销售金额
-    List<Jsdata> selectMonthSalesMoney();
-    
+    List<Jsdata> selectMonthSalesMoney(@Param(value="year")String year);
+    //获取年份个数
+    List<Jsdata> selectYear();
     
     double selectThisMonthProfit();
     

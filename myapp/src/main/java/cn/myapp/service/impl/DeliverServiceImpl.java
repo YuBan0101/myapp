@@ -188,19 +188,21 @@ public class DeliverServiceImpl implements DeliverService{
 	
 	@Override
 	//获取一年中的月份 销售金额
-	public Map<String,Object> getMonthSalesMoney() {
+	public Map<String,Object> getMonthSalesMoney(String year) {
 		List<Jsdata> list = new ArrayList<Jsdata>();
-		list = deliverDao.selectMonthSalesMoney();
+		list = deliverDao.selectMonthSalesMoney(year);
 		ArrayList<String> label = new ArrayList<String>();
 		List<Object> datasets = new ArrayList<Object>();
 		ArrayList<Double> data1 = new ArrayList<Double>();
 		ArrayList<Double> data2 = new ArrayList<Double>();
-		for(int i =1,j=0 ;i< 12 && j <list.size();i++) {
-			if(list.get(j).getMonth() == i) {
+		for(int i =1,j=0 ;i<= 12 ;i++) {
+			if(!list.isEmpty() && list.get(j).getMonth() == i) {
 			label.add(list.get(j).getMonth()+" 月");
 			data1.add(i-1,list.get(j).getMoney());
 			data2.add(i-1,list.get(j).getSalesMoney());
+			if((j+1)!=list.size()) {
 			j++;
+			}
 			}else {
 				label.add(i+" 月");
 				data1.add(i-1,0.0);
@@ -214,6 +216,13 @@ public class DeliverServiceImpl implements DeliverService{
 		map.put("labels", label);
 		map.put("datasets", datasets);
 		return map;
+	}
+	
+	//返回年份
+	@Override
+	public List<Jsdata> getYear() {
+		
+		return deliverDao.selectYear();
 	}
 	
 	
