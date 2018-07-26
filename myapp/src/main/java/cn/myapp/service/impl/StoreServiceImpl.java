@@ -68,7 +68,7 @@ public class StoreServiceImpl implements StoreService {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		List<Store> list = new ArrayList<Store>();
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.*]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
@@ -143,7 +143,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public Page searchStoreRecordCount(Page page) {
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|[a-zA-Z0-9\\-.*]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
