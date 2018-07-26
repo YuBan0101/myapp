@@ -20,7 +20,7 @@
   
  
   <select id="selectAllProductType" parameterType="cn.myapp.model.Page" resultMap="BaseResultMap">
-    select DISTINCT type from product limit #{pageOffset}, #{pageSize}
+    select DISTINCT type from product order by brand desc limit #{pageOffset}, #{pageSize}
   </select>
    <select id="selectAllProductType1"  resultMap="BaseResultMap">
     select DISTINCT type from product 
