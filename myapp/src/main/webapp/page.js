@@ -144,7 +144,8 @@ function unitShow(type){
 			return "扎";
 		}else{
 			return "米"; }
-	}else if(type.charAt(type.length-1) == "机" || type.charAt(type.length-1) == "锯" || type.charAt(type.length-1) == "刨" || type.charAt(type.length-1) == "钻"){
+	}else if(type.charAt(type.length-1) == "机" || type.charAt(type.length-1) == "锯" || type.charAt(type.length-1) == "刨" ||
+			type.charAt(type.length-1) == "钻" ||type.charAt(type.length-1) == "锤" || type.charAt(type.length-1) == "镐"){
 		return "台";
 	}else if(type.charAt(type.length-1) == "片"){
 		return "片";
