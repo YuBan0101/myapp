@@ -228,7 +228,7 @@ function showSalesTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+data[i].brand+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center">'+data[i].model+'</td>'+
 			   '<td class="mailbox-name" style="text-align:center">'+data[i].type+'</td>'+
-			   '<td class="mailbox-name" style="text-align:center">'+data[i].sales+' '+unitShow(data[i].type)+'/元</td>'+
+			   '<td class="mailbox-name" style="text-align:center">'+data[i].sales+'元/'+unitShow(data[i].type)+'</td>'+
 			   '</tr>');
             }
 }
