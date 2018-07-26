@@ -58,7 +58,7 @@ public class PriceServiceImpl implements PriceService {
 	public List<Price> searchPriceRecord(Page page) {
 		List<Price> list = new ArrayList<Price>();
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.*]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
@@ -94,7 +94,7 @@ public class PriceServiceImpl implements PriceService {
 	@Override
 	public Page searchPriceRecordCount(Page page) {
 		ArrayList<String> arr = new ArrayList<String>();
-		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.]+");
+		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5/]+|[a-zA-Z0-9\\-.*]+");
 		Matcher m = p.matcher(page.getKey().trim());
         while ( m.find() ) {
             arr.add(m.group());
