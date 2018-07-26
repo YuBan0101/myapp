@@ -125,17 +125,33 @@ function showProductTable(data,currentPage){
 			//害我不浅
 			//$("input[name='currentPage']").val(data[0].currentPage);
 			for(var i=0;i<data.length;i++){
+				//if(data[i].type.charAt(data[i].type.length()-1))
 				$("#plist tbody").append("<tr>"+
 				'<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+' 台/米</a></td>'+
+				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].count+' '+unitShow(data[i].type) +' </a></td>'+
 				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
 				'</tr>');
 			}
 		}
+
+function unitShow(type){
+	if(type.charAt(type.length-1) == "管" ||type.charAt(type.length-1) == "线"){
+		if(type != "电缆线"){
+			return "扎";
+		}else{
+			return "米"; }
+	}else if(type.charAt(type.length-1) == "机" || type.charAt(type.length-1) == "锯" || type.charAt(type.length-1) == "刨" || type.charAt(type.length-1) == "钻"){
+		return "台";
+	}else if(type.charAt(type.length-1) == "片"){
+		return "片";
+	}else {
+		return "个";
+	}
+}
 
 function showShortSupplyProductTable(data,currentPage){
 
@@ -163,7 +179,7 @@ function showShortSupplyProductTable(data,currentPage){
 				'<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 				'<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[i].count+' 个</a></td>'+
+				'<td class="mailbox-name" style="text-align:center;"><a href="#" style="color:red;font-weight:bold">剩余   '+data[i].count+' '+unitShow(data[i].type) +' </a></td>'+
 				'<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastDeliverDate+'</a></td>'+
 				'<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].lastStoreDate+'</a></td>'+
@@ -188,7 +204,7 @@ function showStoreTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' '+unitShow(data[i].type) +'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].sales+' 元</a></td>'+
@@ -260,7 +276,7 @@ function showDeliverTable(data,currentPage){
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' '+unitShow(data[i].type) +' </a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+((data[i].price-data[i].sprice)*data[i].count).toFixed(2)+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
