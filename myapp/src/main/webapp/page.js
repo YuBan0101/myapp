@@ -262,7 +262,7 @@ function showDeliverTable(data,currentPage){
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].price+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count+' 台/米</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+data[i].count*data[i].price+' 元</a></td>'+
-			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice)*data[i].count+' 元</a></td>'+
+			   '<td class="mailbox-name" style="text-align:center"><a href="#" >'+(data[i].price-data[i].sprice).toFixed(2)*data[i].count+' 元</a></td>'+
 			   '<td class="mailbox-name" style="text-align:center"><a href="#">'+data[i].type+'</a></td>'+
 			   '<td class="mailbox-date" style="text-align:center"><a href="#">'+data[i].dateString+'</a></td>'+
 			   '</tr>');
