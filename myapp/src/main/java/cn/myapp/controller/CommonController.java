@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.myapp.model.Jsdata;
 import cn.myapp.service.DeliverService;
 import cn.myapp.service.PriceService;
 
@@ -50,9 +51,16 @@ public class CommonController {
 		    }*/
 	@RequestMapping("/showMonthPrice")
 	@ResponseBody
-	public Map<String,Object> showMonthPrice() {
+	public Map<String,Object> showMonthPrice(String year) {
+		return deliverService.getMonthSalesMoney(year);
 		
-		return deliverService.getMonthSalesMoney();
+	}
+	
+	
+	@RequestMapping("/showYear")
+	@ResponseBody
+	public List<Jsdata> showYear() {
+		return deliverService.getYear();
 		
 	}
 }

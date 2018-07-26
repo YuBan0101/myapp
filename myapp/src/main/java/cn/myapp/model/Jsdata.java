@@ -3,7 +3,15 @@ package cn.myapp.model;
 public class Jsdata {
 	
 	private Integer month;
-	
+	private String year;
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 	public Integer getMonth() {
 		return month;
 	}
