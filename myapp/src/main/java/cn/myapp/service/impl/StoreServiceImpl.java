@@ -101,8 +101,18 @@ public class StoreServiceImpl implements StoreService {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		record.setDate(new Date());
 		//record.setType(productDao.searchProductDes(record.getBrand(), record.getModel()).getType());
+		if(storeDao.selectByPrimaryKey(record.getId()) != null) {
+			Store temp = storeDao.selectByPrimaryKey(record.getId());
+			if(storeDao.deleteByPrimaryKey(temp.getId()) == 1 ) {
+				if(productDao.searchProductDes(temp.getBrand(), temp.getModel())!=null) {
+					productDao.updateReduceProductCount(temp.getBrand(), temp.getModel(),temp.getCount());
+					}
+				
+			}
+		}else {
 		//插入
 		storeDao.insertSelective(record);
+		}
 		// if price 表里有当前品牌型号产品 
 		//price表更新价格
 		if(priceDao.selectPriceByModelAndBrand(record.getBrand(), record.getModel())!=null) {

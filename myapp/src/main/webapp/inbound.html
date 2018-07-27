@@ -345,14 +345,14 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" id="change" class="nav-link">
-                    <i class="fa fa-circle-o text-warning"></i> 查看进价变动
+                  <a href="#"  id="updateInfo"  class="nav-link">
+                    <i class="fa fa-circle-o text-warning"></i> 修改入库信息
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="#"  id="change" class="nav-link">
                     <i class="fa fa-circle-o text-primary"></i>
-                    Social
+              		     查看进价变动
                   </a>
                 </li>
               </ul>
@@ -573,6 +573,9 @@
 <script>  
         function msgbox(n){
             document.getElementById('inputbox').style.display=n?'block':'none'; /* 点击按钮打开/关闭 对话框 */
+            $("#fd input[name='brand']").attr("disabled",false);
+    	    $("#fd input[name='model']").attr("disabled",false);
+    	    $(".login-box-msg").html("登记入库");
             if(n==1){
               $("#boxback").addClass("boxback");
             }
@@ -582,39 +585,43 @@
         } 
         </script>
         <script type="text/javascript">
+        $(function(){
+        	$.ajax({
+     			type:'GET',
+       			contentType:"allication/json",
+         		dataType: "json",
+         		url:'/product/showProductTypeList',
+         		success: function(data){
+         			$("#typelist").html("");
+         			for(var o in data){
+         				$("#typelist").append(' <option>'+data[o]+'</option>');
+         			}
+         		}
+         });
+        })
         $("document").ready(function(){
         	 $("#sub").on("click",function(){
+        		// $("#fd input[name='brand']").attr("disabled",false);
+         	//    $("#fd input[name='model']").attr("disabled",false);
         			$.ajax({
                 		type:'POST',
                 		dataType: 'json',
                 		url:'/store/showStoreRecordAfterAdd',
                 		data:{"brand":$("#fd input[name='brand']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
-                			  "price":$("#fd input[name='price']").val().trim(),
-                			  "sales":$("#fd input[name='sales']").val().trim(),
-                			  "count":$("#fd input[name='count']").val().trim(),
-                			  "type":$("#fd input[name='type']").val().trim()
+                			  "price":$("#fd input[name='price']").val().trim().split(" ")[0],
+                			  "sales":$("#fd input[name='sales']").val().trim().split(" ")[0],
+                			  "count":$("#fd input[name='count']").val().trim().split(" ")[0],
+                			  "type":$("#fd input[name='type']").val().trim(),
+                			  "id":$("#fd input[name='id']").val().trim()
                 			 },
                 		success: function(data){
-                			alert("登记成功");
+                			alert("操作成功");
                 			msgbox(0);
                 			window.location.reload();
                 		 }
                 	});
         		});
-        	 
-             	$.ajax({
-         			type:'GET',
-           			contentType:"allication/json",
-             		dataType: "json",
-             		url:'/product/showProductTypeList',
-             		success: function(data){
-             			$("#typelist").html("");
-             			for(var o in data){
-             				$("#typelist").append(' <option>'+data[o]+'</option>');
-             			}
-             		}
-             });
         	 
         });
         
@@ -625,13 +632,14 @@
       <p class="login-box-msg">登记入库</p>
 	
       <form action="#" method="post" id="fd">
+      <input hidden ="hidden" name="id" >
         <div class="form-group has-feedback">
        	  产品品牌：	
-          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
+          <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand" >
         </div>
          <div class="form-group has-feedback">
       	    产品型号：                 
-          <input type="text" class="form-control" placeholder="型号" name="model">
+          <input type="text" class="form-control" placeholder="型号" name="model" >
         </div>
          <div class="form-group has-feedback">
     	     进价：                 
@@ -663,7 +671,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4" style="margin-left:310px;">
-            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 提交 </button>
           </div>
           <!-- /.col -->
         </div>
@@ -672,6 +680,9 @@
 </div>
     </div>
     <!-- /.form-box -->
+
+
+
 
    <!-- 分页 -->
    <script type="text/javascript" src="./type.js"></script>
@@ -684,6 +695,15 @@
                   					$("#search").click();
                   					}
                   				});
+              				$("#updateInfo").on("click",function(){
+              					if($("#plist tbody tr input[type='checkbox']:checked").length > 1){
+              					msgbox(1);
+              				 	review();
+              					}else{
+              						alert("请先选择一项记录 ！");
+              					}
+              				});
+              				checkbox();
                       		$("#search").on("click",function(){
                       			showContent("store","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss input").val().trim());
                       		});
