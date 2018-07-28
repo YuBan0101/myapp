@@ -190,7 +190,7 @@ function showShortSupplyProductTable(data,currentPage){
 }
 
 function showStoreTable(data,currentPage){
-	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center"><i class="fa fa-star-o"></i></td><td class="mailbox-subject" style="text-align:center">ID</td>'+
             '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
             '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
             '<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>入库数量</td>'+
@@ -202,6 +202,7 @@ function showStoreTable(data,currentPage){
 			);
 			for(var i= 0;i<data.length;i++){
 			   $("#plist tbody").append("<tr>"+
+			   '<td class="mailbox-subject" style="text-align:center"><input type="checkbox" name="aid" value='+data[i].id+'></td>'+
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
@@ -261,7 +262,7 @@ function showPriceTable(data,currentPage){
 }
 
 function showDeliverTable(data,currentPage){
-	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center">ID</td>'+
+	$("#plist tbody").html('<tr><td class="mailbox-subject" style="text-align:center"><i class="fa fa-star-o"></i></td><td class="mailbox-subject" style="text-align:center">ID</td>'+
             '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品品牌</td>'+
             '<td class="mailbox-subject" style="text-align:center"><a href="#"></a>产品代号</td>'+
 			'<td class="mailbox-subject" style="text-align:center;"><a href="#"></a>出售价格</td>'+
@@ -273,6 +274,7 @@ function showDeliverTable(data,currentPage){
 			);
 			for(var i= 0;i<data.length;i++){
 			   $("#plist tbody").append("<tr>"+
+			  '<td class="mailbox-subject" style="text-align:center"><input type="checkbox" name="aid" value='+data[i].id+'></td>'+
 			   '<td class="mailbox-subject" style="text-align:center">'+(i+parseInt((currentPage-1)*15)+1)+'</td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].brand+'</a></td>'+
 			   '<td class="mailbox-subject" style="text-align:center"><a href="#">'+data[i].model+'</a></td>'+
@@ -330,6 +332,77 @@ function hideDiv(){
 		})
 	}
 
+function checkbox(){
+	$("#plist tbody tr").on({
+		click: function(){if($(this).find("input").is(":checked") != true){
+		
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+			}
+		},
+		dblclick:function(){if($(this).find("input").is(":checked") != true){
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+		}
+		msgbox(1);
+		review();
+		}
+	});
+	
+}
+
+function checkbox2(){
+	$("#plist tbody tr").on({
+		click: function(){if($(this).find("input").is(":checked") != true){
+		
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+			}
+		},
+		dblclick:function(){if($(this).find("input").is(":checked") != true){
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+		}
+		msgbox(1);
+		review2();
+		}
+	});
+}
+
+function review(){
+		
+		$("#fd input[name='id']").val($("#plist input[type='checkbox']:checked").val());
+		$("#fd input[name='brand']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(2).text());
+	    $("#fd input[name='model']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(3).text());
+	    $("#fd input[name='price']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(5).text().split(" ")[0]);
+	    $("#fd input[name='sales']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(7).text().split(" ")[0]);
+	    $("#fd input[name='count']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(4).text().split(" ")[0]);
+	    $("#fd input[name='type']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(8).text());
+	    $("#fd input[name='brand']").attr("disabled",true);
+	    $("#fd input[name='model']").attr("disabled",true);
+	    $(".login-box-msg").html("修改入库信息");
+}
+
+function review2(){
+	
+	$("#fd input[name='id']").val($("#plist input[type='checkbox']:checked").val());
+	$("#fd input[name='brand']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(2).text());
+    $("#fd input[name='model']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(3).text());
+    $("#fd input[name='price']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(4).text().split(" ")[0]);
+    $("#fd input[name='count']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(5).text().split(" ")[0]);
+    $("#fd input[name='type']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(8).text());
+   
+    $(".login-box-msg").html("修改出库信息");
+}
+
 function showTableChoose(pageindex,data,currentPage){
 	switch(pageindex){
 		case "product" : showProductTable(data,currentPage); break;
@@ -342,4 +415,21 @@ function showTableChoose(pageindex,data,currentPage){
 		default :break;
 		}
 }
+
+function inputCheck(){
+	var flag = true;
+	$("#fd").find('input').each(function(){
+		alert($(this).attr("name"));
+		if($(this).attr("name") != "id"){
+			if($(this).val() == ""){
+				//alert("请检查表单输入是否完整！");
+				flag = false;
+				return false;
+			}
+		}
+		
+	});
+	return flag;
+}
+
 

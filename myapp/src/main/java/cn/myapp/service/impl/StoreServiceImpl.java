@@ -101,8 +101,20 @@ public class StoreServiceImpl implements StoreService {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		record.setDate(new Date());
 		//record.setType(productDao.searchProductDes(record.getBrand(), record.getModel()).getType());
+		if(storeDao.selectByPrimaryKey(record.getId()) != null) {
+			Store temp = storeDao.selectByPrimaryKey(record.getId());
+				if(productDao.searchProductDes(temp.getBrand(), temp.getModel())!=null) {
+					productDao.updateReduceProductCount(temp.getBrand(), temp.getModel(),temp.getCount());
+					
+					storeDao.updateByPrimaryKeySelective(record);
+					
+					}
+				
+			
+		}else {
 		//插入
 		storeDao.insertSelective(record);
+		}
 		// if price 表里有当前品牌型号产品 
 		//price表更新价格
 		if(priceDao.selectPriceByModelAndBrand(record.getBrand(), record.getModel())!=null) {
@@ -163,6 +175,32 @@ public class StoreServiceImpl implements StoreService {
         }
         
 		return page;
+	}
+	@Override
+	//删除记录
+	public int removeRecordById(Integer id) {
+		//找到记录
+		Store temp = storeDao.selectByPrimaryKey(id);
+		//在product表查找 此brand mdoel 记录 ，如果存在数量大于 temp 数量 ，count -temp.count 
+		//否则 删除 product 记录
+		if(productDao.searchProductDes(temp.getBrand(), temp.getModel()).getCount() < temp.getCount()) {
+			return 0;
+		}else if(productDao.searchProductDes(temp.getBrand(), temp.getModel()).getCount() > temp.getCount()) {
+			productDao.updateReduceProductCount(temp.getBrand(), temp.getModel(),temp.getCount());
+		}else {
+			productDao.deleteByPrimaryKey(productDao.searchProductDes(temp.getBrand(), temp.getModel()).getId());
+		}
+		
+		// 在store表 中查找 此brand mdoel 记录，如过只有一条记录 ，则删除 price表中记录  
+		List<Store> list = storeDao.selectTwoLastStoreRecord(temp.getBrand(), temp.getModel());
+		if(list.size() == 1) {
+			priceDao.deleteByPrimaryKey(priceDao.selectPriceByModelAndBrand(temp.getBrand(), temp.getModel()).getId());
+		}else {
+			//否则 将第二条记录信息更新到price表
+			priceDao.updatePrice(list.get(1));
+		}
+		//删除record
+		return storeDao.deleteByPrimaryKey(id);
 	}
 
 }

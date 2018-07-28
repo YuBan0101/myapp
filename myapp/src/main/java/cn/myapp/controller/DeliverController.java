@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.myapp.model.Deliver;
 import cn.myapp.model.Page;
+import cn.myapp.model.Store;
 import cn.myapp.service.DeliverService;
 @Controller
 @RequestMapping("/deliver")
@@ -106,11 +107,14 @@ public class DeliverController {
 		return deliverService.searchDeliverRecord(page);
 	}
 	
-	@RequestMapping(value="/searchDeliverRecordCount")
+	@RequestMapping(value ="/removeDeliverRecord")
 	@ResponseBody
-	//查找 符合关键字   记录数量
-	public Page searchDeliverRecordCount(Page page) {
-
-		return deliverService.searchDeliverRecordCount(page);
+	//新录入入库记录
+	public String removeDeliverRecord(HttpServletRequest req,Deliver record) {
+		if(deliverService.removeRecordById(record.getId()) == 1)
+			
+		return JSON.toJSONString("删除成功 ！");
+		else
+		return JSON.toJSONString("该商品已经出售 ,无法删除 ！");
 	}
 }
