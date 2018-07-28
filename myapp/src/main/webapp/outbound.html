@@ -549,6 +549,7 @@
         <script type="text/javascript">
         $("document").ready(function(){
         	 $("#sub").on("click",function(){
+        		 if(inputCheck() == true ){
         			$.ajax({
                 		type:'POST',
                 		dataType: 'json',
@@ -565,6 +566,9 @@
                 			window.location.reload();
                 		 }
                 	});
+        		 }else{
+        			 alert("请检查表单输入是否完整！");
+        		 }
         		});
         	});
      </script> 

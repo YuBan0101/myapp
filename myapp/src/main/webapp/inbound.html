@@ -608,6 +608,7 @@
         	 $("#sub").on("click",function(){
         		// $("#fd input[name='brand']").attr("disabled",false);
          	//    $("#fd input[name='model']").attr("disabled",false);
+         	 if(inputCheck() == true ){
         			$.ajax({
                 		type:'POST',
                 		dataType: 'json',
@@ -626,6 +627,9 @@
                 			window.location.reload();
                 		 }
                 	});
+         	 }else{
+         		alert("请检查表单输入是否完整！");
+         	 }
         		});
         	 
         });
