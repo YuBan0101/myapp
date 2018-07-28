@@ -103,12 +103,14 @@ public class StoreServiceImpl implements StoreService {
 		//record.setType(productDao.searchProductDes(record.getBrand(), record.getModel()).getType());
 		if(storeDao.selectByPrimaryKey(record.getId()) != null) {
 			Store temp = storeDao.selectByPrimaryKey(record.getId());
-			if(storeDao.deleteByPrimaryKey(temp.getId()) == 1 ) {
 				if(productDao.searchProductDes(temp.getBrand(), temp.getModel())!=null) {
 					productDao.updateReduceProductCount(temp.getBrand(), temp.getModel(),temp.getCount());
+					
+					storeDao.updateByPrimaryKeySelective(record);
+					
 					}
 				
-			}
+			
 		}else {
 		//插入
 		storeDao.insertSelective(record);

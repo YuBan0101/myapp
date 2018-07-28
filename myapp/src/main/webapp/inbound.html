@@ -339,7 +339,7 @@
             <div class="card-body p-0">
               <ul class="nav nav-pills flex-column" id="optionUl">
                 <li class="nav-item">
-                  <a href="javascript:void(0)" onclick="msgbox(1)" class="nav-link">
+                  <a href="javascript:void(0)"  id="add" class="nav-link">
                     <i class="fa fa-circle-o text-danger"></i>
                      	入库登记
                   </a>
@@ -609,9 +609,9 @@
                 		url:'/store/showStoreRecordAfterAdd',
                 		data:{"brand":$("#fd input[name='brand']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
-                			  "price":$("#fd input[name='price']").val().trim().split(" ")[0],
-                			  "sales":$("#fd input[name='sales']").val().trim().split(" ")[0],
-                			  "count":$("#fd input[name='count']").val().trim().split(" ")[0],
+                			  "price":$("#fd input[name='price']").val().trim(),
+                			  "sales":$("#fd input[name='sales']").val().trim(),
+                			  "count":$("#fd input[name='count']").val().trim(),
                 			  "type":$("#fd input[name='type']").val().trim(),
                 			  "id":$("#fd input[name='id']").val().trim()
                 			 },
@@ -695,14 +695,14 @@
                   					$("#search").click();
                   					}
                   				});
-              				$("#updateInfo").on("click",function(){
-              					if($("#plist tbody tr input[type='checkbox']:checked").length > 1){
+              				/* $("#updateInfo").on("click",function(){
+              					if($("#plist tbody tr input[type='checkbox']:checked").length > 0){
               					msgbox(1);
               				 	review();
               					}else{
               						alert("请先选择一项记录 ！");
               					}
-              				});
+              				}); */
               				checkbox();
                       		$("#search").on("click",function(){
                       			showContent("store","/store/searchStoreRecordCount","/store/searchStoreRecord","",$("#ss input").val().trim());
@@ -713,24 +713,38 @@
                       		//初始化类别显示页面
                        		$("document").ready(showTypeList("/product/showAllProductTypeCount","/product/showAllProductType"));
                       		//当前类别
-                    		$("#typeUl").on("click","li a",function(){
+                    		$("#typeUl, #optionUl").on("click","li a",function(){
                     			$("#typeUl li a").removeClass("active");
                     			$("#optionUl li a").removeClass("active");
                     			$(this).addClass("active");
-                    			showContent("store","/store/showThisTypeStoreRecordCount","/store/showThisTypeStoreRecord",$(this).text().trim());
+                    			if($(this).attr("id") == "add"){
+                    				msgbox(1);
+                    			}else if($(this).attr("id") == "change"){
+                    				showContent("price","/price/showAllPriceRecordCount","/price/showAllPriceRecord");
+                    			}else if($(this).attr("id") == "updateInfo"){
+                    				if($("#plist tbody tr input[type='checkbox']:checked").length > 0 ){
+                      					msgbox(1);
+                      				 	review();
+                      					}else{
+                      						$(this).removeClass("active");
+                      						alert("提示 ：请先选择一项记录 ！");
+                      					}
+                    			}else{
+                    				showContent("store","/store/showThisTypeStoreRecordCount","/store/showThisTypeStoreRecord",$(this).text().trim());
+                    			}
                     	       });
                     		 $("#home").on("click",function(){
                        		  window.location.reload();
                        	  });
                     		 //2次进货差价
-                    		 $("#optionUl").on("click","li a",function(){
+                    		/*  $("#optionUl").on("click","li a",function(){
                      			$("#typeUl li a").removeClass("active");
                      			$("#optionUl li a").removeClass("active");
                      			$(this).addClass("active");
                      			$("#change").on("click",function(){
                     			showContent("price","/price/showAllPriceRecordCount","/price/showAllPriceRecord");
                      			});
-                    		 });
+                    		 }); */
                       	});
               		</script>
               

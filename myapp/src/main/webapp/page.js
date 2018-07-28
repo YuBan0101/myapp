@@ -360,9 +360,9 @@ function review(){
 		$("#fd input[name='id']").val($("#plist input[type='checkbox']:checked").val());
 		$("#fd input[name='brand']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(2).text());
 	    $("#fd input[name='model']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(3).text());
-	    $("#fd input[name='price']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(5).text());
-	    $("#fd input[name='sales']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(7).text());
-	    $("#fd input[name='count']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(4).text());
+	    $("#fd input[name='price']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(5).text().split(" ")[0]);
+	    $("#fd input[name='sales']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(7).text().split(" ")[0]);
+	    $("#fd input[name='count']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(4).text().split(" ")[0]);
 	    $("#fd input[name='type']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(8).text());
 	    $("#fd input[name='brand']").attr("disabled",true);
 	    $("#fd input[name='model']").attr("disabled",true);
