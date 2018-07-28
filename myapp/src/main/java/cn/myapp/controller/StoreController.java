@@ -94,4 +94,15 @@ public class StoreController {
 		return storeService.getStoreRecordAfterAdd(record);
 	}
 	
+	@RequestMapping(value ="/removeStoreRecord")
+	@ResponseBody
+	//新录入入库记录
+	public String removeStoreRecord(HttpServletRequest req,Store record) {
+		if(storeService.removeRecordById(record.getId()) == 1)
+			
+		return JSON.toJSONString("删除成功 ！");
+		else
+		return JSON.toJSONString("该商品已经出售 ,无法删除 ！");
+	}
+	
 }

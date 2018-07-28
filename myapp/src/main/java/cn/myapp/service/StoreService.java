@@ -27,4 +27,6 @@ public interface StoreService {
 	//插入记录 并更新product.count
 	public Store getStoreRecordAfterAdd(Store record);
 	
+	//删除记录
+	public int removeRecordById(Integer id);
 }
