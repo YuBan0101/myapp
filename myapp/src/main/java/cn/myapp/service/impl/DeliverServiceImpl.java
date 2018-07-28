@@ -54,13 +54,22 @@ public class DeliverServiceImpl implements DeliverService{
 	}
 	@Override
 	@Transactional
-	//插入一条数据deliver 并在product里对count -delivercount;
+	//插入一条数据deliver 并在product里对count -deliver.count;
 	public Deliver getDeliverRecordAfterAdd(Deliver record) {
 		
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		record.setDate(new Date());
+		
+		
+		//如果 该id 存在 ,product 加上 之前减少的 count
+		if(deliverDao.selectByPrimaryKey(record.getId())!=null) {
+			Deliver temp = deliverDao.selectByPrimaryKey(record.getId());
+			productDao.updateAddProductCount(temp.getBrand(), temp.getModel(), temp.getCount());
+			deliverDao.updateByPrimaryKeySelective(record);
+		}else {
 		//插入
 		deliverDao.insertSelective(record);
+		}
 		//count--
 		
 		productDao.updateReduceProductCount(record.getBrand(), record.getModel(),record.getCount());
@@ -223,6 +232,17 @@ public class DeliverServiceImpl implements DeliverService{
 	public List<Jsdata> getYear() {
 		
 		return deliverDao.selectYear();
+	}
+	@Override
+	//删除入库记录
+	public int removeRecordById(Integer id) {
+		//找到记录
+		Deliver temp = deliverDao.selectByPrimaryKey(id);
+		//在product 找到此项记录 并加上出库 count
+		if(productDao.searchProductDes(temp.getBrand(), temp.getModel()) != null) {
+			productDao.updateAddProductCount(temp.getBrand(), temp.getModel(), temp.getCount());
+		}
+		return deliverDao.deleteByPrimaryKey(id);
 	}
 	
 	

@@ -355,6 +355,28 @@ function checkbox(){
 	
 }
 
+function checkbox2(){
+	$("#plist tbody tr").on({
+		click: function(){if($(this).find("input").is(":checked") != true){
+		
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+			}
+		},
+		dblclick:function(){if($(this).find("input").is(":checked") != true){
+			$("#plist tbody tr input[type='checkbox']").prop("checked",false);
+			$(this).find("input").prop("checked",true);
+		}else{
+			$(this).find("input").prop("checked",false);
+		}
+		msgbox(1);
+		review2();
+		}
+	});
+}
+
 function review(){
 		
 		$("#fd input[name='id']").val($("#plist input[type='checkbox']:checked").val());
@@ -367,6 +389,18 @@ function review(){
 	    $("#fd input[name='brand']").attr("disabled",true);
 	    $("#fd input[name='model']").attr("disabled",true);
 	    $(".login-box-msg").html("修改入库信息");
+}
+
+function review2(){
+	
+	$("#fd input[name='id']").val($("#plist input[type='checkbox']:checked").val());
+	$("#fd input[name='brand']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(2).text());
+    $("#fd input[name='model']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(3).text());
+    $("#fd input[name='price']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(4).text().split(" ")[0]);
+    $("#fd input[name='count']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(5).text().split(" ")[0]);
+    $("#fd input[name='type']").val($("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(8).text());
+   
+    $(".login-box-msg").html("修改出库信息");
 }
 
 function showTableChoose(pageindex,data,currentPage){

@@ -43,5 +43,8 @@ public interface DeliverService {
 	
 	// 获取指定type 入库记录 数量
 	public Page getThisTypeDeliverRecordCount(Page page);
+
+	//删除记录
+	public int removeRecordById(Integer id);
 	
 }

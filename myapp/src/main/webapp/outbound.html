@@ -338,22 +338,22 @@
               </div>
             </div>
             <div class="card-body p-0">
-              <ul class="nav nav-pills flex-column">
+              <ul class="nav nav-pills flex-column" id="optionUl">
                 <li class="nav-item">
-                  <a href="javascript:void(0);" onclick="msgbox(1)" class="nav-link">
+                  <a href="javascript:void(0);" id="add" class="nav-link">
                     <i class="fa fa-circle-o text-danger"></i>
                                                                  登记出售
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle-o text-warning"></i> Promotions
+                  <a href="#" class="nav-link" id="updateInfo">
+                    <i class="fa fa-circle-o text-warning"></i> 修改出售信息
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="#" class="nav-link" id="delete">
                     <i class="fa fa-circle-o text-primary"></i>
-                    Social
+                    删除出售信息
                   </a>
                 </li>
               </ul>
@@ -556,10 +556,11 @@
                 		data:{"brand":$("#fd input[name='brand']").val().trim(),
                 			  "model":$("#fd input[name='model']").val().trim(),
                 			  "price":$("#fd input[name='price']").val().trim(),
-                			  "count":$("#fd input[name='count']").val().trim()
+                			  "count":$("#fd input[name='count']").val().trim(),
+                			  "id":$("#fd input[name='id']").val().trim()
                 			 },
                 		success: function(data){
-                			alert("登记成功");
+                			alert("操作成功");
                 			msgbox(0);
                 			window.location.reload();
                 		 }
@@ -576,6 +577,7 @@
       <p class="login-box-msg">登记出售</p>
 	
       <form action="#" method="post" id="fd">
+      <input hidden= "hidden" name="id">
         <div class="form-group has-feedback">
        	  产品品牌：	
           <input id ="yt" type="text" class="form-control" placeholder="品牌名" name="brand">
@@ -599,7 +601,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4" style="margin-left:310px;">
-            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 录入 </button>
+            <button id="sub" type="button" class="btn btn-primary btn-block btn-flat" > 提交 </button>
           </div>
           <!-- /.col -->
         </div>
@@ -620,6 +622,7 @@
                   					$("#search").click();
                   					}
                   				});
+              				checkbox2();
                       		$("#search").on("click",function(){
                       			showContent("deliver","/deliver/searchDeliverRecordCount","/deliver/searchDeliverRecord","",$("#ss input").val().trim());
                       		});
@@ -629,10 +632,44 @@
                       		//初始化类别显示页面
                        		$("document").ready(showTypeList("/product/showAllProductTypeCount","/product/showAllProductType"));
                       		//当前类别
-                    		$("#typeUl").on("click","li a",function(){
-                    			$("#typeUl li a").removeClass("active");
-                    			$(this).addClass("active");
-                    			showContent("deliver","/deliver/showThisTypeDeliverRecordCount","/deliver/showThisTypeDeliverRecord",$(this).text().trim());
+                    			$("#typeUl, #optionUl").on("click","li a",function(){
+                        			$("#typeUl li a").removeClass("active");
+                        			$("#optionUl li a").removeClass("active");
+                        			$(this).addClass("active");
+                        			if($(this).attr("id") == "delete"){
+                        				if($("#plist tbody tr input[type='checkbox']:checked").length > 0 ){
+                        				var r = confirm("确认删除"+$("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(2).text()+
+                        						$("#plist input[type='checkbox']:checked").parents("tr").children("td").eq(3).text()+" 记录信息 ？");
+                        				if(r == true){
+                        					$.ajax({
+                        						type:'POST',
+                        						dataType: 'json',
+                    	                		url:"/deliver/removeDeliverRecord",
+                    	                		data:{"id":$("#plist tbody input[name='aid']").val().trim()},
+                    	                		success: function(data){
+                    	                			alert(data);
+                    	                			window.location.reload();
+                    	                		}
+                        					});
+                        				} }else {
+                        					$(this).removeClass("active");
+                      						alert("提示 ：请先选择一项记录 ！");
+                        				}
+                        			}else if($(this).attr("id") == "add"){
+                        				msgbox(1);
+                        				$(".login-box-msg").html("登记入库信息");
+                        			
+                        			}else if($(this).attr("id") == "updateInfo"){
+                        				if($("#plist tbody tr input[type='checkbox']:checked").length > 0 ){
+                          					msgbox(1);
+                          				 	review2();
+                          					}else{
+                          						$(this).removeClass("active");
+                          						alert("提示 ：请先选择一项记录 ！");
+                          					}
+                        			}else{
+                    				showContent("deliver","/deliver/showThisTypeDeliverRecordCount","/deliver/showThisTypeDeliverRecord",$(this).text().trim());
+                        			}
                     	       });
                     		 $("#home").on("click",function(){
                        		  window.location.reload();
