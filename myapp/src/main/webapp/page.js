@@ -419,7 +419,6 @@ function showTableChoose(pageindex,data,currentPage){
 function inputCheck(){
 	var flag = true;
 	$("#fd").find('input').each(function(){
-		alert($(this).attr("name"));
 		if($(this).attr("name") != "id"){
 			if($(this).val() == ""){
 				//alert("请检查表单输入是否完整！");
