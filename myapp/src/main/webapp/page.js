@@ -37,6 +37,7 @@ function showContent(pageindex,counturl,url,type,key){
         	  				
         	  			}
         	  		});
+        	  		 
         	  		
               		var pageCount = $(".float-right input[name='pageCount']").val();
 						$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
@@ -46,71 +47,100 @@ function showContent(pageindex,counturl,url,type,key){
               			$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
               		}
               		
+              		
+              		//首末页  
+              		$(".float-right div button").off().on("click",function(){
+      					if($(this).text() == "首页"){
+      						$("input[name='currentPage']").val(parseInt(2));
+      						prePage(pageindex,url,type,key,pageCount);
+      					}
+      					if($(this).text() == "末页"){
+      						if($(".float-right input[name='pageCount']").val() % 15 == 0){
+      							$("input[name='currentPage']").val(parseInt($(".float-right input[name='pageCount']").val()/15 -1 ));
+              				}else{
+              					$("input[name='currentPage']").val(parseInt($(".float-right input[name='pageCount']").val()/15));
+              				}
+      						nextPage(pageindex,url,type,key,pageCount);
+      					}
+        	  		 });
+              		
               	//向前翻页-------
 					$(".float-right div button i[class='fa fa-chevron-left']").parent().off().on("click",function(){
-							$("input[name='currentPage']").val($("input[name='currentPage']").val()-1);
-							if($("input[name='currentPage']").val() == 1){
-							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
-							$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
-							}
-							$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
-						$.ajax({
-	              			type:'GET',
-	              			contentType:"allication/json",
-	                		dataType: "json",
-	                		async:false,
-	                		url:url,
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
-	                		success: function(data){
-	                			currentPage = $("input[name='currentPage']").val();
-	                			if(data.pageCount < 15){
-	                				$(".float-right span").text("1-"+pageCount+"/"+pageCount);
-	                			}else if(currentPage > parseInt(pageCount/15)){
-	                				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+pageCount+"/"+pageCount);
-	                			}else{
-	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
-	                			}
-	                			showTableChoose(pageindex,data,currentPage);
-	                			hideDiv();
-	                		}
-	              		});
-					
+						
+						prePage(pageindex,url,type,key,pageCount);
 					}) ;  
 					
               	//像后翻页
 					$(".float-right div button i[class='fa fa-chevron-right']").parent().off().on("click",function(){
-							$("input[name='currentPage']").val(parseInt($("input[name='currentPage']").val())+1);
-							if($("input[name='currentPage']").val() > pageCount/15){
-								$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",true);
-								$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
-							}
-							$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
-						$.ajax({
-	              			type:'GET',
-	              			contentType:"allication/json",
-	                		dataType: "json",
-	                		url:url,
-	                		async:false,
-	                		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
-	                		success: function(data){
-	                			currentPage = $("input[name='currentPage']").val();
-	                			if(data.pageCount < 15){
-	                				$(".float-right span").text("1-"+pageCount+"/"+pageCount);
-	                			}else if(currentPage > parseInt(pageCount/15)){
-	                				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+pageCount+"/"+pageCount);
-	                			}else{
-	                			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
-	                			}
-	                			showTableChoose(pageindex,data,currentPage);
-	                			hideDiv();
-	                		}
-	              		});
 						
+						nextPage(pageindex,url,type,key,pageCount);	
 					});
-					
 					hideDiv();
-					}); 
-				}
+				}); 
+			}
+
+
+
+// 向前翻页
+function prePage(pageindex,url,type,key,pageCount){
+	$("input[name='currentPage']").val($("input[name='currentPage']").val()-1);
+	if($("input[name='currentPage']").val() == 1){
+	$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",true);
+	$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
+	}
+	$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",false);
+	$.ajax({
+		type:'GET',
+		contentType:"allication/json",
+		dataType: "json",
+		async:false,
+		url:url,
+		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
+		success: function(data){
+			currentPage = $("input[name='currentPage']").val();
+			if(data.pageCount < 15){
+				$(".float-right span").text("1-"+pageCount+"/"+pageCount);
+			}else if(currentPage > parseInt(pageCount/15)){
+			$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+pageCount+"/"+pageCount);
+			}else{
+				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
+			}
+			showTableChoose(pageindex,data,currentPage);
+			hideDiv();
+		}
+	});
+}
+//向后翻页
+function nextPage(pageindex,url,type,key,pageCount){
+	$("input[name='currentPage']").val(parseInt($("input[name='currentPage']").val())+1);
+	if($("input[name='currentPage']").val() > pageCount/15){
+		$(".float-right div button i[class='fa fa-chevron-right']").parent().attr("disabled",true);
+		$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
+	}
+	$(".float-right div button i[class='fa fa-chevron-left']").parent().attr("disabled",false);
+	$.ajax({
+		type:'GET',
+		contentType:"allication/json",
+		dataType: "json",
+		url:url,
+		async:false,
+		data:{'currentPage':$("input[name='currentPage']").val(),'pageSize':15,"type":type,"key":key},
+		success: function(data){
+			currentPage = $("input[name='currentPage']").val();
+			if(data.pageCount < 15){
+				$(".float-right span").text("1-"+pageCount+"/"+pageCount);
+			}else if(currentPage > parseInt(pageCount/15)){
+				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+pageCount+"/"+pageCount);
+			}else{
+				$(".float-right span").text((parseInt((currentPage-1)*15)+1)+"-"+currentPage*15+"/"+pageCount);
+			}
+			showTableChoose(pageindex,data,currentPage);
+			hideDiv();
+		}
+	});
+}
+
+
 
 function showProductTable(data,currentPage){
 
@@ -429,6 +459,18 @@ function inputCheck(){
 		
 	});
 	return flag;
+}
+
+function startAndEndPage(){
+	$(".btn btn-default btn-sm page").on('click',function(){
+		alert($(this).text());
+		if($(this).text() == "首页"){
+			$("input[name='currentPage']").val(parseInt(1));
+		}else if($(this).text() == "末页"){
+			$("input[name='currentPage']").val(parseInt($(".float-right input[name='pageCount']").val()/15 +1));
+		}
+	})
+	
 }
 
 
